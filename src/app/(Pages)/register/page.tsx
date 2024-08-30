@@ -28,14 +28,14 @@ const page = () => {
               alt='Image'
               width={500}
               height={200}
-              style={{ width: '100%', height: 'auto' }}
+              style={{ width: '80%', height: 'auto' }}
               className='mix-blend-plus-darker'
             ></Image>
           </Link>
         </div>
 
         {/* Rigth side */}
-        <div className='w-[90%] md:w-[70%] lg:w-[50%] mx-auto z-50 -mt-80 md:-mt-0'>
+        <div className='w-[90%] md:w-[70%] lg:w-[70%] mx-auto z-50 -mt-80 md:-mt-0'>
           <div className='bg-gray-900/30 py-10 rounded-xl flex flex-col items-center'>
             <h1 className='text-3xl text-white border-b-4 border-[#008EAD] mb-8'>
               Sign Up

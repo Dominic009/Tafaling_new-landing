@@ -39,7 +39,7 @@ const Page = () => {
         </div>
 
         {/* Rigth side */}
-        <div className='w-[90%] md:w-[70%] lg:w-[50%] mx-auto z-50 -mt-24 md:-mt-0'>
+        <div className='w-[90%] md:w-[70%] lg:w-[70%] mx-auto z-50 -mt-24 md:-mt-0'>
           <div className='bg-gray-900/30 py-10 rounded-xl flex flex-col items-center'>
             <h1 className='text-3xl text-white border-b-4 border-[#008EAD] mb-8'>
               Sign In
@@ -122,7 +122,7 @@ const Page = () => {
             <div className='flex gap-4 text-[#00B4DB] font-normal w-[70%] mt-5'>
               <button className='bg-[#F2F2F2] w-[100%] py-2 px-4 rounded-md text-lg flex justify-center items-center gap-2'>
                 <Image
-                  src='/google.png'
+                  src='/Icons/google.png'
                   alt='google'
                   width={25}
                   height={50}

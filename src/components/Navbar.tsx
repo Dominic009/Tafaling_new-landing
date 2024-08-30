@@ -67,7 +67,7 @@ const Navbar = () => {
             onClick={() => setDropdown(!dropdown)}
           >
             <Image
-              src={'/Profile.png'}
+              src={'/ProfileDP/Profile.png'}
               width={50}
               height={50}
               alt='User'
