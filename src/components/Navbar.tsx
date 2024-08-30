@@ -8,7 +8,7 @@ import { HiOutlineSearch } from 'react-icons/hi';
 import { FaRegBell } from 'react-icons/fa';
 import Link from 'next/link';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = useState(false);
   return (
     <nav className='h-[70px] bg-gradient-to-r from-[#004A99] to-[#003773] flex items-center justify-between px-5'>

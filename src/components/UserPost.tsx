@@ -4,14 +4,26 @@ import React, { useEffect, useState } from 'react';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { IoLocationOutline } from 'react-icons/io5';
 
-const UserPost = () => {
-  const [posts, setPosts] = useState([]);
+interface Post {
+  profilePicture: string;
+  username: string;
+  location: string;
+  postContent: string;
+  caption: string;
+  hashtags: string[];
+}
+
+const UserPost: React.FC = () => {
+  const [posts, setPosts] = React.useState<Post[]>([]);
+
   useEffect(() => {
     fetch('data.json')
       .then(res => res.json())
       .then(data => setPosts(data));
   }, []);
+
   console.log(posts);
+
   return (
     <div>
       {posts.map((post, idx) => (
