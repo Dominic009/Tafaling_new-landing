@@ -3,9 +3,11 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import PrimaryBtn from './PrimaryBtn';
 
-const Post = () => {
+const Post: React.FC = () => {
   const [modal, setModal] = useState(false);
+
   console.log(modal);
+
   return (
     <div>
       <div className='w-[90%] mx-auto backdrop-blur-md rounded-xl p-3 shadow mb-12 bg-white'>
