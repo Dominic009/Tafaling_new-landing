@@ -9,7 +9,7 @@ import { FaRegBell } from 'react-icons/fa';
 import Link from 'next/link';
 
 const Navbar: React.FC = () => {
-  const [dropdown, setDropdown] = useState(false);
+  const [dropdown, setDropdown] = React.useState<boolean>(false);
   return (
     <nav className='h-[70px] bg-gradient-to-r from-[#004A99] to-[#003773] flex items-center justify-between px-5'>
       {/* Left Side */}

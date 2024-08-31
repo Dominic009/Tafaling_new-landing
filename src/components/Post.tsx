@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import PrimaryBtn from './PrimaryBtn';
 
 const Post: React.FC = () => {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = React.useState<boolean>(false);
 
-  console.log(modal);
+  //console.log(modal);
 
   return (
     <div>
