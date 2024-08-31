@@ -1,0 +1,7 @@
+#Changes that has been done 
+
+Dominic Pranto Gomes - 31/8/24
+ 1. Moved <Navbar/> from "/home" to main layout.js to render
+ 2. Changed the width of Login and Registration form
+ 3. Home page content and left right section layout changed with grid and sticky position and made responsive for smaller devices
+ 4. Navbar "Search" element have been made responsive for all devices
