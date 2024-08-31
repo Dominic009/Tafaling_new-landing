@@ -11,6 +11,8 @@ import { usePathname } from 'next/navigation';
 
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
+  const path = usePathname();
+
   return (
     <div>
       {path === '/home' && (
