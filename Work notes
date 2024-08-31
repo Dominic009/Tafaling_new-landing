@@ -7,3 +7,4 @@ Dominic Pranto Gomes - 31/8/24
  4. Navbar "Search" element have been made responsive for all devices
  5. Made the Navbar dynamic for routes to show
  6. Navbar layout has been changed with grid
+ 7. Added virtual menu for web in mobile devices. (Static)
