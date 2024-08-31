@@ -10,7 +10,7 @@ const Post: React.FC = () => {
 
   return (
     <div>
-      <div className='w-[90%] mx-auto backdrop-blur-md rounded-xl p-3 shadow mb-12 bg-white'>
+      <div className='w-full mx-auto backdrop-blur-md rounded-xl p-3 shadow mb-6 bg-white'>
         <div>
           <div className='flex items-center gap-3'>
             <Image

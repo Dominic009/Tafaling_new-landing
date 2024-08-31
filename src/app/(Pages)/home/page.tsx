@@ -10,7 +10,7 @@ const page = () => {
   return (
     <div>
       {/* Page Layout */}
-      <div className="grid lg:grid-cols-4 gap-8 w-full md:w-[90%] lg:w-[80%] mx-auto md:px-5 text-center">
+      <div className="grid lg:grid-cols-4 gap-8 w-full md:w-[90%] lg:w-[90%] mx-auto md:px-5 text-center">
         <div className="h-[80vh] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl ">
           Left Section
         </div>
