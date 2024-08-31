@@ -1,13 +1,40 @@
 'use client';
+import { AuthUser, loginUser } from '@/api/auth/auth';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
+  const [loginData, setLoginData] = React.useState<AuthUser>({
+    email: '',
+    password: '',
+  });
+
+  const handleLoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+
+    const userData = {
+      email: form.email.value,
+      password: form.password.value,
+    };
+
+    const response = await loginUser(userData);
+
+    console.log(response);
+
+    if (response.status == 200) {
+      router.push('home');
+    }
+  };
+
   return (
     <main className='flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]'>
       <div className='opacity-20 absolute -left-52 scale-125'></div>
@@ -46,54 +73,67 @@ const Page = () => {
             </h1>
 
             {/* Input fields */}
-            <div className='flex flex-col gap-5 w-[80%]'>
-              {/* Email */}
-              <input
-                required
-                placeholder='Your Email'
-                type='text'
-                className='px-4 py-2 rounded-md outline-none'
-              ></input>
-              {/* Password */}
-              <div className='relative'>
+            <form onSubmit={handleLoginUser}>
+              <div className='flex flex-col gap-5 w-[80%]'>
+                {/* Email */}
                 <input
                   required
-                  placeholder='Your Password'
-                  type={isOpen ? 'text' : 'password'}
-                  className='px-4 py-2 rounded-md outline-none w-full'
+                  placeholder='Your Email'
+                  name='email'
+                  type='text'
+                  className='px-4 py-2 rounded-md outline-none'
                 ></input>
-                {isOpen ? (
-                  <IoEyeOutline
-                    onClick={() => setIsOpen(!isOpen)}
-                    className='absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]'
-                  />
-                ) : (
-                  <IoEyeOffOutline
-                    onClick={() => setIsOpen(!isOpen)}
-                    className='absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]'
-                  />
-                )}
+                {/* Password */}
+                <div className='relative'>
+                  <input
+                    required
+                    placeholder='Your Password'
+                    name='password'
+                    type={isOpen ? 'text' : 'password'}
+                    className='px-4 py-2 rounded-md outline-none w-full'
+                  ></input>
+                  {isOpen ? (
+                    <IoEyeOutline
+                      onClick={() => setIsOpen(!isOpen)}
+                      className='absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]'
+                    />
+                  ) : (
+                    <IoEyeOffOutline
+                      onClick={() => setIsOpen(!isOpen)}
+                      className='absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]'
+                    />
+                  )}
+                </div>
+                <a href='#' className='text-[#D6EAFF]/50 -mt-5 text-sm'>
+                  Forgotten password?
+                </a>
               </div>
-              <a href='#' className='text-[#D6EAFF]/50 -mt-5 text-sm'>
-                Forgotten password?
-              </a>
-            </div>
 
-            {/* Sign In button */}
-            <div className='flex items-center gap-1 w-[80%] mt-8'>
-              <input type='checkbox' />
-              <p className='text-[#D6EAFF]/50'>Remember Me</p>
-            </div>
+              {/* Sign In button */}
+              <div className='flex items-center gap-1 w-[80%] mt-8'>
+                <input type='checkbox' />
+                <p className='text-[#D6EAFF]/50'>Remember Me</p>
+              </div>
 
-            {/* Sign in btn */}
-            <Link href={'/home'} className='w-full flex justify-center'>
+              {/* Sign in btn */}
+              <div className='w-full flex justify-center'>
+                <PrimaryBtn
+                  text={'Sign In'}
+                  width={'80%'}
+                  size={'2xl'}
+                  weight={'bold'}
+                  type='submit'
+                />
+              </div>
+            </form>
+            {/* <Link href={'/home'} className='w-full flex justify-center'>
               <PrimaryBtn
                 text={'Sign In'}
                 width={'80%'}
                 size={'2xl'}
                 weight={'bold'}
               />
-            </Link>
+            </Link> */}
 
             {/* Third party log in */}
             <div className='w-[80%] mt-7 flex gap-2 items-center mb-3'>
