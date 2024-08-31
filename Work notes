@@ -6,3 +6,4 @@ Dominic Pranto Gomes - 31/8/24
  3. Home page content and left right section layout changed with grid and sticky position and made responsive for smaller devices
  4. Navbar "Search" element have been made responsive for all devices
  5. Made the Navbar dynamic for routes to show
+ 6. Navbar layout has been changed with grid
