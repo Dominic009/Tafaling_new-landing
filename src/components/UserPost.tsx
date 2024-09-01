@@ -29,7 +29,7 @@ const UserPost: React.FC = () => {
       {posts.map((post, idx) => (
         <div
           key={idx}
-          className='mb-4 w-[100%] mx-auto bg-white rounded-xl p-3 shadow'
+          className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow'
         >
           {/* Header */}
           <div className='flex items-center'>

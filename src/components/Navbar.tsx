@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   return (
     <div>
       {path === "/home" && (
-        <nav className="h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-[#004A99] to-[#003773]  items-center px-5 w-full">
+        <nav className="h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-[#004A99] to-[#003773]  items-center px-5 w-full min-w-[450px]">
           {/* Left Section */}
           <div>
             <Link href={"/home"}>
