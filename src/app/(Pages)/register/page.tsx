@@ -2,7 +2,7 @@
 import PrimaryBtn from "@/components/PrimaryBtn";
 import Image from "next/image";
 import Link from "next/link";
-import { RegisterUser } from "@/types/Auth";
+import { AuthUser } from "@/types/Auth";
 import { registerUser } from "@/api/auth/auth";
 import { useRouter } from "next/navigation";
 const Page = () => {
@@ -11,7 +11,8 @@ const Page = () => {
   const handleRegisterUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const userData: RegisterUser = {
+
+    const userData: AuthUser = {
       name: form.fullName.value,
       email: form.email.value,
       password: form.password.value,
@@ -104,32 +105,31 @@ const Page = () => {
                   className="px-4 py-2 rounded-md outline-none"
                 ></input>
               </div>
-           
 
-            {/* Sign In button */}
-            <div className="flex items-center gap-2 w-[80%] mt-8 mb-2">
-              <input type="checkbox" />
-              <p className="text-[#D6EAFF]/50">
-                Accept
-                <a href="#" className="text-gray-300">
-                  {" "}
-                  Terms & Conditions
-                </a>{" "}
-                and{" "}
-                <a href="#" className="text-gray-300">
-                  Privacy & Policy
-                </a>
-              </p>
-            </div>
+              {/* Sign In button */}
+              <div className="flex items-center gap-2 w-[80%] mt-8 mb-2">
+                <input type="checkbox" />
+                <p className="text-[#D6EAFF]/50">
+                  Accept
+                  <a href="#" className="text-gray-300">
+                    {" "}
+                    Terms & Conditions
+                  </a>{" "}
+                  and{" "}
+                  <a href="#" className="text-gray-300">
+                    Privacy & Policy
+                  </a>
+                </p>
+              </div>
 
-            {/* Sign in btn */}
-            <PrimaryBtn
-              text={"Sign Up"}
-              width={"80%"}
-              size={"2xl"}
-              weight={"bold"}
-            />
-            
+              {/* Sign in btn */}
+              <PrimaryBtn
+                text={"Sign Up"}
+                width={"80%"}
+                size={"2xl"}
+                weight={"bold"}
+                type="submit"
+              />
             </form>
           </div>
 
