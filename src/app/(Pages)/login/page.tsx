@@ -13,7 +13,7 @@ const Page = () => {
       <div className='opacity-20 absolute -left-52 scale-125'></div>
 
       <div
-        className='grid grid-cols-1 lg:grid-cols-2 w-full items-center justify-center'
+        className='grid grid-cols-1 lg:grid-cols-2 gap-24 w-full items-center justify-center'
         style={{
           backgroundImage: `url('/Pattern 3.png')`,
           backgroundSize: '1700px',
@@ -98,9 +98,10 @@ const Page = () => {
             {/* Third party log in */}
             <div className='w-[80%] mt-7 flex gap-2 items-center mb-3'>
               <div className='border-b border-[#BFB0B0] w-[33%]'></div>
-              <div className='text-[#D6EAFF]/50 flex-1 text-center'>
+              <div className='text-[#D6EAFF]/50 flex-1 text-center hidden md:block'>
                 or continue with
               </div>
+              <p className='text-[#D6EAFF]/50 flex-1 text-center md:hidden'>or</p>
               <div className='border-b border-[#BFB0B0] w-[33%]'></div>
             </div>
 
