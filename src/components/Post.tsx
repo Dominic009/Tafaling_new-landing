@@ -70,7 +70,7 @@ const Post: React.FC = () => {
               <div className='flex items-center gap-3'>
                 <Image
                   alt='User DP'
-                  src={'ProfileDP/Profile.png'}
+                  src={'/ProfileDP/Profile.png'}
                   width={50}
                   height={65}
                 ></Image>

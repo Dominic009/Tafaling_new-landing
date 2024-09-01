@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   return (
     <div>
       {path === "/home" && (
-        <nav className="h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-[#004A99] to-[#003773]  items-center px-5 w-full min-w-[450px]">
+        <nav className="h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-[#004A99] to-[#012349]  items-center px-5 w-full min-w-[450px]">
           {/* Left Section */}
           <div>
             <Link href={"/home"}>
@@ -48,12 +48,12 @@ const Navbar: React.FC = () => {
 
           {/* Right Section */}
           <div className="flex justify-end">
-            <div className="flex items-center justify-between lg:w-[90%] ">
+            <div className="flex items-center justify-between lg:w-[80%]">
               {/* Search field */}
               <div className="hidden md:block md:w-full lg:w-[50%] relative">
                 <input
                   type="text"
-                  className="outline-none px-4 py-1 rounded-lg bg-[#00274A] text-white w-full"
+                  className="outline-none px-4 py-1 rounded-lg bg-[#062139] text-white w-full"
                   placeholder="Search"
                 />
                 <HiOutlineSearch className="absolute top-[6px] right-3 text-gray-400 text-xl" />
