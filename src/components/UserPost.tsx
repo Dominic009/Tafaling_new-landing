@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
-import { formatDistanceToNow } from 'date-fns';
+import PostTimeConverter from "./PostTimeConverter";
 
 interface Post {
   profilePicture: string;
@@ -23,7 +23,6 @@ const UserPost: React.FC = () => {
       .then((res) => res.json())
       .then((data) => setPosts(data));
   }, []);
-
 
   return (
     <div>
@@ -78,7 +77,7 @@ const UserPost: React.FC = () => {
               ))}
             </div>
             <div className="text-end text-gray-400 text-sm font-light">
-              {formatDistanceToNow(new Date(post.postedTime), { addSuffix: true })}
+              <PostTimeConverter time={post.postedTime}></PostTimeConverter>
             </div>
           </div>
         </div>
