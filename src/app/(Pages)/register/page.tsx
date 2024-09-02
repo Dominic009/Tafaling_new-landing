@@ -5,8 +5,11 @@ import Link from "next/link";
 import { AuthUser } from "@/types/Auth";
 import { registerUser } from "@/api/auth/auth";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 const Page = () => {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleRegisterUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,8 +43,8 @@ const Page = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Left side */}
-        <div className="z-50 flex flex-col items-center justify-center lg:border-l scale-50 lg:scale-100 h-[50%] lg:order-last -mt-36 md:-mt-0">
+        {/* Right side */}
+        <div className="z-50 flex flex-col items-center justify-center lg:border-l scale-50 lg:scale-100 h-[50%] lg:order-last">
           <h1 className="font-semibold text-[#08B7EB] text-4xl mb-3">
             Welcome to
           </h1>
@@ -51,63 +54,68 @@ const Page = () => {
               alt="Image"
               width={500}
               height={200}
-              style={{ width: "80%", height: "auto" }}
+              style={{ width: "100%", height: "auto" }}
               className="mix-blend-plus-darker"
             ></Image>
           </Link>
         </div>
 
-        {/* Rigth side */}
-        <div className="w-[90%] md:w-[70%] lg:max-w-[50%] mx-auto z-50 -mt-80 md:-mt-0">
+        {/* Left side */}
+        <div className="w-[90%] md:w-[70%] lg:max-w-[60%] mx-auto z-50 md:-mt-0">
           <div className="bg-gray-900/30 py-10 rounded-xl flex flex-col items-center backdrop-blur-sm">
             <h1 className="text-3xl text-white border-b-4 border-[#008EAD] mb-8">
               Sign Up
             </h1>
 
             {/* Input fields */}
-            <form onSubmit={handleRegisterUser}>
-              <div className="flex flex-col gap-7 w-[80%]">
-                {/* Name */}
+            <form
+              onSubmit={handleRegisterUser}
+              className="flex flex-col gap-7 w-[80%]"
+            >
+              {/* Name */}
+              <input
+                placeholder="Your Name"
+                name="fullName"
+                type="text"
+                className="px-4 py-2 rounded-md outline-none"
+              ></input>
+              {/* Email */}
+              <input
+                placeholder="Your Email"
+                type="text"
+                name="email"
+                className="px-4 py-2 rounded-md outline-none"
+              ></input>
+              {/* Password */}
+              <div className="relative">
                 <input
-                  placeholder="Your Name"
-                  name="fullName"
-                  type="text"
-                  className="px-4 py-2 rounded-md outline-none"
+                  placeholder="Your Password"
+                  type={isOpen ? "text" : "password"}
+                  name="password"
+                  className="px-4 py-2 rounded-md outline-none w-full"
                 ></input>
-                {/* Email */}
-                <input
-                  placeholder="Your Email"
-                  type="text"
-                  name="email"
-                  className="px-4 py-2 rounded-md outline-none"
-                ></input>
-                {/* Password */}
-                <div className="relative">
-                  <input
-                    placeholder="Your Password"
-                    type="password"
-                    name="password"
-                    className="px-4 py-2 rounded-md outline-none w-full"
-                  ></input>
-                  <Image
-                    src={"/Eye.png"}
-                    alt="Eye_Icon"
-                    width={20}
-                    height={20}
-                    className="absolute right-3 top-3"
-                  ></Image>
-                </div>
-                {/* Confirm Password */}
-                <input
-                  placeholder="Confirm Password"
-                  type="password"
-                  name="confirmPassword"
-                  className="px-4 py-2 rounded-md outline-none"
-                ></input>
+                {isOpen ? (
+                  <IoEyeOutline
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
+                  />
+                ) : (
+                  <IoEyeOffOutline
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
+                  />
+                )}
               </div>
+              {/* Confirm Password */}
+              <input
+                placeholder="Confirm Password"
+                type="password"
+                name="confirmPassword"
+                className="px-4 py-2 rounded-md outline-none"
+              ></input>
 
               {/* Sign In button */}
-              <div className="flex items-center gap-2 w-[80%] mt-8 mb-2">
+              <div className="flex items-center gap-2 w-[80%] mt-8">
                 <input type="checkbox" />
                 <p className="text-[#D6EAFF]/50">
                   Accept
@@ -125,7 +133,7 @@ const Page = () => {
               {/* Sign in btn */}
               <PrimaryBtn
                 text={"Sign Up"}
-                width={"80%"}
+                width={"100%"}
                 size={"2xl"}
                 weight={"bold"}
                 type="submit"

@@ -62,7 +62,7 @@ const Page = () => {
         </div>
 
         {/* Rigth side */}
-        <div className="w-[90%] md:w-[70%] lg:max-w-[65%] mx-auto z-50 -mt-24 md:-mt-0">
+        <div className="w-[90%] md:w-[70%] lg:max-w-[60%] mx-auto z-50 -mt-24 md:-mt-0">
           <div className="bg-gray-900/30 py-10 rounded-xl flex flex-col items-center backdrop-blur-sm">
             <h1 className="text-3xl text-white border-b-4 border-[#008EAD] mb-8">
               Sign In
@@ -123,14 +123,6 @@ const Page = () => {
                 />
               </div>
             </form>
-            {/* <Link href={'/home'} className='w-full flex justify-center'>
-              <PrimaryBtn
-                text={'Sign In'}
-                width={'80%'}
-                size={'2xl'}
-                weight={'bold'}
-              />
-            </Link> */}
 
             {/* Third party log in */}
             <div className="w-[80%] mt-7 flex gap-2 items-center mb-3">

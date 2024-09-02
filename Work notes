@@ -10,9 +10,12 @@ Dominic Pranto Gomes - 31/8/24
 6.  Navbar layout has been changed with grid
 7.  Added virtual menu for web in mobile devices. (Static)
 
-
-
 Dominic Pranto Gomes - 1/9/24
 
 1.  Login and registration layout fixing for Laptop and mobile devices
 2.  Installed date-fns to showcase the time of posting on each post
+
+Dominic Pranto Gomes - 2/9/24
+
+1. Sunit and Saif worked in login and registration with functionality and layout got changed. Fixed them
+2. Implemeneted show pass option in Regitration page
