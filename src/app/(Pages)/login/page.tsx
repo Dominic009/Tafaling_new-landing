@@ -36,11 +36,7 @@ const Page = () => {
       <div className="opacity-20 absolute -left-52 scale-125"></div>
 
       <div
-<<<<<<< HEAD
         className='grid grid-cols-1 lg:grid-cols-2 gap-24 w-full items-center justify-center'
-=======
-        className="grid grid-cols-1 lg:grid-cols-2 w-full items-center justify-center"
->>>>>>> 7cbcff45ade6769f92a23d6313feae48b7f6387d
         style={{
           backgroundImage: `url('/Pattern 3.png')`,
           backgroundSize: "1700px",
@@ -66,15 +62,9 @@ const Page = () => {
         </div>
 
         {/* Rigth side */}
-<<<<<<< HEAD
-        <div className='w-[90%] md:w-[70%] lg:max-w-[65%] mx-auto z-50 -mt-24 md:-mt-0'>
-          <div className='bg-gray-900/30 py-10 rounded-xl flex flex-col items-center backdrop-blur-sm'>
-            <h1 className='text-3xl text-white border-b-4 border-[#008EAD] mb-8'>
-=======
-        <div className="w-[90%] md:w-[70%] lg:max-w-[50%] mx-auto z-50 -mt-24 md:-mt-0">
+        <div className="w-[90%] md:w-[70%] lg:max-w-[65%] mx-auto z-50 -mt-24 md:-mt-0">
           <div className="bg-gray-900/30 py-10 rounded-xl flex flex-col items-center backdrop-blur-sm">
             <h1 className="text-3xl text-white border-b-4 border-[#008EAD] mb-8">
->>>>>>> 7cbcff45ade6769f92a23d6313feae48b7f6387d
               Sign In
             </h1>
 
@@ -142,22 +132,15 @@ const Page = () => {
             </Link> */}
 
             {/* Third party log in */}
-<<<<<<< HEAD
-            <div className='w-[80%] mt-7 flex gap-2 items-center mb-3'>
-              <div className='border-b border-[#BFB0B0] w-[33%]'></div>
-              <div className='text-[#D6EAFF]/50 flex-1 text-center hidden md:block'>
-                or continue with
-              </div>
-              <p className='text-[#D6EAFF]/50 flex-1 text-center md:hidden'>or</p>
-              <div className='border-b border-[#BFB0B0] w-[33%]'></div>
-=======
             <div className="w-[80%] mt-7 flex gap-2 items-center mb-3">
               <div className="border-b border-[#BFB0B0] w-[33%]"></div>
-              <div className="text-[#D6EAFF]/50 flex-1 text-center">
+              <div className="text-[#D6EAFF]/50 flex-1 text-center hidden md:block">
                 or continue with
               </div>
+              <p className="text-[#D6EAFF]/50 flex-1 text-center md:hidden">
+                or
+              </p>
               <div className="border-b border-[#BFB0B0] w-[33%]"></div>
->>>>>>> 7cbcff45ade6769f92a23d6313feae48b7f6387d
             </div>
 
             <p className="text-center font-light text-gray-400 text-sm md:text-md">
