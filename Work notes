@@ -19,3 +19,4 @@ Dominic Pranto Gomes - 2/9/24
 
 1. Sunit and Saif worked in login and registration with functionality and layout got changed. Fixed them
 2. Implemeneted show pass option in Regitration page
+3. Created route for "user-profile"
