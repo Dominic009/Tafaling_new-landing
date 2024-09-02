@@ -69,44 +69,45 @@ const Page = () => {
             </h1>
 
             {/* Input fields */}
-            <form onSubmit={handleLoginUser}>
-              <div className="flex flex-col gap-5 w-[80%]">
-                {/* Email */}
+            <form
+              onSubmit={handleLoginUser}
+              className="flex flex-col gap-5 w-[80%]"
+            >
+              {/* Email */}
+              <input
+                required
+                placeholder="Your Email"
+                name="email"
+                type="text"
+                className="px-4 py-2 rounded-md outline-none"
+              ></input>
+              {/* Password */}
+              <div className="relative">
                 <input
                   required
-                  placeholder="Your Email"
-                  name="email"
-                  type="text"
-                  className="px-4 py-2 rounded-md outline-none"
+                  placeholder="Your Password"
+                  name="password"
+                  type={isOpen ? "text" : "password"}
+                  className="px-4 py-2 rounded-md outline-none w-full"
                 ></input>
-                {/* Password */}
-                <div className="relative">
-                  <input
-                    required
-                    placeholder="Your Password"
-                    name="password"
-                    type={isOpen ? "text" : "password"}
-                    className="px-4 py-2 rounded-md outline-none w-full"
-                  ></input>
-                  {isOpen ? (
-                    <IoEyeOutline
-                      onClick={() => setIsOpen(!isOpen)}
-                      className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
-                    />
-                  ) : (
-                    <IoEyeOffOutline
-                      onClick={() => setIsOpen(!isOpen)}
-                      className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
-                    />
-                  )}
-                </div>
-                <a href="#" className="text-[#D6EAFF]/50 -mt-5 text-sm">
-                  Forgotten password?
-                </a>
+                {isOpen ? (
+                  <IoEyeOutline
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
+                  />
+                ) : (
+                  <IoEyeOffOutline
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
+                  />
+                )}
               </div>
+              <a href="#" className="text-[#D6EAFF]/50 -mt-5 text-sm">
+                Forgotten password?
+              </a>
 
               {/* Sign In button */}
-              <div className="flex items-center gap-1 w-[80%] mt-8">
+              <div className="flex items-center gap-1 w-[80%] mt-4">
                 <input type="checkbox" />
                 <p className="text-[#D6EAFF]/50">Remember Me</p>
               </div>
@@ -115,7 +116,7 @@ const Page = () => {
               <div className="w-full flex justify-center">
                 <PrimaryBtn
                   text={"Sign In"}
-                  width={"80%"}
+                  width={"100%"}
                   size={"2xl"}
                   weight={"bold"}
                   type="submit"
