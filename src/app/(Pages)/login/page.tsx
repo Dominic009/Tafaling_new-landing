@@ -36,7 +36,7 @@ const Page = () => {
       <div className="opacity-20 absolute -left-52 scale-125"></div>
 
       <div
-        className='grid grid-cols-1 lg:grid-cols-2 gap-24 w-full items-center justify-center'
+        className="grid grid-cols-1 lg:grid-cols-2 gap-24 w-full items-center justify-center"
         style={{
           backgroundImage: `url('/Pattern 3.png')`,
           backgroundSize: "1700px",
