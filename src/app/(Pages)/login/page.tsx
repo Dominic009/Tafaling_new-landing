@@ -1,6 +1,7 @@
 "use client";
 import { loginUser } from "@/api/auth/auth";
 import PrimaryBtn from "@/components/PrimaryBtn";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
 import { AuthUser } from "@/types/Auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 const Page = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const { login } = useAuth();
 
   const handleLoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,13 +24,16 @@ const Page = () => {
       password: form.password.value,
     };
 
-    const response = await loginUser(userData);
+    const { data, status } = await loginUser(userData);
 
-    console.log(response);
+    console.log(data.data.user.user_name);
+    console.log(data.data.user.email);
 
-    if (response.status == 200) {
+    if (status == 200) {
       router.push("home");
     }
+
+    login({ name: data.data.user.user_name, email: data.data.user.email });
   };
 
   return (

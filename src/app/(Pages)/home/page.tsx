@@ -1,11 +1,22 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+"use client";
 import Post from "@/components/Post";
 import UserPost from "@/components/UserPost";
-import React from "react";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
+import React, { useEffect } from "react";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaRegNewspaper } from "react-icons/fa6";
 import { TiHome } from "react-icons/ti";
 
 const page = () => {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      alert(`Welcome ${user?.name}`);
+    }
+  }, [user]);
+
   return (
     <div>
       {/* Page Layout */}
