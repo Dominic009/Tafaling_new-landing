@@ -25,9 +25,10 @@ const Page = () => {
     };
 
     const { data, status } = await registerUser(userData);
+    console.log(data);
 
     if (status == 201) {
-      login({ name: data.data.user.user_name, email: data.data.user.email });
+      login({ name: data.data.user_name, email: data.data.email });
       router.push("home");
     }
   };

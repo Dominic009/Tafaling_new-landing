@@ -4,19 +4,23 @@ import Post from "@/components/Post";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import UserPost from "@/components/UserPost";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaRegNewspaper } from "react-icons/fa6";
 import { TiHome } from "react-icons/ti";
 
 const page = () => {
+  const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
     if (user) {
       alert(`Welcome ${user?.name}`);
+    } else {
+      router.push("login");
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div>
@@ -63,4 +67,4 @@ const page = () => {
   );
 };
 
-export default PrivateRoute(page);
+export default page;

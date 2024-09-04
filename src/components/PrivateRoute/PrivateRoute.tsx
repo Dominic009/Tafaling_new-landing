@@ -12,9 +12,9 @@ const PrivateRoute = <T extends {}>(Component: ComponentType<T>) => {
     if (!isAuthenticated) {
       router.push("/login");
       return null;
+    } else {
+      return <Component {...props} />;
     }
-
-    return <Component {...props} />;
   };
 };
 
