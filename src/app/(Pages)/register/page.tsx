@@ -7,9 +7,11 @@ import { registerUser } from "@/api/auth/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
 const Page = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const { login } = useAuth();
 
   const handleRegisterUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,11 +24,10 @@ const Page = () => {
       password_confirmation: form.confirmPassword.value,
     };
 
-    const response = await registerUser(userData);
+    const { data, status } = await registerUser(userData);
 
-    console.log(response);
-
-    if (response.status == 201) {
+    if (status == 201) {
+      login({ name: data.data.user.user_name, email: data.data.user.email });
       router.push("home");
     }
   };

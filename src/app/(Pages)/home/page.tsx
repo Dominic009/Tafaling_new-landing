@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import Post from "@/components/Post";
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import UserPost from "@/components/UserPost";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
 import React, { useEffect } from "react";
@@ -62,4 +63,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default PrivateRoute(page);
