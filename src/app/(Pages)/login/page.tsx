@@ -27,10 +27,10 @@ const Page = () => {
     const { data, status } = await loginUser(userData);
 
     // console.log(data.data.user.user_name);
-    console.log(data);
+    console.log("login response: ", data);
 
     if (status == 200) {
-      login({ name: data.data.user_name, email: data.data.email });
+      login({ name: data.data.user.user_name, email: data.data.user.email });
       router.push("home");
     }
   };

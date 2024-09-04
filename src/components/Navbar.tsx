@@ -13,9 +13,9 @@ import { useAuth } from "@/context/AuthContext/AuthProvider";
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
   const path = usePathname();
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
 
-  if (path === "/" || path === "/login" || path === "/register") {
+  if (path === "/" || path === "/login" || path === "/register" || !user) {
     return null; // Do not render the Navbar on these paths
   }
 
