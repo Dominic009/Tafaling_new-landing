@@ -3,4 +3,6 @@ export type AuthUser = {
     password?: string;
     name?: string;
     password_confirmation?: string;
+    cover?: string;
+    user_name?: string
 };

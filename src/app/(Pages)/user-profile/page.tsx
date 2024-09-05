@@ -1,17 +1,18 @@
-"use client"
-import { useAuth } from '@/context/AuthContext/AuthProvider';
-import React from 'react';
+"use client";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
+import React from "react";
 
 const Page = () => {
+  const { user } = useAuth();
 
-    const { user } = useAuth();
+  console.log(user);
 
-    console.log(user)
-    return (
-        <div>
-            This is user profile
-        </div>
-    );
+  return (
+    <div>
+      {user?.name} <br />
+      {user?.email}
+    </div>
+  );
 };
 
 export default Page;

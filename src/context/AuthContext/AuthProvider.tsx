@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUser(null);
     router.push("login");
   };
-
+  console.log(user)
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}

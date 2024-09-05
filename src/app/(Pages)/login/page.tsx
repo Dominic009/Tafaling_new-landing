@@ -30,7 +30,7 @@ const Page = () => {
     console.log("login response: ", data);
 
     if (status == 200) {
-      login({ name: data.data.user.user_name, email: data.data.user.email });
+      login({ user_name: data.data.user.user_name, email: data.data.user.email, cover: data.data.user.cover_photo, name:data.data.user.name });
       router.push("home");
     }
   };

@@ -37,10 +37,12 @@ const Navbar: React.FC = () => {
         {/* Middle Section */}
         <div className="hidden md:block">
           <div className="flex gap-9 items-center justify-center">
-            <TiHome
-              title="Home"
-              className="text-3xl text-white border-b-2 border-[#42C6DE] rounded-sm cursor-pointer transition-all duration-200 ease-in-out"
-            />
+            <Link href={'/home'}>
+              <TiHome
+                title="Home"
+                className="text-3xl text-white border-b-2 border-[#42C6DE] rounded-sm cursor-pointer transition-all duration-200 ease-in-out"
+              />
+            </Link>
             <FaRegNewspaper
               title="News Feed"
               className="text-2xl text-white/50 hover:text-white hover:scale-105 cursor-pointer transition-all duration-200 ease-in-out"
@@ -77,9 +79,10 @@ const Navbar: React.FC = () => {
 
               {/* User Profile */}
               <div
-                className="relative transition ease-in-out duration-500"
+                className="relative transition ease-in-out duration-500 group"
                 onClick={() => setDropdown(!dropdown)}
               >
+
                 <Image
                   src={"/ProfileDP/Profile.png"}
                   width={50}
