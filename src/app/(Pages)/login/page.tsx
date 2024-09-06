@@ -3,10 +3,13 @@ import { loginUser } from '@/api/auth/auth';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { AuthUser } from '@/types/Auth';
+import { ResponseType } from '@/types/Response';
+import { AxiosError } from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
@@ -18,6 +21,7 @@ const Page = () => {
 
   const handleLoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    toast.dismiss();
     const form = e.target as HTMLFormElement;
     setIsLoginLoading(true);
 
@@ -26,21 +30,25 @@ const Page = () => {
       password: form.password.value,
     };
 
-    const { data, status } = await loginUser(userData);
+    try {
+      const { data, status } = await loginUser(userData);
+      console.log('login response: ', data);
+      if (status == 200) {
+        login({
+          user_name: data.data.user.user_name,
+          email: data.data.user.email,
+          cover: data.data.user.cover_photo,
+          name: data.data.user.name,
+        });
 
-    // console.log(data.data.user.user_name);
-    console.log('login response: ', data);
-
-    if (status == 200) {
-      login({
-        user_name: data.data.user.user_name,
-        email: data.data.user.email,
-        cover: data.data.user.cover_photo,
-        name: data.data.user.name,
-      });
-      router.push('home');
-      //setIsLoginLoading(false);
-    } else {
+        router.push('home');
+        toast.success('Login Success!');
+      }
+    } catch (e) {
+      const error = e as AxiosError<any, ResponseType>;
+      console.log(error);
+      
+      toast.error(error.response?.data.message);
       setIsLoginLoading(false);
     }
   };
