@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { ButtonHTMLAttributes } from 'react';
+import ButtonLoader from './Loader/ButtonLoader';
 
 interface PrimaryBtnProps {
   text: string;
@@ -10,6 +11,7 @@ interface PrimaryBtnProps {
   onclick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   type?: 'submit' | 'reset' | 'button' | undefined;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
@@ -21,6 +23,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
   onclick,
   type,
   disabled,
+  isLoading = false,
 }) => {
   const bgColor = `${disabled ? 'bg-[#4B5563]' : 'bg-[#00B4DB]'}`;
   const bgHoverColor = `${
@@ -29,7 +32,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
 
   return (
     <button
-      className={`${bgColor} ${bgHoverColor} py-2 rounded-md text-white font-${weight} text-${size} flex items-center justify-center gap-2 transition duration-300 ease-in-out hover:scale-105`}
+      className={`${bgColor} ${bgHoverColor} py-2 rounded-md text-white font-${weight} text-${size} flex items-center justify-center gap-2 transition duration-300 ease-in-out hover:scale-105 relative`}
       style={{ width }}
       onClick={onclick}
       type={type}
@@ -42,7 +45,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
           height={30}
         ></Image>
       )}
-      {text}
+      {isLoading ? <ButtonLoader /> : text}
     </button>
   );
 };

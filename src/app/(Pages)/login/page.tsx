@@ -137,12 +137,14 @@ const Page = () => {
               {/* Sign in btn */}
               <div className='w-full flex justify-center'>
                 <PrimaryBtn
-                  text={`${isLoginLoading ? 'Loading...' : 'Login'}`}
+                  // text={`${isLoginLoading ? 'Loading...' : 'Login'}`}
+                  text={`Login`}
                   disabled={isLoginLoading ? true : false}
                   width={'100%'}
                   size={'2xl'}
                   weight={'bold'}
                   type='submit'
+                  isLoading={isLoginLoading}
                 />
               </div>
             </form>
