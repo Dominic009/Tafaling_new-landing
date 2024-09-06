@@ -1,7 +1,7 @@
-"use client";
-import { AuthUser } from "@/types/Auth";
-import { useRouter } from "next/navigation";
-import React, { ReactNode, useContext } from "react";
+'use client';
+import { AuthUser } from '@/types/Auth';
+import { useRouter } from 'next/navigation';
+import React, { ReactNode, useContext } from 'react';
 
 interface IAuthContext {
   user: AuthUser | null;
@@ -23,9 +23,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = () => {
     setUser(null);
-    router.push("login");
+    router.push('login');
   };
-  console.log(user)
+  //console.log(user)
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       {children}
@@ -37,7 +37,7 @@ export const useAuth = (): IAuthContext => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
 
   return context;

@@ -47,7 +47,7 @@ const Page = () => {
     } catch (e) {
       const error = e as AxiosError<any, ResponseType>;
       console.log(error);
-      
+
       toast.error(error.response?.data.message);
       setIsLoginLoading(false);
     }
