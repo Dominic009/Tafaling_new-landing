@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import React, { useState } from "react";
 import { TiHome } from "react-icons/ti";
 import { FaRegNewspaper } from "react-icons/fa6";
@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
           <Image
             src={"/Tafaling logo.png"}
             width={130}
-            height={130}
+            height={55}
             alt="Brand logo"
           ></Image>
         </Link>

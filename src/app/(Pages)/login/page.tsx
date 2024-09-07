@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext/AuthProvider";
 import { AuthUser } from "@/types/Auth";
 import { ResponseType } from "@/types/Response";
 import { AxiosError } from "axios";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -185,7 +185,7 @@ const Page = () => {
                   src="/Icons/google.png"
                   alt="google"
                   width={25}
-                  height={50}
+                  height={25}
                   style={{ width: "auto", height: "auto" }}
                 ></Image>
                 Google

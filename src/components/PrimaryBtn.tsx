@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import React, { ButtonHTMLAttributes } from 'react';
 import ButtonLoader from './Loader/ButtonLoader';
 
@@ -42,7 +42,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
           src={'/Icons/login.png'}
           alt='login'
           width={35}
-          height={30}
+          height={35}
         ></Image>
       )}
       {isLoading ? <ButtonLoader /> : text}

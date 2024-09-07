@@ -1,6 +1,6 @@
 "use client";
 import PrimaryBtn from "@/components/PrimaryBtn";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { AuthUser } from "@/types/Auth";
 import { registerUser } from "@/api/auth/auth";

@@ -1,6 +1,6 @@
 import PrimaryBtn from '@/components/PrimaryBtn';
 import SecondaryBtn from '@/components/SecondaryBtn';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Link from 'next/link';
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
           src='/Tafaling logo.png'
           alt='Image'
           width={200}
-          height={100}
+          height={85}
           className='mix-blend-plus-darker'
         ></Image>
       </div>
