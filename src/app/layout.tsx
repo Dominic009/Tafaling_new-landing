@@ -1,22 +1,21 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { Blinker } from 'next/font/google';
-import './globals.css';
-import Navbar from '@/components/Navbar';
-import { AuthProvider } from '@/context/AuthContext/AuthProvider';
-import { Toaster } from 'react-hot-toast';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { Blinker } from "next/font/google";
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import { AuthProvider } from "@/context/AuthContext/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
+const blinker = Blinker({
+  weight: ["100", "200", "300", "400", "600", "700"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: 'Tafaling',
-  description: 'Share the madness',
+  title: "Tafaling",
+  description: "Share the madness",
 };
-
-const blinker = Blinker({
-  weight: ['100', '200', '300', '400', '600', '700'],
-  subsets: ['latin'],
-});
 
 export default function RootLayout({
   children,
@@ -24,19 +23,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <head>
-        <link rel='icon' type='image/png' href='/favicon.png' />
+        <link rel="icon" type="image/png" href="/favicon.png" />
       </head>
       <AuthProvider>
         <body
           className={`${inter.className} ${blinker.className} bg-[#f4f7f8]`}
         >
-          <div className='sticky top-0 z-50 w-full'>
+          <div className="sticky top-0 z-50 w-full">
             <Navbar></Navbar>
           </div>
 
-          <div>{children}</div>
+          {children}
           <Toaster />
         </body>
       </AuthProvider>

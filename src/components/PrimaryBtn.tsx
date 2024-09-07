@@ -25,9 +25,9 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
   disabled,
   isLoading = false,
 }) => {
-  const bgColor = `${disabled ? 'bg-[#4B5563]' : 'bg-[#00B4DB]'}`;
+  const bgColor = `${disabled ? 'bg-[#0b819c]' : 'bg-[#00B4DB]'}`;
   const bgHoverColor = `${
-    disabled ? 'hover:bg-[#4B5563]' : 'hover:bg-[#10a6c8]'
+    disabled ? 'hover:bg-[#0b819c]' : 'hover:bg-[#10a6c8]'
   }`;
 
   return (

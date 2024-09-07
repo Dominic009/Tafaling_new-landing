@@ -121,12 +121,12 @@ const Page = () => {
                 <input type="checkbox" />
                 <p className="text-[#D6EAFF]/50">
                   Accept
-                  <a href="#" className="text-gray-300">
+                  <a href="#" className="text-gray-300 hover:text-white transitiont duration-300 ease-in-out">
                     {" "}
                     Terms & Conditions
                   </a>{" "}
                   and{" "}
-                  <a href="#" className="text-gray-300">
+                  <a href="#" className="text-gray-300 hover:text-white transitiont duration-300 ease-in-out">
                     Privacy & Policy
                   </a>
                 </p>

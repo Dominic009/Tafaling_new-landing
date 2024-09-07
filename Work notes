@@ -21,10 +21,13 @@ Dominic Pranto Gomes - 2/9/24
 2. Implemeneted show pass option in Regitration page
 3. Created route for "user-profile"
 
-
 Dominic Pranto Gomes - 5/9/24
-1. Working on User profile 
+
+1. Working on User profile
 2. Made the modal as a reusable component
 3. File uploading/posting ui
 4. Image and Video upload/drag and drop
 
+
+Dominic Pranto Gomes - 7/9/24
+1. Changed the '/login' loader bg 
