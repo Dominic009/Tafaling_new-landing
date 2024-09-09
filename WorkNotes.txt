@@ -31,3 +31,6 @@ Dominic Pranto Gomes - 5/9/24
 
 Dominic Pranto Gomes - 7/9/24
 1. Changed the '/login' loader bg 
+2. Installed next/legacy/image to make the image responsive and use html attribute in images
+3. Set up timeline picture for pc, tablet, mobile.
+4. Set up the layout for user DP and Name, Bio, email
