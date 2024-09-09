@@ -15,8 +15,8 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
-  const [isLoginLoading, setIsLoginLoading] = React.useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoginLoading, setIsLoginLoading] = useState<boolean>(false);
   const { login } = useAuth();
 
   const handleLoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
