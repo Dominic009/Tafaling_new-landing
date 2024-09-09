@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* Custom class for smooth hovering */
+.custom-hover {
+    transition: 200ms ease-in-out;
+}
