@@ -1,6 +1,6 @@
 "use client";
 import PrimaryBtn from "@/components/PrimaryBtn";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { AuthUser } from "@/types/Auth";
 import { registerUser } from "@/api/auth/auth";
@@ -8,14 +8,18 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
+import { AxiosError } from "axios";
+import toast from "react-hot-toast";
 const Page = () => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isRegisterLoading, setIsRegisterLoading] = useState<boolean>(false);
   const { login } = useAuth();
 
   const handleRegisterUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
+    setIsRegisterLoading(true);
 
     const userData: AuthUser = {
       name: form.fullName.value,
@@ -24,12 +28,20 @@ const Page = () => {
       password_confirmation: form.confirmPassword.value,
     };
 
-    const { data, status } = await registerUser(userData);
-    console.log(data);
+    try {
+      const { data, status } = await registerUser(userData);
 
-    if (status == 201) {
-      login({ name: data.data.user_name, email: data.data.email });
-      router.push("home");
+      if (status == 201) {
+        //console.log(data);
+        router.push("login");
+      }
+      toast.success(data.message);
+    } catch (e) {
+      const error = e as AxiosError<any, ResponseType>;
+      console.log(error);
+
+      toast.error(error.response?.data.message);
+      setIsRegisterLoading(false);
     }
   };
   return (
@@ -121,12 +133,18 @@ const Page = () => {
                 <input type="checkbox" />
                 <p className="text-[#D6EAFF]/50">
                   Accept
-                  <a href="#" className="text-gray-300">
+                  <a
+                    href="#"
+                    className="text-gray-300 hover:text-white transitiont duration-300 ease-in-out"
+                  >
                     {" "}
                     Terms & Conditions
                   </a>{" "}
                   and{" "}
-                  <a href="#" className="text-gray-300">
+                  <a
+                    href="#"
+                    className="text-gray-300 hover:text-white transitiont duration-300 ease-in-out"
+                  >
                     Privacy & Policy
                   </a>
                 </p>
@@ -135,10 +153,12 @@ const Page = () => {
               {/* Sign in btn */}
               <PrimaryBtn
                 text={"Sign Up"}
+                disabled={isRegisterLoading ? true : false}
                 width={"100%"}
                 size={"2xl"}
                 weight={"bold"}
                 type="submit"
+                isLoading={isRegisterLoading}
               />
             </form>
           </div>

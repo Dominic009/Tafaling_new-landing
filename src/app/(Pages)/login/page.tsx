@@ -3,17 +3,21 @@ import { loginUser } from "@/api/auth/auth";
 import PrimaryBtn from "@/components/PrimaryBtn";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
 import { AuthUser } from "@/types/Auth";
-import Image from "next/image";
+import { ResponseType } from "@/types/Response";
+import { AxiosError } from "axios";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isLoginLoading, setIsLoginLoading] = useState<boolean>(false);
   const { login } = useAuth();
 
   const {
@@ -141,11 +145,14 @@ const Page = () => {
               {/* Sign In button */}
               <div className="w-full flex justify-center">
                 <PrimaryBtn
-                  text={"Sign In"}
+                  // text={`${isLoginLoading ? 'Loading...' : 'Login'}`}
+                  text={`Login`}
+                  disabled={isLoginLoading ? true : false}
                   width={"100%"}
                   size={"2xl"}
                   weight={"bold"}
                   type="submit"
+                  isLoading={isLoginLoading}
                 />
               </div>
             </form>
@@ -178,17 +185,17 @@ const Page = () => {
             </p>
 
             <div className="flex gap-4 text-[#00B4DB] font-normal w-[70%] mt-5">
-              <button className="bg-[#F2F2F2] w-[100%] py-2 px-4 rounded-md text-lg flex justify-center items-center gap-2">
+              <button className="bg-[#F2F2F2] hover:bg-[#1f515c] hover:text-white w-[100%] py-2 px-4 rounded-md text-lg flex justify-center items-center gap-2 transitiont duration-300 ease-in-out">
                 <Image
                   src="/Icons/google.png"
                   alt="google"
                   width={25}
-                  height={50}
+                  height={25}
                   style={{ width: "auto", height: "auto" }}
                 ></Image>
                 Google
               </button>
-              <button className="bg-[#F2F2F2] w-[100%] py-2 px-4 rounded-md lg:text-lg">
+              <button className="bg-[#F2F2F2] w-[100%] py-2 px-4 rounded-md lg:text-lg hover:bg-[#1f515c] hover:text-white transitiont duration-300 ease-in-out">
                 Other
               </button>
             </div>

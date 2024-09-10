@@ -4,18 +4,18 @@ import { Blinker } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
+const blinker = Blinker({
+  weight: ["100", "200", "300", "400", "600", "700"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Tafaling",
   description: "Share the madness",
 };
-
-const blinker = Blinker({
-  weight: ["100", "200", "300", "400", "600", "700"],
-  subsets: ["latin"],
-});
 
 export default function RootLayout({
   children,
@@ -35,7 +35,8 @@ export default function RootLayout({
             <Navbar></Navbar>
           </div>
 
-          <div>{children}</div>
+          {children}
+          <Toaster />
         </body>
       </AuthProvider>
     </html>

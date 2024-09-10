@@ -1,5 +1,6 @@
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import React, { ButtonHTMLAttributes } from 'react';
+import ButtonLoader from './Loader/ButtonLoader';
 
 interface PrimaryBtnProps {
   text: string;
@@ -9,6 +10,8 @@ interface PrimaryBtnProps {
   weight?: string;
   onclick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   type?: 'submit' | 'reset' | 'button' | undefined;
+  disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
@@ -19,10 +22,17 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
   weight,
   onclick,
   type,
+  disabled,
+  isLoading = false,
 }) => {
+  const bgColor = `${disabled ? 'bg-[#0b819c]' : 'bg-[#00B4DB]'}`;
+  const bgHoverColor = `${
+    disabled ? 'hover:bg-[#0b819c]' : 'hover:bg-[#10a6c8]'
+  }`;
+
   return (
     <button
-      className={`bg-[#00B4DB] py-2 rounded-md text-white font-${weight} text-${size} flex items-center justify-center gap-2 hover:bg-[#10a6c8] transition duration-300 ease-in-out hover:scale-105`}
+      className={`${bgColor} ${bgHoverColor} py-2 rounded-md text-white font-${weight} text-${size} flex items-center justify-center gap-2 transition duration-300 ease-in-out hover:scale-105 relative`}
       style={{ width }}
       onClick={onclick}
       type={type}
@@ -32,10 +42,10 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
           src={'/Icons/login.png'}
           alt='login'
           width={35}
-          height={30}
+          height={35}
         ></Image>
       )}
-      {text}
+      {isLoading ? <ButtonLoader /> : text}
     </button>
   );
 };
