@@ -11,7 +11,7 @@ const Page = () => {
   console.log(user);
 
   return (
-    <div className="w-full lg:w-[80%] mx-auto">
+    <div className="w-full lg:w-[80%] mx-auto border-b pb-9">
       <div className="relative">
         {/* Timeline IMG */}
         <div className="relative h-[240px] md:h-[300px] lg:h-[450px]">
@@ -26,10 +26,10 @@ const Page = () => {
 
         {/* User DP */}
         <div className="flex flex-col lg:flex-row gap-5 top-80 w-[90%] mx-auto -mt-16">
-          <div className="max-w-[35%] lg:min-w-72 h-72 bg-gray-600 bottom-0 rounded-lg drop-shadow-md"></div>
+          <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] bg-gray-600 bottom-0 rounded-lg drop-shadow-md"></div>
           <div className="grid">
             <div></div>
-            <div className="flex flex-col justify-between pt-10">
+            <div className="flex flex-col justify-between lg:pt-10">
               <div>
                 {/* user name */}
                 <h1 className="text-[#00274A] font-semibold text-3xl">

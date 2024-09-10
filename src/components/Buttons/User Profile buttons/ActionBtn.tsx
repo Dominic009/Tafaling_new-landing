@@ -8,9 +8,9 @@ interface ActionBtnProps {
 
 const ActionBtn: React.FC<ActionBtnProps> = ({ text, icon: Icon }) => {
   return (
-    <div className="flex items-center justify-center rounded-xl border border-[#00274A] hover:bg-[#00274A] hover:text-white custom-hover px-3">
+    <div className="flex items-center justify-center gap-1 rounded-lg border border-[#00274A] hover:bg-[#00274A] hover:text-white custom-hover px-3">
       {Icon && <Icon className="text-[#00B4DB] text-2xl" />}
-      <button className="px-2 py-2 lg:text-lg">{text}</button>
+      <button className="py-1 lg:text-lg">{text}</button>
     </div>
   );
 };

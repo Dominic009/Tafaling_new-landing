@@ -12,10 +12,49 @@ import { useAuth } from "@/context/AuthContext/AuthProvider";
 
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
-  const path = usePathname();
+  const currentPath = usePathname();
+  console.log(currentPath);
   const { logout, user } = useAuth();
 
-  if (path === "/" || path === "/login" || path === "/register" || !user) {
+  const routes = [
+    {
+      name: "Home",
+      path: "/home",
+      icon: (
+        <TiHome
+          title="Home"
+          className="text-3xl  hover:text-white custom-hover"
+        />
+      ),
+    },
+    {
+      name: "News Feed",
+      path: "/news-feed",
+      icon: (
+        <FaRegNewspaper
+          title="News Feed"
+          className="text-2xl  hover:text-white custom-hover"
+        />
+      ),
+    },
+    {
+      name: "Requests",
+      path: "/requests",
+      icon: (
+        <BsFillPeopleFill
+          title="Requests"
+          className="text-2xl  hover:text-white custom-hover"
+        />
+      ),
+    },
+  ];
+
+  if (
+    currentPath === "/" ||
+    currentPath === "/login" ||
+    currentPath === "/register" ||
+    !user
+  ) {
     return null; // Do not render the Navbar on these paths
   }
 
@@ -33,23 +72,25 @@ const Navbar: React.FC = () => {
         </Link>
       </div>
 
-      {/* Middle Section */}
+      {/* Middle Section Navlinks*/}
       <div className="hidden md:block">
         <div className="flex gap-9 items-center justify-center">
-          <Link href={"/home"}>
-            <TiHome
-              title="Home"
-              className="text-3xl text-white border-b-2 border-[#42C6DE] rounded-sm cursor-pointer transition-all duration-200 ease-in-out"
-            />
-          </Link>
-          <FaRegNewspaper
-            title="News Feed"
-            className="text-2xl text-white/50 hover:text-white hover:scale-105 cursor-pointer transition-all duration-200 ease-in-out"
-          />
-          <BsFillPeopleFill
-            title="Requests"
-            className="text-2xl text-white/50 hover:text-white hover:scale-105 cursor-pointer transition-all duration-200 ease-in-out"
-          />
+          {routes.map((path) => {
+            const isActive = path.path === currentPath;
+            return (
+              <Link
+                href={path.path}
+                key={path.name}
+                className={`${
+                  isActive
+                    ? "text-white border-b-2 border-[#42C6DE]"
+                    : "text-white/50"
+                }`}
+              >
+                <span>{path.icon}</span>
+              </Link>
+            );
+          })}
         </div>
       </div>
 
@@ -91,7 +132,7 @@ const Navbar: React.FC = () => {
 
               {dropdown ? (
                 <div className="absolute right-4 bg-[#0d1f31] w-48 rounded-lg p-4 flex flex-col justify-between">
-                  <ul className="font-semibold flex flex-col gap-2 text-gray-300">
+                  <ul className="font-semibold flex flex-col gap-2 text-gray-200">
                     <Link href={"/user-profile"}>
                       <li className="hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear">
                         Profile
