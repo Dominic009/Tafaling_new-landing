@@ -13,7 +13,6 @@ import { useAuth } from "@/context/AuthContext/AuthProvider";
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
   const currentPath = usePathname();
-  console.log(currentPath);
   const { logout, user } = useAuth();
 
   const routes = [
@@ -101,7 +100,7 @@ const Navbar: React.FC = () => {
           <div className="hidden md:block md:w-full lg:w-[50%] relative">
             <input
               type="text"
-              className="outline-none px-4 py-1 rounded-lg bg-[#062139] text-white w-full"
+              className="outline-none px-4 py-1 rounded-lg bg-[#062139] text-white w-full font-light"
               placeholder="Search"
             />
             <HiOutlineSearch className="absolute top-[6px] right-3 text-gray-400 text-xl" />
