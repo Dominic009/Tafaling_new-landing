@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
@@ -15,22 +16,23 @@ const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { login } = useAuth();
 
-  const handleLoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthUser>();
 
-    const userData: AuthUser = {
-      email: form.email.value,
-      password: form.password.value,
-    };
-
+  // Form submit handler
+  const handleLoginUser = async (userData: AuthUser) => {
     const { data, status } = await loginUser(userData);
 
-    // console.log(data.data.user.user_name);
-    console.log("login response: ", data);
-
     if (status == 200) {
-      login({ user_name: data.data.user.user_name, email: data.data.user.email, cover: data.data.user.cover_photo, name:data.data.user.name });
+      login({
+        user_name: data.data.user.user_name,
+        email: data.data.user.email,
+        cover: data.data.user.cover_photo,
+        name: data.data.user.name,
+      });
       router.push("home");
     }
   };
@@ -72,28 +74,44 @@ const Page = () => {
               Sign In
             </h1>
 
-            {/* Input fields */}
             <form
-              onSubmit={handleLoginUser}
+              onSubmit={handleSubmit(handleLoginUser)} // Use handleSubmit from react-hook-form
               className="flex flex-col gap-5 w-[80%]"
             >
               {/* Email */}
-              <input
-                required
-                placeholder="Your Email"
-                name="email"
-                type="text"
-                className="px-4 py-2 rounded-md outline-none"
-              ></input>
+              <div>
+                <input
+                  placeholder="Your Email"
+                  {...register("email", {
+                    // required: "Email is required",
+                    pattern: {
+                      value:
+                        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                      message: "Enter a valid email",
+                    },
+                  })}
+                  type="email"
+                  className="px-4 py-2 rounded-md outline-none w-full"
+                />
+                {errors.email && (
+                  <p className="text-white mt-1">{errors.email.message}</p>
+                )}
+              </div>
+
               {/* Password */}
               <div className="relative">
                 <input
-                  required
                   placeholder="Your Password"
-                  name="password"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
                   type={isOpen ? "text" : "password"}
                   className="px-4 py-2 rounded-md outline-none w-full"
-                ></input>
+                />
                 {isOpen ? (
                   <IoEyeOutline
                     onClick={() => setIsOpen(!isOpen)}
@@ -105,18 +123,22 @@ const Page = () => {
                     className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
                   />
                 )}
+                {errors.password && (
+                  <p className="text-white mt-1">{errors.password.message}</p>
+                )}
               </div>
+
               <a href="#" className="text-[#D6EAFF]/50 -mt-5 text-sm">
                 Forgotten password?
               </a>
 
-              {/* Sign In button */}
+              {/* Remember Me */}
               <div className="flex items-center gap-1 w-[80%] mt-4">
                 <input type="checkbox" />
                 <p className="text-[#D6EAFF]/50">Remember Me</p>
               </div>
 
-              {/* Sign in btn */}
+              {/* Sign In button */}
               <div className="w-full flex justify-center">
                 <PrimaryBtn
                   text={"Sign In"}
