@@ -87,7 +87,7 @@ const Page = () => {
                 <input
                   placeholder="Your Email"
                   {...register("email", {
-                    // required: "Email is required",
+                    required: "Email is required",
                     pattern: {
                       value:
                         /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
@@ -95,10 +95,12 @@ const Page = () => {
                     },
                   })}
                   type="email"
-                  className="px-4 py-2 rounded-md outline-none w-full"
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.email && "border-2 border-red-500"
+                  }`}
                 />
                 {errors.email && (
-                  <p className="text-white mt-1">{errors.email.message}</p>
+                  <p className="text-red-500">{errors.email.message}</p>
                 )}
               </div>
 
@@ -114,7 +116,9 @@ const Page = () => {
                     },
                   })}
                   type={isOpen ? "text" : "password"}
-                  className="px-4 py-2 rounded-md outline-none w-full"
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.email && "border-2 border-red-500"
+                  }`}
                 />
                 {isOpen ? (
                   <IoEyeOutline
@@ -128,7 +132,7 @@ const Page = () => {
                   />
                 )}
                 {errors.password && (
-                  <p className="text-white mt-1">{errors.password.message}</p>
+                  <p className="text-red-500">{errors.password.message}</p>
                 )}
               </div>
 
