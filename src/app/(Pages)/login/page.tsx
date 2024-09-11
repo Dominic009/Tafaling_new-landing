@@ -26,18 +26,30 @@ const Page = () => {
     formState: { errors },
   } = useForm<AuthUser>();
 
-  // Form submit handler
   const handleLoginUser = async (userData: AuthUser) => {
-    const { data, status } = await loginUser(userData);
+    toast.dismiss();
+    // const { data, status } = await loginUser(userData);
+    setIsLoginLoading(true);
+    try {
+      const { data, status } = await loginUser(userData);
+      console.log("login response: ", data);
+      if (status == 200) {
+        login({
+          user_name: data.data.user.user_name,
+          email: data.data.user.email,
+          cover: data.data.user.cover_photo,
+          name: data.data.user.name,
+        });
 
-    if (status == 200) {
-      login({
-        user_name: data.data.user.user_name,
-        email: data.data.user.email,
-        cover: data.data.user.cover_photo,
-        name: data.data.user.name,
-      });
-      router.push("home");
+        router.push("home");
+        toast.success("Login Success!");
+      }
+    } catch (e) {
+      const error = e as AxiosError<any, ResponseType>;
+      console.log(error);
+
+      toast.error(error.response?.data.message);
+      setIsLoginLoading(false);
     }
   };
 
@@ -79,35 +91,32 @@ const Page = () => {
             </h1>
 
             <form
-              onSubmit={handleSubmit(handleLoginUser)} // Use handleSubmit from react-hook-form
+              onSubmit={handleSubmit(handleLoginUser)}
               className="flex flex-col gap-5 w-[80%]"
             >
               {/* Email */}
-              <div>
-                <input
-                  placeholder="Your Email"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value:
-                        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-                      message: "Enter a valid email",
-                    },
-                  })}
-                  type="email"
-                  className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.email && "border-2 border-red-500"
-                  }`}
-                />
-                {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
-                )}
-              </div>
+             <div className="relative">
+             <input
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+                placeholder="Your Email"
+                className={`px-4 py-2 rounded-md outline-none w-full ${
+                  errors.email ? "border-2 border-red-500" : ""
+                }`}
+              />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+             </div>
 
               {/* Password */}
               <div className="relative">
                 <input
-                  placeholder="Your Password"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
@@ -115,9 +124,10 @@ const Page = () => {
                       message: "Password must be at least 6 characters",
                     },
                   })}
+                  placeholder="Your Password"
                   type={isOpen ? "text" : "password"}
                   className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.email && "border-2 border-red-500"
+                    errors.password ? "border-2 border-red-500" : ""
                   }`}
                 />
                 {isOpen ? (
@@ -132,26 +142,17 @@ const Page = () => {
                   />
                 )}
                 {errors.password && (
-                  <p className="text-red-500">{errors.password.message}</p>
+                  <p className="text-red-500">
+                    {errors.password.message}
+                  </p>
                 )}
-              </div>
-
-              <a href="#" className="text-[#D6EAFF]/50 -mt-5 text-sm">
-                Forgotten password?
-              </a>
-
-              {/* Remember Me */}
-              <div className="flex items-center gap-1 w-[80%] mt-4">
-                <input type="checkbox" />
-                <p className="text-[#D6EAFF]/50">Remember Me</p>
               </div>
 
               {/* Sign In button */}
               <div className="w-full flex justify-center">
                 <PrimaryBtn
-                  // text={`${isLoginLoading ? 'Loading...' : 'Login'}`}
                   text={`Login`}
-                  disabled={isLoginLoading ? true : false}
+                  disabled={isLoginLoading}
                   width={"100%"}
                   size={"2xl"}
                   weight={"bold"}
