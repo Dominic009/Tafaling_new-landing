@@ -1,6 +1,6 @@
-import { useAuth } from "@/context/AuthContext/AuthProvider";
-import { redirect, useRouter } from "next/navigation";
-import React, { ComponentType, useEffect } from "react";
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import { redirect, useRouter } from 'next/navigation';
+import React, { ComponentType, useEffect } from 'react';
 
 const PrivateRoute = <T extends {}>(Component: ComponentType<T>) => {
   return function PrivateRoute(props: T) {
@@ -12,15 +12,15 @@ const PrivateRoute = <T extends {}>(Component: ComponentType<T>) => {
     useEffect(() => {
       if (!isAuthenticated) {
         //alert(`Welcome ${user?.name}`);
-        return redirect("login");
+        return redirect('login');
       }
     }, [isAuthenticated, router]);
 
     if (!isAuthenticated) {
       return (
-        <>
-          <h1>Loading</h1>
-        </>
+        <div className='h-[90vh] flex justify-center items-center'>
+          <h1 className='text-2xl'>Loading... ⏳</h1>
+        </div>
       );
     } else {
       return <Component {...props} />;
