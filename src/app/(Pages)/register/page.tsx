@@ -118,10 +118,10 @@ const Page = () => {
             {/* Input fields */}
             <form
               onSubmit={handleSubmit(handleRegisterUser)}
-              className="flex flex-col gap-7 w-[80%]"
+              className="flex flex-col gap-5 w-[80%]"
             >
               {/* Name */}
-              <div>
+              <div className="relative">
                 <input
                   placeholder="Your Name"
                   {...register("fullName", {
@@ -138,7 +138,7 @@ const Page = () => {
               </div>
 
               {/* Email */}
-              <div>
+              <div className="relative">
                 <input
                   placeholder="Your Email"
                   {...register("email", {
@@ -192,7 +192,7 @@ const Page = () => {
               </div>
 
               {/* Confirm Password */}
-              <div>
+              <div className="relative">
                 <input
                   placeholder="Confirm Password"
                   type="password"
