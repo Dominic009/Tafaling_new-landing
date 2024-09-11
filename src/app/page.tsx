@@ -2,11 +2,12 @@ import PrimaryBtn from '@/components/PrimaryBtn';
 import SecondaryBtn from '@/components/SecondaryBtn';
 import Image from "next/legacy/image";
 import Link from 'next/link';
+import 'animate.css'
 
 export default function Home() {
   return (
     <main className='min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB] p-5'>
-      <div className='flex justify-between'>
+      <div className='flex justify-between animate__animated animate__fadeInLeft'>
         <Image
           src='/Tafaling logo.png'
           alt='Image'
@@ -25,7 +26,7 @@ export default function Home() {
           returning, we&apos;re excited to have you. <br />
         </p>
 
-        <div className='w-[90%] lg:w-[50%] mt-12 flex flex-col justify-center items-center'>
+        <div className='w-[90%] lg:w-[50%] mt-12 flex flex-col justify-center items-center  animate__animated animate__fadeInUp animate__delay-1s'>
           <p className='text-lg md:text-xl lg:text-xl text-center mt-2 text-gray-100 mb-5'>
             Please choose an option below to get started :
           </p>

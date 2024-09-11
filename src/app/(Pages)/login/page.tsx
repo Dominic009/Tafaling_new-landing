@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import 'animate.css'
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
@@ -84,7 +85,7 @@ const Page = () => {
         </div>
 
         {/* Rigth side */}
-        <div className="w-[90%] md:w-[70%] lg:max-w-[60%] mx-auto z-50 -mt-24 md:-mt-0">
+        <div className="w-[90%] md:w-[70%] lg:max-w-[60%] mx-auto z-50 -mt-24 md:-mt-0  animate__animated animate__fadeIn">
           <div className="bg-gray-900/30 py-10 rounded-xl flex flex-col items-center backdrop-blur-sm">
             <h1 className="text-3xl text-white border-b-4 border-[#008EAD] mb-8">
               Sign In

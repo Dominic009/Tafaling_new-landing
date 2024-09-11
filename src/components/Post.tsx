@@ -3,6 +3,7 @@ import Image from "next/legacy/image";
 import React, { useState } from "react";
 import Modal from "./Modal/Modal";
 import PostBody from "./PostBody";
+import FileUploader from "./Input File/FileUploader";
 
 const Post: React.FC = () => {
   const [modal, setModal] = useState<boolean>(false);
@@ -94,7 +95,8 @@ const Post: React.FC = () => {
         {activeTab === "photo-video" && (
           <div>
             <PostBody>
-              <div className="mt-2 mb-4 border border-dashed rounded-lg py-9 bg-blue-50">
+              {/* old */}
+              {/* <div className="mt-2 mb-4 border border-dashed rounded-lg py-9 bg-blue-50">
                 <form
                   action="/upload"
                   method="post"
@@ -114,9 +116,10 @@ const Post: React.FC = () => {
                     accept="video/* && image/*"
                     required
                   />
-                  {/* <button type="submit">Upload Video</button> */}
                 </form>
-              </div>
+              </div> */}
+              {/* new */}
+              <FileUploader></FileUploader>
             </PostBody>
           </div>
         )}
