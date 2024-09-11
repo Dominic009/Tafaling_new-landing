@@ -49,35 +49,6 @@ const Page = () => {
   };
 
   const password = watch("password");
-
-  // const handleRegisterUser = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const form = e.target as HTMLFormElement;
-  //   setIsRegisterLoading(true);
-
-  //   const userData: AuthUser = {
-  //     name: form.fullName.value,
-  //     email: form.email.value,
-  //     password: form.password.value,
-  //     password_confirmation: form.confirmPassword.value,
-  //   };
-
-  //   try {
-  //     const { data, status } = await registerUser(userData);
-
-  //     if (status == 201) {
-  //       //console.log(data);
-  //       router.push("login");
-  //     }
-  //     toast.success(data.message);
-  //   } catch (e) {
-  //     const error = e as AxiosError<any, ResponseType>;
-  //     console.log(error);
-
-  //     toast.error(error.response?.data.message);
-  //     setIsRegisterLoading(false);
-  //   }
-  // };
   return (
     <main className="flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]">
       <div className="opacity-20 absolute -left-52 scale-125"></div>
@@ -126,14 +97,20 @@ const Page = () => {
                   placeholder="Your Name"
                   {...register("fullName", {
                     required: "Name is required",
-                    minLength: { value: 2, message: "Name must be at least 2 characters" },
+                    minLength: {
+                      value: 2,
+                      message: "Name must be at least 2 characters",
+                    },
                   })}
                   className={`px-4 py-2 rounded-md outline-none w-full ${
                     errors.fullName ? "border-2 border-red-500" : ""
                   }`}
                 />
-                {errors.fullName && (
-                  <p className="text-red-500 mt-1">{errors.fullName.message}</p>
+
+                {errors.fullName?.message && (
+                  <p className="text-red-500 mt-1">
+                    {String(errors.fullName.message)}
+                  </p>
                 )}
               </div>
 
@@ -154,8 +131,11 @@ const Page = () => {
                     errors.email ? "border-2 border-red-500" : ""
                   }`}
                 />
-                {errors.email && (
-                  <p className="text-red-500 mt-1">{errors.email.message}</p>
+
+                {errors.email?.message && (
+                  <p className="text-red-500 mt-1">
+                    {String(errors.email.message)}
+                  </p>
                 )}
               </div>
 
@@ -186,8 +166,11 @@ const Page = () => {
                     className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
                   />
                 )}
-                {errors.password && (
-                  <p className="text-red-500 mt-1">{errors.password.message}</p>
+
+                {errors.password?.message && (
+                  <p className="text-red-500 mt-1">
+                    {String(errors.password.message)}
+                  </p>
                 )}
               </div>
 
@@ -205,9 +188,9 @@ const Page = () => {
                     errors.confirmPassword ? "border-2 border-red-500" : ""
                   }`}
                 />
-                {errors.confirmPassword && (
+                {errors.confirmPassword?.message && (
                   <p className="text-red-500 mt-1">
-                    {errors.confirmPassword.message}
+                    {String(errors.confirmPassword.message)}
                   </p>
                 )}
               </div>
