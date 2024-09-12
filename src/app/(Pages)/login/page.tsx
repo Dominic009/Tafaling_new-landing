@@ -48,7 +48,7 @@ const Page = () => {
       const error = e as AxiosError<any, ResponseType>;
       console.log(error);
 
-      toast.error(error.response?.data.message);
+      error.response?.data.message && toast.error(error.response?.data.message);
       setIsLoginLoading(false);
     }
   };
@@ -95,24 +95,24 @@ const Page = () => {
               className="flex flex-col gap-5 w-[80%]"
             >
               {/* Email */}
-             <div className="relative">
-             <input
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: "Invalid email address",
-                  },
-                })}
-                placeholder="Your Email"
-                className={`px-4 py-2 rounded-md outline-none w-full ${
-                  errors.email ? "border-2 border-red-500" : ""
-                }`}
-              />
-              {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
-              )}
-             </div>
+              <div className="relative">
+                <input
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Invalid email address",
+                    },
+                  })}
+                  placeholder="Your Email"
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.email ? "border-2 border-red-500" : ""
+                  }`}
+                />
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
+                )}
+              </div>
 
               {/* Password */}
               <div className="relative">
@@ -142,9 +142,7 @@ const Page = () => {
                   />
                 )}
                 {errors.password && (
-                  <p className="text-red-500">
-                    {errors.password.message}
-                  </p>
+                  <p className="text-red-500">{errors.password.message}</p>
                 )}
               </div>
 
