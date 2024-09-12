@@ -87,7 +87,7 @@ const Post: React.FC = () => {
       </div>
 
       {/* Modal Content Based on Active Tab */}
-      <Modal isOpen={modal} onClose={closeModal}>
+      <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
         {/* Default Modal for "Thinking about something...?" */}
         {!activeTab && <PostBody></PostBody>}
 
