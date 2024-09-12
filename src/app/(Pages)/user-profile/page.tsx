@@ -1,12 +1,12 @@
 "use client";
 import ActionBtn from "@/components/Buttons/User Profile buttons/ActionBtn";
+import SingleUploader from "@/components/Input File/Single File Uploader/SingleUploader";
 import Modal from "@/components/Modal/Modal";
 import UserPost from "@/components/UserPost";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
 import Image from "next/legacy/image";
 import React, { useState } from "react";
 import { MdEditSquare, MdOutlineEdit, MdSettings } from "react-icons/md";
-import FileUploader from "@/components/Input File/FileUploader";
 
 const Page = () => {
   const { user } = useAuth();
@@ -45,7 +45,7 @@ const Page = () => {
             <h1 className="text-xl text-gray-500 font-semibold text-center underline mb-4">
               Select Picture from device
             </h1>
-            <FileUploader></FileUploader>
+            <SingleUploader></SingleUploader>
           </div>
         </Modal>
 
