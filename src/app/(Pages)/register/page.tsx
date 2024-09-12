@@ -10,6 +10,7 @@ import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 import 'animate.css';
 
 
@@ -19,34 +20,38 @@ const Page = () => {
   const [isRegisterLoading, setIsRegisterLoading] = useState<boolean>(false);
   const { login } = useAuth();
 
-  const handleRegisterUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
+
+  const handleRegisterUser = async (data: any) => {
     setIsRegisterLoading(true);
 
-    const userData: AuthUser = {
-      name: form.fullName.value,
-      email: form.email.value,
-      password: form.password.value,
-      password_confirmation: form.confirmPassword.value,
+    const userData = {
+      name: data.fullName,
+      email: data.email,
+      password: data.password,
+      password_confirmation: data.confirmPassword,
     };
 
     try {
       const { data, status } = await registerUser(userData);
 
       if (status == 201) {
-        //console.log(data);
         router.push("login");
       }
       toast.success(data.message);
     } catch (e) {
-      const error = e as AxiosError<any, ResponseType>;
-      console.log(error);
-
+      const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
       setIsRegisterLoading(false);
     }
   };
+
+  const password = watch("password");
   return (
     <main className="flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]">
       <div className="opacity-20 absolute -left-52 scale-125"></div>
@@ -86,31 +91,73 @@ const Page = () => {
 
             {/* Input fields */}
             <form
-              onSubmit={handleRegisterUser}
-              className="flex flex-col gap-7 w-[80%]"
+              onSubmit={handleSubmit(handleRegisterUser)}
+              className="flex flex-col gap-5 w-[80%]"
             >
               {/* Name */}
-              <input
-                placeholder="Your Name"
-                name="fullName"
-                type="text"
-                className="px-4 py-2 rounded-md outline-none"
-              ></input>
+              <div className="relative">
+                <input
+                  placeholder="Your Name"
+                  {...register("fullName", {
+                    required: "Name is required",
+                    minLength: {
+                      value: 2,
+                      message: "Name must be at least 2 characters",
+                    },
+                  })}
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.fullName ? "border-2 border-red-500" : ""
+                  }`}
+                />
+
+                {errors.fullName?.message && (
+                  <p className="text-red-500 mt-1">
+                    {String(errors.fullName.message)}
+                  </p>
+                )}
+              </div>
+
               {/* Email */}
-              <input
-                placeholder="Your Email"
-                type="text"
-                name="email"
-                className="px-4 py-2 rounded-md outline-none"
-              ></input>
+              <div className="relative">
+                <input
+                  placeholder="Your Email"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value:
+                        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                      message: "Enter a valid email",
+                    },
+                  })}
+                  type="email"
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.email ? "border-2 border-red-500" : ""
+                  }`}
+                />
+
+                {errors.email?.message && (
+                  <p className="text-red-500 mt-1">
+                    {String(errors.email.message)}
+                  </p>
+                )}
+              </div>
+
               {/* Password */}
               <div className="relative">
                 <input
                   placeholder="Your Password"
                   type={isOpen ? "text" : "password"}
-                  name="password"
-                  className="px-4 py-2 rounded-md outline-none w-full"
-                ></input>
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.password ? "border-2 border-red-500" : ""
+                  }`}
+                />
                 {isOpen ? (
                   <IoEyeOutline
                     onClick={() => setIsOpen(!isOpen)}
@@ -122,14 +169,34 @@ const Page = () => {
                     className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
                   />
                 )}
+
+                {errors.password?.message && (
+                  <p className="text-red-500 mt-1">
+                    {String(errors.password.message)}
+                  </p>
+                )}
               </div>
+
               {/* Confirm Password */}
-              <input
-                placeholder="Confirm Password"
-                type="password"
-                name="confirmPassword"
-                className="px-4 py-2 rounded-md outline-none"
-              ></input>
+              <div className="relative">
+                <input
+                  placeholder="Confirm Password"
+                  type="password"
+                  {...register("confirmPassword", {
+                    required: "Please confirm your password",
+                    validate: (value) =>
+                      value === password || "Passwords do not match",
+                  })}
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.confirmPassword ? "border-2 border-red-500" : ""
+                  }`}
+                />
+                {errors.confirmPassword?.message && (
+                  <p className="text-red-500 mt-1">
+                    {String(errors.confirmPassword.message)}
+                  </p>
+                )}
+              </div>
 
               {/* Sign In button */}
               <div className="flex items-center gap-2 w-[80%] mt-8">
@@ -138,7 +205,7 @@ const Page = () => {
                   Accept
                   <a
                     href="#"
-                    className="text-gray-300 hover:text-white transitiont duration-300 ease-in-out"
+                    className="text-gray-300 hover:text-white transition duration-300 ease-in-out"
                   >
                     {" "}
                     Terms & Conditions
@@ -146,17 +213,17 @@ const Page = () => {
                   and{" "}
                   <a
                     href="#"
-                    className="text-gray-300 hover:text-white transitiont duration-300 ease-in-out"
+                    className="text-gray-300 hover:text-white transition duration-300 ease-in-out"
                   >
                     Privacy & Policy
                   </a>
                 </p>
               </div>
 
-              {/* Sign in btn */}
+              {/* Sign Up Button */}
               <PrimaryBtn
                 text={"Sign Up"}
-                disabled={isRegisterLoading ? true : false}
+                disabled={isRegisterLoading}
                 width={"100%"}
                 size={"2xl"}
                 weight={"bold"}

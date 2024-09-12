@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import 'animate.css'
 
@@ -20,17 +21,16 @@ const Page = () => {
   const [isLoginLoading, setIsLoginLoading] = useState<boolean>(false);
   const { login } = useAuth();
 
-  const handleLoginUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthUser>();
+
+  const handleLoginUser = async (userData: AuthUser) => {
     toast.dismiss();
-    const form = e.target as HTMLFormElement;
+    // const { data, status } = await loginUser(userData);
     setIsLoginLoading(true);
-
-    const userData: AuthUser = {
-      email: form.email.value,
-      password: form.password.value,
-    };
-
     try {
       const { data, status } = await loginUser(userData);
       console.log("login response: ", data);
@@ -49,7 +49,7 @@ const Page = () => {
       const error = e as AxiosError<any, ResponseType>;
       console.log(error);
 
-      toast.error(error.response?.data.message);
+      error.response?.data.message && toast.error(error.response?.data.message);
       setIsLoginLoading(false);
     }
   };
@@ -91,28 +91,46 @@ const Page = () => {
               Sign In
             </h1>
 
-            {/* Input fields */}
             <form
-              onSubmit={handleLoginUser}
+              onSubmit={handleSubmit(handleLoginUser)}
               className="flex flex-col gap-5 w-[80%]"
             >
               {/* Email */}
-              <input
-                required
-                placeholder="Your Email"
-                name="email"
-                type="text"
-                className="px-4 py-2 rounded-md outline-none"
-              ></input>
+              <div className="relative">
+                <input
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Invalid email address",
+                    },
+                  })}
+                  placeholder="Your Email"
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.email ? "border-2 border-red-500" : ""
+                  }`}
+                />
+                {errors.email && (
+                  <p className="text-red-500">{errors.email.message}</p>
+                )}
+              </div>
+
               {/* Password */}
               <div className="relative">
                 <input
-                  required
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
                   placeholder="Your Password"
-                  name="password"
                   type={isOpen ? "text" : "password"}
-                  className="px-4 py-2 rounded-md outline-none w-full"
-                ></input>
+                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                    errors.password ? "border-2 border-red-500" : ""
+                  }`}
+                />
                 {isOpen ? (
                   <IoEyeOutline
                     onClick={() => setIsOpen(!isOpen)}
@@ -124,26 +142,16 @@ const Page = () => {
                     className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
                   />
                 )}
+                {errors.password && (
+                  <p className="text-red-500">{errors.password.message}</p>
+                )}
               </div>
-              <a
-                href="#"
-                className="text-[#D6EAFF]/50 -mt-2 text-sm hover:text-white transitiont duration-300 ease-in-out"
-              >
-                Forgotten password?
-              </a>
 
               {/* Sign In button */}
-              <div className="flex items-center gap-1 w-[80%] mt-4">
-                <input type="checkbox" />
-                <p className="text-[#D6EAFF]/50">Remember Me</p>
-              </div>
-
-              {/* Sign in btn */}
               <div className="w-full flex justify-center">
                 <PrimaryBtn
-                  // text={`${isLoginLoading ? 'Loading...' : 'Login'}`}
                   text={`Login`}
-                  disabled={isLoginLoading ? true : false}
+                  disabled={isLoginLoading}
                   width={"100%"}
                   size={"2xl"}
                   weight={"bold"}
