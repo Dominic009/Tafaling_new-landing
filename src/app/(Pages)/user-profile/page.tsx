@@ -40,7 +40,7 @@ const Page = () => {
             className=" rounded-b-lg "
           />
         </div>
-        <Modal isOpen={modal} onClose={closeModal}>
+        <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
           <div className="py-7 px-2 rounded-lg flex flex-col justify-center items-center">
             <h1 className="text-xl text-gray-500 font-semibold text-center underline mb-4">
               Select Picture from device
