@@ -107,11 +107,11 @@ const Page = () => {
                   })}
                   placeholder="Your Email"
                   className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.email ? "border-2 border-red-500" : ""
+                    errors.email ? "border-2 bg-red-100 border-red-600" : ""
                   }`}
                 />
                 {errors.email && (
-                  <p className="text-red-500">{errors.email.message}</p>
+                  <p className="text-red-300">{errors.email.message}</p>
                 )}
               </div>
 
@@ -128,7 +128,7 @@ const Page = () => {
                   placeholder="Your Password"
                   type={isOpen ? "text" : "password"}
                   className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.password ? "border-2 border-red-500" : ""
+                    errors.password ? "border-2 bg-red-100 border-red-600" : ""
                   }`}
                 />
                 {isOpen ? (
@@ -143,7 +143,7 @@ const Page = () => {
                   />
                 )}
                 {errors.password && (
-                  <p className="text-red-500">{errors.password.message}</p>
+                  <p className="text-red-300">{errors.password.message}</p>
                 )}
               </div>
 
