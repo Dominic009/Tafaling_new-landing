@@ -11,3 +11,7 @@
 .custom-hover-img {
     transition: 500ms ease-in-out;
 }
+
+.no-scroll {
+    overflow: hidden;
+}

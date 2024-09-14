@@ -8,7 +8,7 @@ interface ContentProps {
 
 const ContentViewer: React.FC<ContentProps> = ({ imageURL, onClose }) => {
   return (
-    <div className="bg-gray-900/70 fixed w-full h-full backdrop-blur-sm left-0 top-0 z-40 flex items-center justify-center animate__animated animate__fadeIn animate__faster pt-[100px] overflow-hidden">
+    <div className="bg-gray-900/70 fixed w-full h-full backdrop-blur-sm left-0 top-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster pt-[100px] overflow-hidden">
       <div className="mx-auto w-[95%] h-full rounded-xl p-3 shadow mb-12 bg-black/60 relative grid lg:grid-cols-4 gap-5">
         <div className="col-span-3 relative">
           <Image

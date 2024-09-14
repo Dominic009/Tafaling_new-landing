@@ -28,9 +28,8 @@ const UserPost: React.FC = () => {
 
   const handleContentView = (postContent: string) => {
     setViewImagePost(postContent);
+    document.body.classList.add('no-scroll')
   };
-
-  console.log(viewImagePost);
 
   return (
     <div>
@@ -63,7 +62,7 @@ const UserPost: React.FC = () => {
           </div>
 
           {/* Content body */}
-          <div className="mt-2">
+          <div className="mt-2 cursor-pointer">
             <Image
               alt="My image"
               src={post.postContent}
