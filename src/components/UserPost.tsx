@@ -28,8 +28,18 @@ const UserPost: React.FC = () => {
 
   const handleContentView = (postContent: string) => {
     setViewImagePost(postContent);
-    document.body.classList.add('no-scroll')
   };
+
+  useEffect(() => {
+    if (viewImagePost) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    // Cleanup on component unmount
+    return () => document.body.classList.remove("no-scroll");
+  }, [viewImagePost]);
 
   return (
     <div>
