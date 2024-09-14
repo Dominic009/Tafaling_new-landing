@@ -20,7 +20,7 @@ const Page = () => {
     <div className="w-full lg:w-[80%] mx-auto">
       <div className="relative border-b pb-7">
         {/* Timeline IMG */}
-        <div className="relative h-[240px] md:h-[300px] lg:h-[450px] cursor-pointer group transition ease-in-out duration-500">
+        <div className="relative h-[240px] md:h-[300px] lg:h-[450px] group transition ease-in-out duration-500">
           {/* overlay div */}
           <div className="w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg"></div>
           {/* Change timeline image button */}
@@ -51,7 +51,19 @@ const Page = () => {
 
         {/* User DP */}
         <div className="flex flex-col lg:flex-row gap-5 top-80 w-[90%] mx-auto -mt-16">
-          <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] bg-gray-600 bottom-0 rounded-lg drop-shadow-md z-30"></div>
+          <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] bg-gray-600 bottom-0 rounded-lg drop-shadow-md z-30 group">
+            {/* overlay div */}
+            <div className="w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg"></div>
+            {/* Change timeline image button */}
+            <div className="absolute bottom-6 right-6 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible">
+              <button
+                onClick={() => setModal(!modal)}
+                className="bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]"
+              >
+                Change Picture
+              </button>
+            </div>
+          </div>
           <div className="grid">
             <div></div>
             <div className="flex flex-col justify-between lg:pt-10">

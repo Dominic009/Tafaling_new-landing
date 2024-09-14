@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import PostTimeConverter from "./PostTimeConverter";
+import ContentViewer from "./Content Viewer/ContentViewer";
 
 interface Post {
   profilePicture: string;
@@ -17,12 +18,19 @@ interface Post {
 
 const UserPost: React.FC = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
+  const [viewImagePost, setViewImagePost] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("data.json")
       .then((res) => res.json())
       .then((data) => setPosts(data));
   }, []);
+
+  const handleContentView = (postContent: string) => {
+    setViewImagePost(postContent);
+  };
+
+  console.log(viewImagePost);
 
   return (
     <div>
@@ -61,7 +69,8 @@ const UserPost: React.FC = () => {
               src={post.postContent}
               width={800}
               height={600}
-              className="rounded-md h-[500px] object-cover"
+              className="rounded-md h-[500px] object-cover hover:scale-105 custom-hover-img"
+              onClick={() => handleContentView(post.postContent)}
             ></Image>
           </div>
 
@@ -82,6 +91,13 @@ const UserPost: React.FC = () => {
           </div>
         </div>
       ))}
+
+      {viewImagePost && (
+        <ContentViewer
+          imageURL={viewImagePost}
+          onClose={() => setViewImagePost(null)}
+        />
+      )}
     </div>
   );
 };

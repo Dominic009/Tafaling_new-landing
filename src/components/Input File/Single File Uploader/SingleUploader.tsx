@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FileInput, Label } from "flowbite-react";
 import Image from "next/image"; // Import Next.js Image component
+import toast from "react-hot-toast";
 
 export function SingleUploader() {
   const [preview, setPreview] = useState<string | null>(null); // State to store a single file preview
@@ -12,7 +13,7 @@ export function SingleUploader() {
     if (file && file.type.startsWith("image/")) {
       setPreview(URL.createObjectURL(file)); // Set the preview URL for the image
     } else {
-      alert("Please select an image file (JPG, PNG, GIF).");
+      toast.error("Please select an image file (JPG, PNG, GIF).");
     }
   };
 
