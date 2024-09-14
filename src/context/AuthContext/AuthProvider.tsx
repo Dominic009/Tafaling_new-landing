@@ -1,4 +1,5 @@
 'use client';
+import useLocalStorage from '@/hooks/useLocalStorage';
 import { AuthUser } from '@/types/Auth';
 import { useRouter } from 'next/navigation';
 import React, { ReactNode, useContext } from 'react';
@@ -16,6 +17,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const router = useRouter();
   const [user, setUser] = React.useState<AuthUser | null>(null);
+  const { removeItem } = useLocalStorage('auth-token');
 
   const login = (authData: AuthUser) => {
     setUser(authData);
@@ -23,6 +25,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const logout = () => {
     setUser(null);
+    removeItem();
     router.push('login');
   };
   //console.log(user)
