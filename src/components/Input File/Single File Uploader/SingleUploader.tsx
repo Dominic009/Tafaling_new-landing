@@ -57,7 +57,7 @@ export function SingleUploader() {
               drop
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Only JPG, PNG, or GIF images (1 file only)
+              Only JPG, PNG, or GIF images <span className="text-[#00B4DB] font-semibold">(1 file only)</span>
             </p>
           </div>
           <FileInput
@@ -66,7 +66,7 @@ export function SingleUploader() {
             className="hidden"
             onChange={handleFileChange} // Capture file input change
             accept="image/jpeg, image/png, image/gif" // Accept only image files
-            multiple={false} // Disallow multiple file uploads
+            multiple={false}
           />
         </Label>
       </form>
@@ -77,8 +77,8 @@ export function SingleUploader() {
           <Image
             src={preview}
             alt="Cover photo preview"
-            width={200} // Set desired width
-            height={200} // Set desired height
+            width={200} 
+            height={200} 
             className="rounded-lg object-cover"
           />
           <button

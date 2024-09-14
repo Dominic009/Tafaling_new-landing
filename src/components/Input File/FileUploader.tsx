@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { FileInput, Label } from "flowbite-react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 export function FileUploader() {
   const [previews, setPreviews] = useState<{ url: string; type: string }[]>([]);
-  const fileInputRef = React.useRef<HTMLInputElement | null>(null); 
-  const path = useRouter();
-  console.log(path)
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   // Handle file input change for multiple files
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,8 +94,8 @@ export function FileUploader() {
                   <Image
                     src={preview.url}
                     alt={`Uploaded file preview ${index + 1}`}
-                    width={200} // Set desired width
-                    height={200} // Set desired height
+                    width={200}
+                    height={200}
                     className="rounded-lg object-cover"
                   />
                 ) : (
