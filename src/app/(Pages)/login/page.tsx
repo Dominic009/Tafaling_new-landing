@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import 'animate.css'
+import "animate.css";
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
@@ -145,6 +145,18 @@ const Page = () => {
                 {errors.password && (
                   <p className="text-red-300">{errors.password.message}</p>
                 )}
+              </div>
+
+              <div>
+              
+                <Link href="/forgotPassword" className="text-[#D6EAFF]/50 -mt-5 text-sm">
+                Forgot password?
+            </Link>
+
+                <div className="flex items-center gap-1 w-[80%] mt-4">
+                  <input type="checkbox" />
+                  <p className="text-[#D6EAFF]/50">Remember Me</p>
+                </div>
               </div>
 
               {/* Sign In button */}
