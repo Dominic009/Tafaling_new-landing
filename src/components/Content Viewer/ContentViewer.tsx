@@ -4,20 +4,29 @@ import React from "react";
 interface ContentProps {
   imageURL: string;
   onClose: () => void;
+  postContentType: string;
 }
 
-const ContentViewer: React.FC<ContentProps> = ({ imageURL, onClose }) => {
+const ContentViewer: React.FC<ContentProps> = ({
+  imageURL,
+  onClose,
+  postContentType,
+}) => {
   return (
     <div className="bg-gray-900/70 fixed w-full h-full backdrop-blur-sm left-0 top-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster pt-[100px] overflow-hidden">
       <div className="mx-auto w-[95%] h-full rounded-xl p-3 shadow mb-12 bg-black/60 relative grid lg:grid-cols-4 gap-5">
-        <div className="col-span-3 relative">
-          <Image
-            alt="Image"
-            src={imageURL}
-            layout="fill"
-            objectFit="contain"
-            className="rounded-md"
-          />
+        <div className="col-span-3 relative flex justify-center items-center">
+          {postContentType === "image" ? (
+            <Image
+              alt="Image"
+              src={imageURL}
+              layout="fill"
+              objectFit="contain"
+              className="rounded-md"
+            />
+          ) : (
+            <video src={imageURL} width="400" height="500" controls></video>
+          )}
         </div>
         <div className="border bg-[#f4f7f8] rounded-md">
           <h1>Comment section</h1>

@@ -10,6 +10,7 @@ interface Post {
   profilePicture: string;
   username: string;
   location: string;
+  contentType: string;
   postContent: string;
   caption: string;
   hashtags: string[];
@@ -19,6 +20,7 @@ interface Post {
 const UserPost: React.FC = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
+  const [postContentType, setPostContentType] = useState<string>('');
 
   useEffect(() => {
     fetch("data.json")
@@ -26,8 +28,9 @@ const UserPost: React.FC = () => {
       .then((data) => setPosts(data));
   }, []);
 
-  const handleContentView = (postContent: string) => {
+  const handleContentView = (postContent: string, contentType: string) => {
     setViewImagePost(postContent);
+    setPostContentType(contentType);
   };
 
   useEffect(() => {
@@ -40,6 +43,8 @@ const UserPost: React.FC = () => {
     // Cleanup on component unmount
     return () => document.body.classList.remove("no-scroll");
   }, [viewImagePost]);
+
+  console.log(viewImagePost);
 
   return (
     <div>
@@ -73,14 +78,31 @@ const UserPost: React.FC = () => {
 
           {/* Content body */}
           <div className="mt-2 cursor-pointer">
-            <Image
-              alt="My image"
-              src={post.postContent}
-              width={800}
-              height={600}
-              className="rounded-md h-[500px] object-cover hover:scale-105 custom-hover-img"
-              onClick={() => handleContentView(post.postContent)}
-            ></Image>
+            {post.contentType === "image" ? (
+              <Image
+                alt="Post content"
+                src={post.postContent}
+                width={800}
+                height={600}
+                className="rounded-md h-[500px] object-cover hover:scale-105 custom-hover-img"
+                onClick={() =>
+                  handleContentView(post.postContent, post.contentType)
+                }
+              />
+            ) : (
+              <video
+                width="800"
+                height="500"
+                controls
+                className="rounded-md h-[500px]"
+                onClick={() =>
+                  handleContentView(post.postContent, post.contentType)
+                }
+              >
+                <source src={post.postContent} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
           </div>
 
           {/* Footer */}
@@ -103,6 +125,7 @@ const UserPost: React.FC = () => {
 
       {viewImagePost && (
         <ContentViewer
+          postContentType={postContentType}
           imageURL={viewImagePost}
           onClose={() => setViewImagePost(null)}
         />
