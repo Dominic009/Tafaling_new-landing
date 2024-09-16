@@ -3,13 +3,18 @@ import React, { useState } from 'react';
 import { FileInput, Label } from 'flowbite-react';
 import Image from 'next/image'; // Import Next.js Image component
 import toast from 'react-hot-toast';
-import { updateProfilePicture } from '@/api/profile/profile';
-import useLocalStorage from '@/hooks/useLocalStorage';
 
-export function SingleUploader() {
+interface ISingleUploaderProps {
+  handleUploadPicture: (
+    fileInputRef: React.RefObject<HTMLInputElement>
+  ) => void;
+}
+
+const SingleUploader: React.FC<ISingleUploaderProps> = ({
+  handleUploadPicture,
+}) => {
   const [preview, setPreview] = useState<string | null>(null); // State to store a single file preview
   const fileInputRef = React.useRef<HTMLInputElement | null>(null); // Ref for the file input to reset it
-  const { item } = useLocalStorage('auth-token');
 
   // Handle file input change for a single image file
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,24 +23,6 @@ export function SingleUploader() {
       setPreview(URL.createObjectURL(file)); // Set the preview URL for the image
     } else {
       toast.error('Please select an image file (JPG, PNG, GIF).');
-    }
-  };
-
-  //upload picture handler
-  const handleUploadPicture = async () => {
-    let lsItem = item && JSON.parse(item).accessT;
-    const formData = new FormData();
-    formData.append('profilePhoto', fileInputRef.current.files[0]);
-
-    // for (const value of formData.values()) {
-    //   console.log('values from form data: ', value);
-    // }
-
-    try {
-      const response = await updateProfilePicture(formData, lsItem);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -114,7 +101,7 @@ export function SingleUploader() {
             Remove Preview
           </button>
           <button
-            onClick={handleUploadPicture}
+            onClick={() => handleUploadPicture(fileInputRef)}
             className='mt-2 bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600'
           >
             Upload
@@ -123,6 +110,6 @@ export function SingleUploader() {
       )}
     </div>
   );
-}
+};
 
 export default SingleUploader;

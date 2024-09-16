@@ -1,5 +1,5 @@
 'use client';
-import { loginUser } from '@/api/auth/auth';
+import { getAuthUser, loginUser } from '@/api/auth/auth';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { AuthUser } from '@/types/Auth';
@@ -40,7 +40,8 @@ const Page = () => {
         login({
           user_name: data.data.user.user_name,
           email: data.data.user.email,
-          cover: data.data.user.cover_photo,
+          cover_photo: data.data.user.cover_photo,
+          profile_picture: data.data.user.profile_picture,
           name: data.data.user.name,
         });
 

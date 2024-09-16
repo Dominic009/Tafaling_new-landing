@@ -12,3 +12,15 @@ export async function updateProfilePicture(
     },
   });
 }
+
+export async function updateCoverPhoto(
+  data: any,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('user/cover/picture/update', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'multipart/form-data',
+    },
+  });
+}
