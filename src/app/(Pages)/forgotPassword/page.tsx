@@ -7,11 +7,14 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
+import { forgotPassword, verifyForgetPasswordOTP } from "@/api/auth/auth";
+import { AxiosError } from "axios";
 
 const Page = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isLoginLoading, setIsLoginLoading] = useState<boolean>(false);
+  const [isForgetPasswordLoading, setIsForgetPasswordLoading] =
+    useState<boolean>(false);
   const [step, setStep] = useState(1);
 
   const {
@@ -21,13 +24,53 @@ const Page = () => {
     formState: { errors },
   } = useForm({ mode: "onSubmit" });
   const watchNewPassword = watch("newPassword");
+  // SEND OTP
+  const handleEmailSubmit = async (data: any) => {
+    setIsForgetPasswordLoading(true);
 
-  const handleEmailSubmit = () => {
-    toast.success("An OTP has been sent to your email");
+    const userData = {
+      email: data.email,
+    };
+    console.log(userData, "userData");
+    try {
+      const { data, status } = await forgotPassword(userData);
+
+      console.log(data);
+      console.log(status);
+      // toast.success(data.message);
+    } catch (e) {
+      const error = e as AxiosError<any>;
+      toast.error(error.response?.data.message);
+      console.log(error.response?.data.message);
+      setIsForgetPasswordLoading(false);
+    }
+
+    // toast.success("An OTP has been sent to your email");
     setStep(2);
   };
 
-  const handleOtpSubmit = () => {
+  // OTP VERIFICATION
+  const handleOtpSubmit = async (data: any) => {
+    setIsForgetPasswordLoading(true);
+
+    const userData = {
+      email: data.email,
+      otp: data.otp,
+    };
+    console.log(userData, "userData");
+    try {
+      const { data, status } = await verifyForgetPasswordOTP(userData);
+
+      console.log(data);
+      console.log(status);
+      // toast.success(data.message);
+    } catch (e) {
+      const error = e as AxiosError<any>;
+      toast.error(error.response?.data.message);
+      console.log(error.response?.data.message);
+      setIsForgetPasswordLoading(false);
+    }
+
     toast.success("OTP verified successfully");
     setStep(3);
   };
@@ -95,12 +138,12 @@ const Page = () => {
                 )}
                 <PrimaryBtn
                   text={`Request OTP`}
-                  disabled={isLoginLoading}
+                  disabled={isForgetPasswordLoading}
                   width={"100%"}
                   size={"2xl"}
                   weight={"bold"}
                   type="submit"
-                  isLoading={isLoginLoading}
+                  isLoading={isForgetPasswordLoading}
                 />
               </form>
             )}
@@ -136,22 +179,22 @@ const Page = () => {
                 <div className="grid grid-cols-2 gap-4 ">
                   <PrimaryBtn
                     text={`Submit OTP`}
-                    disabled={isLoginLoading}
+                    disabled={isForgetPasswordLoading}
                     width={"100%"}
                     size={"2xl"}
                     weight={"bold"}
                     type="submit"
-                    isLoading={isLoginLoading}
+                    isLoading={isForgetPasswordLoading}
                   />
                   <PrimaryBtn
                     text={`Resend OTP`}
-                    disabled={isLoginLoading}
+                    disabled={isForgetPasswordLoading}
                     width={"100%"}
                     size={"2xl"}
                     weight={"bold"}
                     type="button"
-                    isLoading={isLoginLoading}
-                    onclick={() => handleEmailSubmit()}
+                    isLoading={isForgetPasswordLoading}
+                    // onclick={() => handleEmailSubmit()}
                   />
                 </div>
               </form>
@@ -217,12 +260,12 @@ const Page = () => {
 
                 <PrimaryBtn
                   text={`Change Password`}
-                  disabled={isLoginLoading}
+                  disabled={isForgetPasswordLoading}
                   width={"100%"}
                   size={"2xl"}
                   weight={"bold"}
                   type="submit"
-                  isLoading={isLoginLoading}
+                  isLoading={isForgetPasswordLoading}
                 />
               </form>
             )}

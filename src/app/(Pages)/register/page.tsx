@@ -47,6 +47,7 @@ const Page = () => {
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
+      console.log(error.response?.data.message);
       setIsRegisterLoading(false);
     }
   };

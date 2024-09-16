@@ -10,3 +10,9 @@ export async function loginUser(
 export async function registerUser(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
   return await axiosClient.post('auth/register', JSON.stringify(data));
 }
+export async function forgotPassword(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('auth/forgot-password', JSON.stringify(data));
+}
+export async function verifyForgetPasswordOTP(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('auth/verify-forgot-password-otp', JSON.stringify(data));
+}
