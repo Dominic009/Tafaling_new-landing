@@ -66,7 +66,7 @@ export function SingleUploader() {
             ref={fileInputRef} // Attach ref to the file input
             className="hidden"
             onChange={handleFileChange} // Capture file input change
-            accept="image/jpeg, image/png, image/gif" // Accept only image files
+            accept="image/jpeg, image/png, image/gif, image/jpg" // Accept only image files
             multiple={false}
           />
         </Label>
