@@ -11,8 +11,7 @@ import { useAuth } from "@/context/AuthContext/AuthProvider";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import 'animate.css';
-
+import "animate.css";
 
 const Page = () => {
   const router = useRouter();
@@ -106,12 +105,12 @@ const Page = () => {
                     },
                   })}
                   className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.fullName ? "border-2 border-red-500" : ""
+                    errors.fullName ? "border-2 border-red-600" : ""
                   }`}
                 />
 
                 {errors.fullName?.message && (
-                  <p className="text-red-500 mt-1">
+                  <p className="text-red-300 mt-1">
                     {String(errors.fullName.message)}
                   </p>
                 )}
@@ -131,12 +130,12 @@ const Page = () => {
                   })}
                   type="email"
                   className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.email ? "border-2 border-red-500" : ""
+                    errors.email ? "border-2 border-red-600" : ""
                   }`}
                 />
 
                 {errors.email?.message && (
-                  <p className="text-red-500 mt-1">
+                  <p className="text-red-300 mt-1">
                     {String(errors.email.message)}
                   </p>
                 )}
@@ -155,7 +154,7 @@ const Page = () => {
                     },
                   })}
                   className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.password ? "border-2 border-red-500" : ""
+                    errors.password ? "border-2 border-red-600" : ""
                   }`}
                 />
                 {isOpen ? (
@@ -171,7 +170,7 @@ const Page = () => {
                 )}
 
                 {errors.password?.message && (
-                  <p className="text-red-500 mt-1">
+                  <p className="text-red-300 mt-1">
                     {String(errors.password.message)}
                   </p>
                 )}
@@ -188,11 +187,11 @@ const Page = () => {
                       value === password || "Passwords do not match",
                   })}
                   className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.confirmPassword ? "border-2 border-red-500" : ""
+                    errors.confirmPassword ? "border-2 border-red-600" : ""
                   }`}
                 />
                 {errors.confirmPassword?.message && (
-                  <p className="text-red-500 mt-1">
+                  <p className="text-red-300 mt-1">
                     {String(errors.confirmPassword.message)}
                   </p>
                 )}

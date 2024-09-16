@@ -11,7 +11,7 @@ const Post: React.FC = () => {
 
   // Function to handle the opening of the modal for different tabs
   const openModalForTab = (tab: string | null) => {
-    setActiveTab(tab); // Set the active tab to display the respective content
+    setActiveTab(tab); 
     setModal(true); // Open the modal
   };
 
@@ -20,6 +20,8 @@ const Post: React.FC = () => {
     setModal(false);
     setActiveTab(null);
   };
+
+  console.log(activeTab)
 
   return (
     <div>

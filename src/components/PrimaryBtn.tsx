@@ -32,7 +32,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
 
   return (
     <button
-      className={`${bgColor} ${bgHoverColor} py-2 rounded-md text-white font-${weight} text-${size} flex items-center justify-center gap-2 transition duration-300 ease-in-out hover:scale-105 relative`}
+      className={`${bgColor} ${bgHoverColor} py-2 rounded-md text-white font-${weight} text-${size} flex items-center justify-center gap-2 transition duration-300 ease-in-out active:scale-90 relative`}
       style={{ width }}
       onClick={onclick}
       type={type}

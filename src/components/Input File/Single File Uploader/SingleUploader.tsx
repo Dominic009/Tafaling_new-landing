@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FileInput, Label } from "flowbite-react";
 import Image from "next/image"; // Import Next.js Image component
+import toast from "react-hot-toast";
 
 export function SingleUploader() {
   const [preview, setPreview] = useState<string | null>(null); // State to store a single file preview
@@ -12,7 +13,7 @@ export function SingleUploader() {
     if (file && file.type.startsWith("image/")) {
       setPreview(URL.createObjectURL(file)); // Set the preview URL for the image
     } else {
-      alert("Please select an image file (JPG, PNG, GIF).");
+      toast.error("Please select an image file (JPG, PNG, GIF).");
     }
   };
 
@@ -57,7 +58,7 @@ export function SingleUploader() {
               drop
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Only JPG, PNG, or GIF images (1 file only)
+              Only JPG, PNG, or GIF images <span className="text-[#00B4DB] font-semibold">(1 file only)</span>
             </p>
           </div>
           <FileInput
@@ -66,7 +67,7 @@ export function SingleUploader() {
             className="hidden"
             onChange={handleFileChange} // Capture file input change
             accept="image/jpeg, image/png, image/gif" // Accept only image files
-            multiple={false} // Disallow multiple file uploads
+            multiple={false}
           />
         </Label>
       </form>
@@ -77,8 +78,8 @@ export function SingleUploader() {
           <Image
             src={preview}
             alt="Cover photo preview"
-            width={200} // Set desired width
-            height={200} // Set desired height
+            width={200} 
+            height={200} 
             className="rounded-lg object-cover"
           />
           <button

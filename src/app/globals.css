@@ -7,3 +7,11 @@
 .custom-hover {
     transition: 200ms ease-in-out;
 }
+
+.custom-hover-img {
+    transition: 500ms ease-in-out;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
