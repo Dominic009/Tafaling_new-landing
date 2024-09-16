@@ -51,12 +51,14 @@ const Page = () => {
           })
         );
       
-        // console.log(data?.data?.user?.email_verified_at);
+        console.log(data?.data?.user?.email_verified_at);
         
         if (data?.data?.user?.email_verified_at === null) {
           router.push("verifyEmail");
+        }else{
+          router.push("home");
         }
-        // router.push("home");
+        
         toast.success("Login Success!");
       }
     } catch (e) {

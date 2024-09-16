@@ -12,10 +12,29 @@ export async function registerUser(
 ): Promise<AxiosResponse<any, ResponseType>> {
   return await axiosClient.post('auth/register', JSON.stringify(data));
 }
+
+
 export async function verifyUserEmail(
-  data: AuthUser
+  data: any,
+  token: string
 ): Promise<AxiosResponse<any, ResponseType>> {
-  return await axiosClient.post('account/email/verify', JSON.stringify(data));
+  return await axiosClient.post('account/email/verify', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'multipart/form-data',
+    },
+  });
+}
+export async function resendEmailVerifyOtp(
+  data: any,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('/account/email/resend', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'multipart/form-data',
+    },
+  });
 }
 
 // refetch user data

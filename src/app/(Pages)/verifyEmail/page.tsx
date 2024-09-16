@@ -1,20 +1,17 @@
 "use client";
 import { useForm } from "react-hook-form";
 import PrimaryBtn from "@/components/PrimaryBtn";
-import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { verifyUserEmail } from "@/api/auth/auth";
+import { resendEmailVerifyOtp, verifyUserEmail } from "@/api/auth/auth";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import toast from "react-hot-toast";
 
 const Page = () => {
   const router = useRouter();
-
-  const [isOtpVerifyLoading, setOtpVerifyLoading] =
-    useState<boolean>(false);
+  const { item: accessToken } = useLocalStorage("auth-token");
+  const [isOtpVerifyLoading, setOtpVerifyLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -22,36 +19,50 @@ const Page = () => {
     formState: { errors },
   } = useForm({ mode: "onSubmit" });
 
-
-
   // OTP VERIFICATION
   const handleOtpSubmit = async (data: any) => {
+    let lsItem = accessToken && JSON.parse(accessToken).accessT;
     setOtpVerifyLoading(true);
 
     const userData = {
-     
       otp: data.otp,
     };
     console.log(userData, "userData");
     try {
-      const { data, status } = await verifyUserEmail(userData);
-
+      const { data, status } = await verifyUserEmail(userData, lsItem);
       console.log(data);
       console.log(status);
-    //   toast.success(data.message);
+
+      router.push("home");
+      toast.success(data.message);
     } catch (e) {
       const error = e as AxiosError<any>;
       console.log(error);
-    //   toast.error(error.response?.data.message);
-    //   console.log(error.response?.data.message);
+      toast.error(error.response?.data.message);
+      console.log(error.response?.data.message);
       setOtpVerifyLoading(false);
     }
-
-    // toast.success("OTP verified successfully");
-
   };
 
-  
+  // OTP Resend
+  const handleOtpResend = async () => {
+    let lsItem = accessToken && JSON.parse(accessToken).accessT;
+    setOtpVerifyLoading(true);
+    const userData = {};
+    try {
+      const { data, status } = await resendEmailVerifyOtp(userData, lsItem);
+      console.log(data);
+      console.log(status);
+      toast.success(data.message);
+      setOtpVerifyLoading(false);
+    } catch (e) {
+      const error = e as AxiosError<any>;
+      console.log(error);
+      toast.error(error.response?.data.message);
+      console.log(error.response?.data.message);
+      setOtpVerifyLoading(false);
+    }
+  };
 
   return (
     <main className="flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]">
@@ -64,8 +75,6 @@ const Page = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        
-
         <div className="w-[30%] mx-auto z-50 -mt-24 md:-mt-0 animate__animated animate__fadeIn">
           <div className="bg-gray-900/30 py-10 rounded-xl flex flex-col items-center backdrop-blur-sm">
             <h1 className="text-3xl text-white border-b-4 border-[#008EAD] mb-8">
@@ -117,18 +126,11 @@ const Page = () => {
                   weight={"bold"}
                   type="button"
                   isLoading={isOtpVerifyLoading}
-                  // onclick={() => handleEmailSubmit()}
+                  onclick={() => handleOtpResend()}
                 />
               </div>
             </form>
           </div>
-
-          {/* <h2 className="mt-7 text-white text-center text-xl font-light">
-            New to Tafaling?{" "}
-            <Link href="/register" className="text-[#025C70] font-semibold">
-              JOIN NOW
-            </Link>
-          </h2> */}
         </div>
       </div>
     </main>
