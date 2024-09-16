@@ -12,6 +12,11 @@ export async function registerUser(
 ): Promise<AxiosResponse<any, ResponseType>> {
   return await axiosClient.post('auth/register', JSON.stringify(data));
 }
+export async function verifyUserEmail(
+  data: AuthUser
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('account/email/verify', JSON.stringify(data));
+}
 
 // refetch user data
 export async function getAuthUser(
