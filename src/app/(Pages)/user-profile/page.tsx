@@ -8,13 +8,103 @@ import Image from 'next/legacy/image';
 import React, { useState } from 'react';
 import { MdEditSquare, MdOutlineEdit, MdSettings } from 'react-icons/md';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
+import { updateCoverPhoto, updateProfilePicture } from '@/api/profile/profile';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import toast from 'react-hot-toast';
+import { getAuthUser } from '@/api/auth/auth';
 
 const Page = () => {
-  const { user } = useAuth();
-  const [modal, setModal] = useState<boolean>(false);
+  const { user, login } = useAuth();
+  const [modalProfilePicture, setModalProfilePicture] =
+    useState<boolean>(false);
+  const [modalCoverPhoto, setModalCoverPhoto] = useState<boolean>(false);
+  const { item: accessToken } = useLocalStorage('auth-token');
 
-  const closeModal = () => {
-    setModal(false);
+  const closeModalProfilePicture = () => {
+    setModalProfilePicture(false);
+  };
+
+  const closeModalCoverPhoto = () => {
+    setModalCoverPhoto(false);
+  };
+
+  console.log(user);
+
+  const fetchUserData = async () => {
+    let lsItem = accessToken && JSON.parse(accessToken).accessT;
+    try {
+      const { data, status } = await getAuthUser(lsItem);
+      const { data: userData } = data;
+      // console.log(userData);
+
+      login({
+        user_name: userData.user_name,
+        email: userData.email,
+        cover_photo: userData.cover_photo,
+        profile_picture: userData.profile_picture,
+        name: userData.name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //upload picture handler
+  const handleUploadProfilePicture = async (
+    fileInputRef: React.RefObject<HTMLInputElement>
+  ) => {
+    let lsItem = accessToken && JSON.parse(accessToken).accessT;
+    const formData = new FormData();
+
+    if (
+      fileInputRef.current &&
+      fileInputRef.current.files &&
+      fileInputRef.current.files[0]
+    ) {
+      formData.append('profilePhoto', fileInputRef.current.files[0]);
+    }
+
+    try {
+      const { data, status } = await updateProfilePicture(formData, lsItem);
+      //console.log(data);
+
+      if (status === 201) {
+        closeModalProfilePicture();
+        toast.success(data.message);
+        fetchUserData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //upload picture handler
+  const handleUploadCoverPhoto = async (
+    fileInputRef: React.RefObject<HTMLInputElement>
+  ) => {
+    let lsItem = accessToken && JSON.parse(accessToken).accessT;
+    const formData = new FormData();
+
+    if (
+      fileInputRef.current &&
+      fileInputRef.current.files &&
+      fileInputRef.current.files[0]
+    ) {
+      formData.append('coverPhoto', fileInputRef.current.files[0]);
+    }
+
+    try {
+      const { data, status } = await updateCoverPhoto(formData, lsItem);
+      //console.log(data);
+
+      if (status === 201) {
+        closeModalCoverPhoto();
+        toast.success(data.message);
+        fetchUserData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -27,38 +117,61 @@ const Page = () => {
           {/* Change timeline image button */}
           <div className='absolute bottom-6 right-6 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible'>
             <button
-              onClick={() => setModal(!modal)}
+              onClick={() => setModalCoverPhoto(!modalCoverPhoto)}
               className='bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]'
             >
               Change Picture
             </button>
           </div>
           <Image
-            src='/Profile banner/banner.jpg'
+            src={user?.cover_photo || '/Profile banner/banner.jpg'}
             alt='Banner Image'
             layout='fill'
             objectFit='cover'
             className=' rounded-b-lg '
           />
         </div>
-        <Modal isOpen={modal} onClose={closeModal} width={'30%'}>
+        {/* modal for profile picture upload */}
+        <Modal
+          isOpen={modalProfilePicture}
+          onClose={closeModalProfilePicture}
+          width={'30%'}
+        >
           <div className='py-7 px-2 rounded-lg flex flex-col justify-center items-center'>
             <h1 className='text-xl text-gray-500 font-semibold text-center underline mb-4'>
-              Select Picture from device
+              Select Profile Picture from device
             </h1>
-            <SingleUploader></SingleUploader>
+            <SingleUploader
+              handleUploadPicture={handleUploadProfilePicture}
+            ></SingleUploader>
+          </div>
+        </Modal>
+
+        {/* modal for cover photo upload */}
+        <Modal
+          isOpen={modalCoverPhoto}
+          onClose={closeModalCoverPhoto}
+          width={'30%'}
+        >
+          <div className='py-7 px-2 rounded-lg flex flex-col justify-center items-center'>
+            <h1 className='text-xl text-gray-500 font-semibold text-center underline mb-4'>
+              Select Cover Photo from device
+            </h1>
+            <SingleUploader
+              handleUploadPicture={handleUploadCoverPhoto}
+            ></SingleUploader>
           </div>
         </Modal>
 
         {/* User DP */}
         <div className='flex flex-col lg:flex-row gap-5 top-80 w-[90%] mx-auto -mt-16'>
-          <div className='w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] bg-gray-600 bottom-0 rounded-lg drop-shadow-md z-30 group'>
+          <div className='w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] aspect-square bg-gray-600 bottom-0 rounded-lg drop-shadow-md z-30 group'>
             {/* overlay div */}
             <div className='w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg'></div>
             {/* Change timeline image button */}
             <div className='absolute bottom-6 right-6 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible'>
               <button
-                onClick={() => setModal(!modal)}
+                onClick={() => setModalProfilePicture(!modalProfilePicture)}
                 className='bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]'
               >
                 Change Picture
