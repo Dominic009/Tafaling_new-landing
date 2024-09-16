@@ -1,3 +1,4 @@
+'use client';
 import { getAuthUser } from '@/api/auth/auth';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import useLocalStorage from '@/hooks/useLocalStorage';
