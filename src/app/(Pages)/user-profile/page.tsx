@@ -165,7 +165,6 @@ const Page = () => {
 
         {/* User DP */}
         <div className='flex flex-col lg:flex-row gap-5 top-80 w-[90%] mx-auto -mt-16'>
-          <div className='w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] aspect-square bg-gray-600 bottom-0 rounded-lg drop-shadow-md z-30 group'>
             {/* overlay div */}
             <div className='w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg'></div>
             {/* Change timeline image button */}
@@ -177,6 +176,7 @@ const Page = () => {
                 Change Picture
               </button>
             </div>
+            <div className='w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] border bottom-0 rounded-lg drop-shadow-md z-30 group'>
           </div>
           <div className='grid'>
             <div></div>
