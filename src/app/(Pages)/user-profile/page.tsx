@@ -171,25 +171,28 @@ const Page = () => {
         </Modal>
 
         {/* User DP */}
-        <div className="flex flex-col lg:flex-row gap-5 top-80 w-[90%] mx-auto -mt-16">
+        <div className="flex flex-col lg:flex-row gap-5 w-[90%] mx-auto -mt-16">
           {/* overlay div */}
-          <div className="w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg"></div>
-          {/* Change timeline image button */}
-          <div className="absolute bottom-6 right-6 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible">
-            <button
-              onClick={() => setModalProfilePicture(!modalProfilePicture)}
-              className="bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]"
-            >
-              Change Picture
-            </button>
+          <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] group relative">
+            <div className="w-full h-full bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg"></div>
+            {/* Change timeline image button */}
+            <div className="absolute bottom-6 right-6 z-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible">
+              <button
+                onClick={() => setModalProfilePicture(!modalProfilePicture)}
+                className="bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]"
+              >
+                Change Picture
+              </button>
+            </div>
+            <Image
+              src={user?.profile_picture || "/ProfileDP/Dummy.png"}
+              width={400}
+              height={400}
+              alt="User DP"
+              objectFit="fill"
+              className="bottom-0 rounded-lg drop-shadow-md z-30 group"
+            ></Image>
           </div>
-          <Image
-            src={user?.cover_photo || "/Profile banner/banner.jpg"}
-            width={500}
-            height={400}
-            alt="User DP"
-            className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] border bottom-0 rounded-lg drop-shadow-md z-30 group"
-          ></Image>
           <div className="grid">
             <div></div>
             <div className="flex flex-col justify-between lg:pt-10">
