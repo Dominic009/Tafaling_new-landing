@@ -12,6 +12,7 @@ import { updateCoverPhoto, updateProfilePicture } from "@/api/profile/profile";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import toast from "react-hot-toast";
 import { getAuthUser } from "@/api/auth/auth";
+import { AxiosError } from "axios";
 
 const Page = () => {
   const { user, login } = useAuth();
@@ -73,8 +74,11 @@ const Page = () => {
         toast.success(data.message);
         fetchUserData();
       }
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      const error = e as AxiosError<any, ResponseType>;
+      //console.log(error);
+
+      error.response?.data.message && toast.error(error.response?.data.message);
     }
   };
 
@@ -102,8 +106,11 @@ const Page = () => {
         toast.success(data.message);
         fetchUserData();
       }
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      const error = e as AxiosError<any, ResponseType>;
+      //console.log(error);
+
+      error.response?.data.message && toast.error(error.response?.data.message);
     }
   };
 
