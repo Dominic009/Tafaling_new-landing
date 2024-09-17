@@ -133,11 +133,11 @@ const Navbar: React.FC = () => {
 
             {/* User Profile */}
             <div
-              className='relative transition ease-in-out duration-500 group'
+              className='relative transition ease-in-out duration-500 group hover:outline outline-blue-400 rounded-full flex items-center justify-center custom-hover'
               onClick={() => setDropdown(!dropdown)}
             >
               <Image
-                src={'/ProfileDP/Profile.png'}
+                src={ user?.profile_picture || '/ProfileDP/Dummy.png'}
                 width={50}
                 height={50}
                 alt='User'
@@ -145,7 +145,7 @@ const Navbar: React.FC = () => {
               ></Image>
 
               {dropdown ? (
-                <div className='absolute right-4 bg-[#0d1f31] w-48 rounded-lg p-4 flex flex-col justify-between'>
+                <div className='absolute top-14 right-4 bg-[#0d1f31] w-48 rounded-lg p-4 flex flex-col justify-between'>
                   <ul className='font-semibold flex flex-col gap-2 text-gray-200'>
                     <Link href={'/user-profile'}>
                       <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
