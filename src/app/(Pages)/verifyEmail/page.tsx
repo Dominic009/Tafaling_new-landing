@@ -4,7 +4,7 @@ import PrimaryBtn from "@/components/PrimaryBtn";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
-import { resendEmailVerifyOtp, verifyUserEmail } from "@/api/auth/auth";
+import { resendEmailVerifyOtp, verifyUserEmail } from "@/api/account/account";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import toast from "react-hot-toast";
 
@@ -12,6 +12,7 @@ const Page = () => {
   const router = useRouter();
   const { item: accessToken } = useLocalStorage("auth-token");
   const [isOtpVerifyLoading, setOtpVerifyLoading] = useState<boolean>(false);
+  const [isOtpResendLoading, setOtpResendLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -47,20 +48,20 @@ const Page = () => {
   // OTP Resend
   const handleOtpResend = async () => {
     let lsItem = accessToken && JSON.parse(accessToken).accessT;
-    setOtpVerifyLoading(true);
-    const userData = {};
+    setOtpResendLoading(true);
     try {
-      const { data, status } = await resendEmailVerifyOtp(userData, lsItem);
+      const { data, status } = await resendEmailVerifyOtp(lsItem);
       console.log(data);
       console.log(status);
       toast.success(data.message);
-      setOtpVerifyLoading(false);
+      setOtpResendLoading(false);
     } catch (e) {
       const error = e as AxiosError<any>;
-      console.log(error);
       toast.error(error.response?.data.message);
+      
+      console.log(error);
       console.log(error.response?.data.message);
-      setOtpVerifyLoading(false);
+      setOtpResendLoading(false);
     }
   };
 
@@ -120,12 +121,12 @@ const Page = () => {
                 />
                 <PrimaryBtn
                   text={`Resend OTP`}
-                  disabled={isOtpVerifyLoading}
+                  disabled={isOtpResendLoading}
                   width={"100%"}
                   size={"2xl"}
                   weight={"bold"}
                   type="button"
-                  isLoading={isOtpVerifyLoading}
+                  isLoading={isOtpResendLoading}
                   onclick={() => handleOtpResend()}
                 />
               </div>

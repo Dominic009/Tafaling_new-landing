@@ -31,7 +31,6 @@ const Page = () => {
 
   const handleLoginUser = async (userData: AuthUser) => {
     toast.dismiss();
-    // const { data, status } = await loginUser(userData);
     setIsLoginLoading(true);
     try {
       const { data, status } = await loginUser(userData);
@@ -50,21 +49,25 @@ const Page = () => {
             refreshT: data.data.refresh_token,
           })
         );
-      
-        console.log(data?.data?.user?.email_verified_at);
-        
+
+        // check if email is verified, if not, redirect to email verification page
         if (data?.data?.user?.email_verified_at === null) {
           router.push("verifyEmail");
-        }else{
+        } else {
+          setItem(
+            JSON.stringify({
+              accessT: data.data.access_token,
+              refreshT: data.data.refresh_token,
+            })
+          );
           router.push("home");
         }
-        
+
         toast.success("Login Success!");
       }
     } catch (e) {
       const error = e as AxiosError<any, ResponseType>;
-      console.log(error);
-
+      // console.log(error);
       error.response?.data.message && toast.error(error.response?.data.message);
       setIsLoginLoading(false);
     }
