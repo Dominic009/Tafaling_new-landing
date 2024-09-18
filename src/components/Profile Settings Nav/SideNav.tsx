@@ -62,7 +62,7 @@ const SideNav = () => {
         </div>
         <h1 className="text-white">{user?.name || "User"}</h1>
       </div>
-      <ul className="text-xl flex flex-col items-center h-full">
+      <ul className="text-lg flex flex-col items-center h-full">
         {routes.map((path) => {
           const isActive = path.path === currentPath;
           return (
