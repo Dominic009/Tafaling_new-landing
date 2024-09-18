@@ -2,8 +2,8 @@ import React from 'react';
 
 const page = () => {
     return (
-        <div>
-            Privacy
+        <div className='text-center'>
+            There is nothing to show
         </div>
     );
 };
