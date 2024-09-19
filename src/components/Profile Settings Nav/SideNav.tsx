@@ -11,7 +11,7 @@ const SideNav = () => {
   const routes = [
     {
       name: "General",
-      path: "/user-profile/settings/general",
+      path: "/user-profile/settings",
       //   icon: (
       //     <TiHome
       //       title='Home'
