@@ -141,6 +141,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import PostTimeConverter from "./PostTimeConverter";
 import ContentViewer from "./Content Viewer/ContentViewer";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
 
 interface Post {
   profilePicture: string;
@@ -157,6 +158,7 @@ const UserPost: React.FC = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
   const [postContentType, setPostContentType] = useState<string>("");
+  const { user } = useAuth();
 
   useEffect(() => {
     fetch("data.json")
@@ -193,7 +195,7 @@ const UserPost: React.FC = () => {
             <div>
               <Image
                 alt="User DP"
-                src={post.profilePicture}
+                src={ user?.profile_picture || "/ProfileDP/Dummy.png" }
                 width={65}
                 height={65}
                 className="mt-1 rounded-full"

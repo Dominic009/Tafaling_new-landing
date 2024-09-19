@@ -1,19 +1,19 @@
-"use client";
-import { loginUser } from "@/api/auth/auth";
-import PrimaryBtn from "@/components/PrimaryBtn";
-import { useAuth } from "@/context/AuthContext/AuthProvider";
-import { AuthUser } from "@/types/Auth";
-import { ResponseType } from "@/types/Response";
-import { AxiosError } from "axios";
-import Image from "next/legacy/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
-import "animate.css";
-import useLocalStorage from "@/hooks/useLocalStorage";
+'use client';
+import { getAuthUser, loginUser } from '@/api/auth/auth';
+import PrimaryBtn from '@/components/PrimaryBtn';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import { AuthUser } from '@/types/Auth';
+import { ResponseType } from '@/types/Response';
+import { AxiosError } from 'axios';
+import Image from 'next/legacy/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
+import 'animate.css';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
@@ -39,7 +39,8 @@ const Page = () => {
         login({
           user_name: data.data.user.user_name,
           email: data.data.user.email,
-          cover: data.data.user.cover_photo,
+          cover_photo: data.data.user.cover_photo,
+          profile_picture: data.data.user.profile_picture,
           name: data.data.user.name,
         });
 

@@ -25,7 +25,8 @@ const PrivateRoute = <T extends {}>(Component: ComponentType<T>) => {
             login({
               user_name: userData.user_name,
               email: userData.email,
-              cover: userData.cover_photo,
+              cover_photo: userData.cover_photo,
+              profile_picture: userData.profile_picture,
               name: userData.name,
             });
             return;
