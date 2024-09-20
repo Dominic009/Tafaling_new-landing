@@ -14,12 +14,13 @@ const ActionBtn: React.FC<ActionBtnProps> = ({
   add: address,
 }) => {
   return (
-    <div className="flex items-center justify-center gap-2 rounded-lg border border-[#00274A] hover:bg-[#00274A] hover:text-white custom-hover px-3">
-      {Icon && <Icon className="text-[#00B4DB] text-2xl" />}
-      <Link href={`${address}`}>
+    <Link href={`${address}`}>
+      <div className="flex items-center justify-center gap-2 rounded-lg border border-[#00274A] hover:bg-[#00274A] hover:text-white custom-hover px-3">
+        {Icon && <Icon className="text-[#00B4DB] text-2xl" />}
+
         <button className="py-1 lg:text-lg">{text}</button>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 
