@@ -4,14 +4,16 @@ import React, { useState } from "react";
 import Modal from "./Modal/Modal";
 import PostBody from "./PostBody";
 import FileUploader from "./Input File/FileUploader";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
 
 const Post: React.FC = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string | null>(null);
+  const { user } = useAuth();
 
   // Function to handle the opening of the modal for different tabs
   const openModalForTab = (tab: string | null) => {
-    setActiveTab(tab); // Set the active tab to display the respective content
+    setActiveTab(tab); 
     setModal(true); // Open the modal
   };
 
@@ -21,18 +23,20 @@ const Post: React.FC = () => {
     setActiveTab(null);
   };
 
+  console.log(activeTab)
+
   return (
     <div>
       <div className="w-full mx-auto backdrop-blur-md rounded-xl p-3 shadow mb-6 bg-white">
         <div>
           {/* User Profile and Post Button */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 ">
             <Image
               alt="User DP"
-              src={"/ProfileDP/Profile.png"}
+              src={ user?.profile_picture || '/ProfileDP/Dummy.png'}
               width={50}
               height={50}
-              className="mt-1"
+              className="mt-1 rounded-full"
             />
             <button
               onClick={() => openModalForTab(null)}

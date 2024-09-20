@@ -7,12 +7,36 @@ export async function loginUser(
 ): Promise<AxiosResponse<any, ResponseType>> {
   return await axiosClient.post('auth/login', JSON.stringify(data));
 }
-export async function registerUser(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
+
+export async function registerUser(
+  data: AuthUser
+): Promise<AxiosResponse<any, ResponseType>> {
   return await axiosClient.post('auth/register', JSON.stringify(data));
 }
+
 export async function forgotPassword(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
   return await axiosClient.post('auth/forgot-password', JSON.stringify(data));
 }
 export async function verifyForgetPasswordOTP(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
   return await axiosClient.post('auth/verify-forgot-password-otp', JSON.stringify(data));
+}
+
+export async function logoutUser(
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.get('auth/logout', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+// refetch user data
+export async function getAuthUser(
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.get('auth/user', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
