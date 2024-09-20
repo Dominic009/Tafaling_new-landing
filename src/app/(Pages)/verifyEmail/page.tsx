@@ -1,32 +1,51 @@
 "use client";
 import { useForm } from "react-hook-form";
 import PrimaryBtn from "@/components/PrimaryBtn";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
 import { resendEmailVerifyOtp, verifyUserEmail } from "@/api/account/account";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import toast from "react-hot-toast";
+import OTPInput from "react-otp-input";
+import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 
 const Page = () => {
   const router = useRouter();
   const { item: accessToken } = useLocalStorage("auth-token");
+  const [otp, setOtp] = useState<string>(""); // State to manage OTP
   const [isOtpVerifyLoading, setOtpVerifyLoading] = useState<boolean>(false);
   const [isOtpResendLoading, setOtpResendLoading] = useState<boolean>(false);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({ mode: "onSubmit" });
 
+  // Register the OTP field manually
+  useEffect(() => {
+    register("otp", {
+      required: "OTP is required",
+      minLength: {
+        value: 6,
+        message: "OTP must be 6 characters",
+      },
+      maxLength: {
+        value: 6,
+        message: "OTP must be 6 characters",
+      },
+    });
+  }, [register]);
+
   // OTP VERIFICATION
-  const handleOtpSubmit = async (data: any) => {
+  const handleOtpSubmit = async () => {
     let lsItem = accessToken && JSON.parse(accessToken).accessT;
     setOtpVerifyLoading(true);
 
     const userData = {
-      otp: data.otp,
+      otp,
     };
     console.log(userData, "userData");
     try {
@@ -58,7 +77,7 @@ const Page = () => {
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
-      
+
       console.log(error);
       console.log(error.response?.data.message);
       setOtpResendLoading(false);
@@ -84,38 +103,38 @@ const Page = () => {
 
             <form
               onSubmit={handleSubmit(handleOtpSubmit)}
-              className="flex flex-col gap-5 w-[80%]"
+              className="flex flex-col gap-5 w-[80%] items-center"
             >
-              <input
-                {...register("otp", {
-                  required: "OTP is required",
-                  minLength: {
-                    value: 6,
-                    message: "OTP must be 6 characters",
-                  },
-                  maxLength: {
-                    value: 6,
-                    message: "OTP must be 6 characters",
-                  },
-                })}
-                placeholder="Enter OTP"
-                className={`px-4 py-2 rounded-md outline-none w-full ${
-                  errors.otp ? "border-2 border-red-600" : ""
-                }`}
+              {/* OTP Input using react-otp-input */}
+              <OTPInput
+                value={otp}
+                onChange={(value: string) => {
+                  setOtp(value);
+                  setValue("otp", value); // Sync with React Hook Form
+                }}
+                numInputs={6}
+                inputStyle={{
+                  width: "2.5rem",
+                  height: "2.5rem",
+                  margin: "0.5rem",
+                  fontSize: "1rem",
+                  borderRadius: "8px",
+                  border: "1px solid rgba(0,0,0,0.3)",
+                }}
+                renderInput={(props) => <input {...props} />}
               />
+              {/* Show error message if validation fails */}
               {errors.otp && (
-                <span className="text-red-300">
-                  {String(errors.otp.message)}
-                </span>
+                <span className="text-red-300">{String(errors.otp.message)}</span>
               )}
 
-              <div className="grid grid-cols-2 gap-4 ">
+              <div className="flex gap-5 w-full items-center">
                 <PrimaryBtn
                   text={`Submit OTP`}
                   disabled={isOtpVerifyLoading}
                   width={"100%"}
-                  size={"2xl"}
-                  weight={"bold"}
+                  size={"xl"}
+                  weight={"semibold"}
                   type="submit"
                   isLoading={isOtpVerifyLoading}
                 />
@@ -123,8 +142,8 @@ const Page = () => {
                   text={`Resend OTP`}
                   disabled={isOtpResendLoading}
                   width={"100%"}
-                  size={"2xl"}
-                  weight={"bold"}
+                  size={"xl"}
+                  weight={"semibold"}
                   type="button"
                   isLoading={isOtpResendLoading}
                   onclick={() => handleOtpResend()}
@@ -138,4 +157,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default PrivateRoute(Page);
