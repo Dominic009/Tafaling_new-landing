@@ -12,7 +12,7 @@ const ChangePassword = () => {
         <InputField htmlFor="new-password" labelTitle="New password" type="password" name="new-password" />
 
         {/* Confirm Password */}
-        <InputField htmlFor="confirm-password" labelTitle="Confirm password" type="password" name="confirm-password" />
+        <InputField htmlFor="confirm-password" labelTitle="Confirm password" type="password" name="confirm-password"  />
 
         {/* Submit Button */}
         {/* <div className="mt-6">

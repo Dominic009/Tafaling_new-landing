@@ -45,9 +45,10 @@
 // export default ContentViewer;
 
 import Image from "next/legacy/image";
-import React from "react";
+import React, { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
+import ContentLoader from "../Loader/ContentLoader";
 
 interface ContentProps {
   onClose: () => void;
@@ -56,11 +57,14 @@ interface ContentProps {
 }
 
 const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
+  const [isLoading, setIsLoading] = useState(true);
   return (
     <div className="bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-16">
-      <div className="mx-auto w-[80%] h-[90vh] flex gap-1 border-4 border-white rounded-md">
+      <div className="mx-auto w-full lg:w-[80%] h-[85vh] flex flex-col lg:flex-row gap-1 border-2 border-white bg-black/80 rounded-md">
         {object ? (
           <div className=" lg:col-span-2 flex justify-center items-center relative scale-90 flex-1">
+            {/* Content loading */}
+            {isLoading && <ContentLoader />}
             {object.contentType === "image" ? (
               <div className="">
                 <Image
@@ -68,6 +72,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
                   src={object.postContent}
                   layout="fill"
                   objectFit="contain"
+                  onLoadingComplete={() => setIsLoading(false)}
                 />
               </div>
             ) : (
@@ -76,6 +81,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
                 width="400"
                 height="500"
                 controls
+                onCanPlay={() => setIsLoading(false)}
               ></video>
             )}
           </div>
@@ -84,8 +90,8 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
         )}
 
         {/* Interaction section */}
-        <div className="bg-[#f4f7f8] w-[25%] rounded-tr-sm rounded-br-sm p-4">
-          <div>
+        <div className="bg-[#f4f7f8] w-full lg:w-[25%] rounded-tr-sm rounded-br-sm p-4 relative">
+          <div className="py-2">
             {/* User Information */}
             <div className="flex items-center gap-2">
               <div className="flex items-center">
@@ -114,13 +120,13 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
               <p className="text-left leading-4">{object.caption}</p>
             </div>
           </div>
+          <button
+            onClick={onClose}
+            className={`absolute -top-[790px] -right-3 lg:-top-3 font-semibold text-red-600 bg-gray-200 px-3 py-1 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
+          >
+            X
+          </button>
         </div>
-        <button
-          onClick={onClose}
-          className={`absolute top-5 right-5 font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full hover:bg-red-600 hover:text-white`}
-        >
-          X
-        </button>
       </div>
     </div>
   );

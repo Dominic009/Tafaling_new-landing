@@ -142,6 +142,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import PostTimeConverter from "./PostTimeConverter";
 import ContentViewer from "./Content Viewer/ContentViewer";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
+import ContentLoader from "./Loader/ContentLoader";
 
 interface Post {
   profilePicture: string;
@@ -158,6 +159,7 @@ const UserPost: React.FC = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
   const [postContentType, setPostContentType] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -214,7 +216,8 @@ const UserPost: React.FC = () => {
           </div>
 
           {/* Content body */}
-          <div className="mt-2 cursor-pointer">
+          <div className="mt-2 cursor-pointer flex items-center justify-center">
+            {isLoading && <ContentLoader/>}
             {post.contentType === "image" ? (
               <Image
                 alt="Post content"
@@ -223,6 +226,8 @@ const UserPost: React.FC = () => {
                 height={600}
                 className="rounded-md h-[500px] object-cover hover:scale-105 custom-hover-img"
                 onClick={() => handleContentView(post)}
+                onLoadingComplete={() => setIsLoading(false)}
+                loading="lazy"
               />
             ) : (
               <video
@@ -231,6 +236,7 @@ const UserPost: React.FC = () => {
                 controls
                 className="rounded-md h-[500px]"
                 onClick={() => handleContentView(post)}
+                onCanPlay={() => setIsLoading(false)}
               >
                 <source src={post.postContent} type="video/mp4" />
                 Your browser does not support the video tag.

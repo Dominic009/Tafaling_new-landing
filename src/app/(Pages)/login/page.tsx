@@ -66,10 +66,10 @@ const Page = () => {
 
   return (
     <main className='flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]'>
-      <div className='opacity-20 absolute -left-52 scale-125'></div>
+      {/* <div className='opacity-20 absolute -left-52 scale-125 border'> asdasdasd</div> */}
 
       <div
-        className='grid grid-cols-1 lg:grid-cols-2 gap-24 w-full items-center justify-center'
+        className='grid grid-cols-1 lg:grid-cols-2 w-full items-center justify-center'
         style={{
           backgroundImage: `url('/Pattern 3.png')`,
           backgroundSize: '1700px',
@@ -95,7 +95,7 @@ const Page = () => {
         </div>
 
         {/* Rigth side */}
-        <div className='w-[90%] md:w-[70%] lg:max-w-[60%] mx-auto z-50 -mt-24 md:-mt-0  animate__animated animate__fadeIn'>
+        <div className='w-[90%] md:w-[70%] lg:max-w-[60%] mx-auto z-50 md:-mt-0  animate__animated animate__fadeIn'>
           <div className='bg-gray-900/30 py-10 rounded-xl flex flex-col items-center backdrop-blur-sm'>
             <h1 className='text-3xl text-white border-b-4 border-[#008EAD] mb-8'>
               Sign In
