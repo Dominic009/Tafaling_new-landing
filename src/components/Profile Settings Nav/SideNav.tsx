@@ -31,7 +31,7 @@ const SideNav = () => {
     },
     {
       name: "Edit Info",
-      path: "",
+      path: "/user-profile/settings/edit-info",
       //   icon: (
       //     <BsFillPeopleFill
       //       title='Requests'

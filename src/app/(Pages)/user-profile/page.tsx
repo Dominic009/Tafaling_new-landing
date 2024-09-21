@@ -222,7 +222,7 @@ const Page = () => {
               </div>
 
               <div className="flex items-center gap-5 w-[50%]">
-                <ActionBtn text="Edit Info" icon={MdOutlineEdit} add=""/>
+                <ActionBtn text="Edit Info" icon={MdOutlineEdit} add={'/user-profile/settings/edit-info'}/>
                 <ActionBtn text="Settings" icon={MdSettings} add={'/user-profile/settings'} />
               </div>
             </div>

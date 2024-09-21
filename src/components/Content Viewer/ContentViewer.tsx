@@ -57,10 +57,10 @@ interface ContentProps {
 
 const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
   return (
-    <div className="bg-black/70 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-16">
-      <div className="mx-auto w-full h-full grid lg:grid-cols-3 lg:gap-8">
+    <div className="bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-16">
+      <div className="mx-auto w-[80%] h-[90vh] flex gap-1 border-4 border-white rounded-md">
         {object ? (
-          <div className=" lg:col-span-2 flex justify-center items-center relative">
+          <div className=" lg:col-span-2 flex justify-center items-center relative scale-90 flex-1">
             {object.contentType === "image" ? (
               <div className="">
                 <Image
@@ -84,7 +84,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
         )}
 
         {/* Interaction section */}
-        <div className="w-full lg:w-[80%] mx-auto bg-[#f4f7f8] rounded-md p-4">
+        <div className="bg-[#f4f7f8] w-[25%] rounded-tr-sm rounded-br-sm p-4">
           <div>
             {/* User Information */}
             <div className="flex items-center gap-2">
