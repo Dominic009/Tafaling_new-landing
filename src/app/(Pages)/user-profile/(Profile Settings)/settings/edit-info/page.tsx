@@ -1,3 +1,4 @@
+'use client';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import React from 'react';
 
