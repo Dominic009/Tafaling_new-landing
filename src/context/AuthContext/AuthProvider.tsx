@@ -35,19 +35,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         dayjs.unix(decodedToken.exp as number).diff(dayjs()) < 1;
       console.log(isExpired);
 
-      const userData = decodedToken.user && decodedToken.user;
+      if (isExpired) {
+        setUser(null);
+        localStorage.removeItem('auth-token');
+        router.push('login');
+      } else {
+        const userData = decodedToken.user && decodedToken.user;
 
-      login({
-        user_name: userData.user_name,
-        email: userData.email,
-        cover_photo: userData.cover_photo,
-        profile_picture: userData.profile_picture,
-        name: userData.name,
-      });
+        login({
+          user_name: userData.user_name,
+          email: userData.email,
+          cover_photo: userData.cover_photo,
+          profile_picture: userData.profile_picture,
+          name: userData.name,
+        });
+      }
     }
 
     setIsAuthLoading(false);
-  }, [item]);
+  }, [item, router]);
 
   const login = (authData: AuthUser) => {
     setUser(authData);
