@@ -1,13 +1,19 @@
 'use client';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { AuthUser } from '@/types/Auth';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode, useContext, useEffect } from 'react';
 
 interface IAuthContext {
   user: AuthUser | null;
   login: (authData: AuthUser) => void;
   logout: () => void;
+  isAuthLoading: boolean;
+}
+
+interface CustomJwtPayload extends JwtPayload {
+  user: AuthUser;
 }
 
 const AuthContext = React.createContext<IAuthContext | undefined>(undefined);
@@ -17,7 +23,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const router = useRouter();
   const [user, setUser] = React.useState<AuthUser | null>(null);
-  const { removeItem } = useLocalStorage('auth-token');
+  const [isAuthLoading, setIsAuthLoading] = React.useState<boolean>(true);
+  const { item, removeItem } = useLocalStorage('auth-token');
+
+  useEffect(() => {
+    if (item) {
+      const accessToken = JSON.parse(item).accessT;
+      const decodedToken = jwtDecode<CustomJwtPayload>(accessToken);
+      const userData = decodedToken.user && decodedToken.user;
+
+      login({
+        user_name: userData.user_name,
+        email: userData.email,
+        cover_photo: userData.cover_photo,
+        profile_picture: userData.profile_picture,
+        name: userData.name,
+      });
+
+      // loading state for if user exists
+      setIsAuthLoading(false);
+    }
+  }, [item]);
 
   const login = (authData: AuthUser) => {
     setUser(authData);
@@ -30,7 +56,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
   //console.log(user)
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isAuthLoading }}>
       {children}
     </AuthContext.Provider>
   );
