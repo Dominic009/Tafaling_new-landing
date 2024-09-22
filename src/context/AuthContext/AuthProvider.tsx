@@ -28,10 +28,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const { item, removeItem } = useLocalStorage('auth-token');
 
   useEffect(() => {
-    if (user?.user_name) {
-      setIsAuthLoading(false);
-    }
-
     if (item) {
       const accessToken = JSON.parse(item).accessT;
       const decodedToken = jwtDecode<CustomJwtPayload>(accessToken);
@@ -48,11 +44,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         profile_picture: userData.profile_picture,
         name: userData.name,
       });
-
-      // loading state for if user exists
-      setIsAuthLoading(false);
     }
-  }, [item, user]);
+
+    setIsAuthLoading(false);
+  }, [item]);
 
   const login = (authData: AuthUser) => {
     setUser(authData);
