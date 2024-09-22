@@ -29,7 +29,7 @@ const page = () => {
     <div>
       {/* Change password */}
       <div className='border-b py-2'>
-        <Heading heading='Change Password' />
+        <Heading heading='Change Password'/>
         <ChangePassword />
       </div>
     </div>
