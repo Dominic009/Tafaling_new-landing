@@ -1,6 +1,7 @@
 'use client';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { AuthUser } from '@/types/Auth';
+import dayjs from 'dayjs';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
 import React, { ReactNode, useContext, useEffect } from 'react';
@@ -27,9 +28,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const { item, removeItem } = useLocalStorage('auth-token');
 
   useEffect(() => {
+    if (user?.user_name) {
+      setIsAuthLoading(false);
+    }
+
     if (item) {
       const accessToken = JSON.parse(item).accessT;
       const decodedToken = jwtDecode<CustomJwtPayload>(accessToken);
+      const isExpired =
+        dayjs.unix(decodedToken.exp as number).diff(dayjs()) < 1;
+      console.log(isExpired);
+
       const userData = decodedToken.user && decodedToken.user;
 
       login({
@@ -43,7 +52,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       // loading state for if user exists
       setIsAuthLoading(false);
     }
-  }, [item]);
+  }, [item, user]);
 
   const login = (authData: AuthUser) => {
     setUser(authData);

@@ -44,12 +44,12 @@ const Page = () => {
           name: data.data.user.name,
         });
 
-        setItem(
-          JSON.stringify({
-            accessT: data.data.access_token,
-            refreshT: data.data.refresh_token,
-          })
-        );
+        // setItem(
+        //   JSON.stringify({
+        //     accessT: data.data.access_token,
+        //     refreshT: data.data.refresh_token,
+        //   })
+        // );
 
         // check if email is verified, if not, redirect to email verification page
         if (data?.data?.user?.email_verified_at === null) {
