@@ -129,7 +129,7 @@ const Page = () => {
                     },
                   })}
                   type="email"
-                  className={`px-4 py-2 rounded-md outline-none w-full ${
+                  className={`px-4 py-2 rounded-md outline-none w-full focus:peer ${
                     errors.email ? "border-2 border-red-600" : ""
                   }`}
                 />

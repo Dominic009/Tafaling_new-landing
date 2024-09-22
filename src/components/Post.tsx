@@ -13,27 +13,26 @@ const Post: React.FC = () => {
 
   // Function to handle the opening of the modal for different tabs
   const openModalForTab = (tab: string | null) => {
-    setActiveTab(tab); 
+    setActiveTab(tab);
     setModal(true); // Open the modal
+    
   };
-
+  
   // Function to close the modal and reset the active tab
   const closeModal = () => {
     setModal(false);
     setActiveTab(null);
   };
 
-  console.log(activeTab)
-
   return (
     <div>
-      <div className="w-full mx-auto backdrop-blur-md rounded-xl p-3 shadow mb-6 bg-white">
+      <div className="w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white">
         <div>
           {/* User Profile and Post Button */}
           <div className="flex items-center gap-3 ">
             <Image
               alt="User DP"
-              src={ user?.profile_picture || '/ProfileDP/Dummy.png'}
+              src={user?.profile_picture || "/ProfileDP/Dummy.png"}
               width={50}
               height={50}
               className="mt-1 rounded-full"
@@ -50,9 +49,9 @@ const Post: React.FC = () => {
 
           {/* Interaction Buttons */}
           <ul className="grid grid-cols-3 text-gray-400">
-            <li
+            <button
               onClick={() => openModalForTab("photo-video")}
-              className="hover:bg-gray-100 px-4 rounded-full cursor-pointer flex items-center justify-center gap-1"
+              className={`hover:bg-gray-100 px-4 rounded-full cursor-pointer flex items-center justify-center gap-1`}
             >
               <Image
                 src={"/Icons/media.png"}
@@ -61,7 +60,7 @@ const Post: React.FC = () => {
                 alt="Media icon"
               />
               Photo/Video
-            </li>
+            </button>
             <li
               onClick={() => openModalForTab("location")}
               className="hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1"
@@ -91,7 +90,7 @@ const Post: React.FC = () => {
       </div>
 
       {/* Modal Content Based on Active Tab */}
-      <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
+      <Modal isOpen={modal} onClose={closeModal} width={"40%"}>
         {/* Default Modal for "Thinking about something...?" */}
         {!activeTab && <PostBody></PostBody>}
 
@@ -99,29 +98,6 @@ const Post: React.FC = () => {
         {activeTab === "photo-video" && (
           <div>
             <PostBody>
-              {/* old */}
-              {/* <div className="mt-2 mb-4 border border-dashed rounded-lg py-9 bg-blue-50">
-                <form
-                  action="/upload"
-                  method="post"
-                  encType="multipart/form-data"
-                  className=" flex flex-col gap-5 items-center justify-center"
-                >
-                  <label
-                    htmlFor="video-upload"
-                    className="text-gray-400 font-semibold text-xl"
-                  >
-                    Upload Photo/Video
-                  </label>
-                  <input
-                    type="file"
-                    id="video-upload"
-                    name="video"
-                    accept="video/* && image/*"
-                    required
-                  />
-                </form>
-              </div> */}
               {/* new */}
               <FileUploader></FileUploader>
             </PostBody>

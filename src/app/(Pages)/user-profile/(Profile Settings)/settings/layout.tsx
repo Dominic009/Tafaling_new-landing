@@ -9,7 +9,7 @@ const SettingsLayout = ({
 }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <div className="bg-[#f4f7f8] p-8">
-      <div className="border rounded-lg w-full mx-auto flex flex-col items-center justify-center py-6">
+      <div className="border rounded-lg mx-auto flex flex-col items-center justify-center py-6">
         <div className="w-[95%] mb-4 flex gap-3 items-center">
           <FaCogs className="text-5xl text-[#00B4DB]"></FaCogs>
           <div>

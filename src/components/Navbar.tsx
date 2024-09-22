@@ -155,9 +155,9 @@ const Navbar: React.FC = () => {
                     <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
                       Privacy
                     </li>
-                    <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
+                    <Link href={'/user-profile/settings'} className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
                       Settings
-                    </li>
+                    </Link>
                   </ul>
                   <button
                     onClick={handleLogoutUser}
