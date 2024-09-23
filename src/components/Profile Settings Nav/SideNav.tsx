@@ -4,6 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import { GrUserSettings } from "react-icons/gr";
+import { MdOutlinePrivacyTip, MdOutlineEdit } from "react-icons/md";
+import { RxHamburgerMenu } from "react-icons/rx";
+
 
 const SideNav = () => {
   const currentPath = usePathname();
@@ -11,38 +15,39 @@ const SideNav = () => {
   const routes = [
     {
       name: "General",
-      path: "/user-profile/settings/general",
-      //   icon: (
-      //     <TiHome
-      //       title='Home'
-      //       className='text-3xl  hover:text-white custom-hover'
-      //     />
-      //   ),
+      path: "/user-profile/settings",
+        icon: (
+          <GrUserSettings
+            title='Settings'
+            className='text-2xl hover:text-white custom-hover'
+          />
+        ),
     },
     {
       name: "Privacy",
       path: "/user-profile/settings/privacy",
-      //   icon: (
-      //     <FaRegNewspaper
-      //       title='News Feed'
-      //       className='text-2xl  hover:text-white custom-hover'
-      //     />
-      //   ),
+
+        icon: (
+          <MdOutlinePrivacyTip
+            title='News Feed'
+            className='text-2xl hover:text-white custom-hover'
+          />
+        ),
     },
     {
       name: "Edit Info",
-      path: "",
-      //   icon: (
-      //     <BsFillPeopleFill
-      //       title='Requests'
-      //       className='text-2xl  hover:text-white custom-hover'
-      //     />
-      //   ),
+      path: "/user-profile/settings/edit-info",
+        icon: (
+          <MdOutlineEdit
+            title='Requests'
+            className='text-2xl  hover:text-white custom-hover'
+          />
+        ),
     },
   ];
   return (
     <div
-      className=" w-[20%] bg-[#00274A] rounded-md py-4 px-2"
+      className=" w-[20%] bg-[#00274A] rounded-md py-4 px-2 relative"
       style={{
         backgroundImage: `url('/Pattern 3.png')`,
         backgroundSize: "1500px",
@@ -50,6 +55,9 @@ const SideNav = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
+      <div className="block lg:hidden absolute text-white right-2">
+        <RxHamburgerMenu className=""/>
+      </div>
       <div className="flex flex-col items-center justify-center mb-8">
         <div>
           <Image
@@ -72,9 +80,9 @@ const SideNav = () => {
               className={`${
                 isActive &&
                 "text-left font-semibold text-white bg-[#155a97] custom-hover py-2"
-              }  text-gray-400 hover:bg-[#0b467a] rounded-md px-2 w-[100%] custom-hover mb-5`}
+              }  text-gray-400 hover:bg-[#0b467a] rounded-md px-2 w-[100%] custom-hover mb-5 flex items-center gap-2`}
             >
-              {/* <span>{path.icon}</span> */}
+              <span>{path.icon}</span>
               <span>{path.name}</span>
             </Link>
           );

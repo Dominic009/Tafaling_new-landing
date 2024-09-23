@@ -3,7 +3,11 @@ import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import React from 'react';
 
 const page = () => {
-  return <div className='text-center'>There is nothing to show</div>;
+  return (
+    <div>
+      <h1>Request</h1>
+    </div>
+  );
 };
 
 export default PrivateRoute(page);
