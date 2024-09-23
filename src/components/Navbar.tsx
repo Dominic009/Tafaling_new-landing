@@ -11,6 +11,8 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { logoutUser } from '@/api/auth/auth';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import 'animate.css';
+import { getAccessToken } from '@/helpers/tokenStorage';
 
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -53,8 +55,7 @@ const Navbar: React.FC = () => {
 
   const handleLogoutUser = async () => {
     try {
-      let lsItem = item && JSON.parse(item).accessT;
-      const { data, status } = await logoutUser(lsItem);
+      const { data, status } = await logoutUser(getAccessToken());
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -137,7 +138,8 @@ const Navbar: React.FC = () => {
               onClick={() => setDropdown(!dropdown)}
             >
               <Image
-                src={ user?.profile_picture || '/ProfileDP/Dummy.png'}
+                // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                src={'/ProfileDP/Dummy.png'}
                 width={50}
                 height={50}
                 alt='User'
@@ -145,7 +147,7 @@ const Navbar: React.FC = () => {
               ></Image>
 
               {dropdown ? (
-                <div className='absolute top-14 right-4 bg-[#0d1f31] w-48 rounded-lg p-4 flex flex-col justify-between'>
+                <div className='absolute top-14 right-4 bg-[#0d1f31] w-48 rounded-lg p-4 flex flex-col justify-between animate__animated animate__fadeIn animate__faster'>
                   <ul className='font-semibold flex flex-col gap-2 text-gray-200'>
                     <Link href={'/user-profile'}>
                       <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
@@ -155,9 +157,12 @@ const Navbar: React.FC = () => {
                     <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
                       Privacy
                     </li>
-                    <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
+                    <Link
+                      href={'/user-profile/settings'}
+                      className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'
+                    >
                       Settings
-                    </li>
+                    </Link>
                   </ul>
                   <button
                     onClick={handleLogoutUser}

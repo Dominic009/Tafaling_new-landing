@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 function useLocalStorage(key: string) {
   const getItem = () => {
-    const storedItem = localStorage.getItem(key);
+    const storedItem =
+      typeof window !== 'undefined' && localStorage.getItem(key);
     return storedItem ? storedItem : null;
   };
 
