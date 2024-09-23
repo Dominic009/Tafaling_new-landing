@@ -23,6 +23,18 @@ export async function logoutUser(
     },
   });
 }
+export async function changePassword(
+  data: any,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('/auth/password-change', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'multipart/form-data',
+    },
+  });
+}
+
 // refetch user data
 export async function getAuthUser(
   token: string
