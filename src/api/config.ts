@@ -35,16 +35,22 @@ axiosClient.interceptors.request.use(
 
     if (!isExpired) return req;
 
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_TAFALING_API}/auth/refresh`,
-      {
+    const response = await axios
+      .get(`${process.env.NEXT_PUBLIC_TAFALING_API}/auth/refresh`, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getRefreshToken()}`,
         },
-      }
-    );
+      })
+      .catch(err => {
+        localStorage.removeItem('auth-token');
+        toast.error('session timeout, please login again');
+        setTimeout(() => {
+          window.location.href = 'login';
+        }, 2000);
+        return req;
+      });
 
     const { data } = await response.data;
     setTokenInLS(data);
