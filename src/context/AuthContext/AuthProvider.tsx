@@ -13,7 +13,7 @@ interface IAuthContext {
   isAuthLoading: boolean;
 }
 
-interface CustomJwtPayload extends JwtPayload {
+export interface AuthJwtPayload extends JwtPayload {
   user: AuthUser;
 }
 
@@ -30,10 +30,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     if (item) {
       const accessToken = JSON.parse(item).accessT;
-      const decodedToken = jwtDecode<CustomJwtPayload>(accessToken);
+      const decodedToken = jwtDecode<AuthJwtPayload>(accessToken);
       const isExpired =
         dayjs.unix(decodedToken.exp as number).diff(dayjs()) < 1;
-      console.log(isExpired);
+      // console.log(
+      //   `${isExpired === true ? 'token is expired' : 'token has validation'}`
+      // );
 
       if (isExpired) {
         setUser(null);

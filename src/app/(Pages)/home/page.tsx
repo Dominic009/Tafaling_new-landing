@@ -3,21 +3,14 @@
 import Post from '@/components/Post';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import UserPost from '@/components/UserPost';
-import { useAuth } from '@/context/AuthContext/AuthProvider';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useLayoutEffect } from 'react';
+import React from 'react';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { FaRegNewspaper } from 'react-icons/fa6';
 import { TiHome } from 'react-icons/ti';
 
 const page = () => {
-  const router = useRouter();
-  const { user } = useAuth();
-
-  // useLayoutEffect(() => {
-  //   console.log(user);
-  // }, [user]);
-
+  //const router = useRouter();
+  //const { user} = useAuth();
   return (
     <div>
       {/* Page Layout */}

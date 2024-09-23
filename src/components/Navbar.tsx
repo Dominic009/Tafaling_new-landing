@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { logoutUser } from '@/api/auth/auth';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { getAccessToken } from '@/helpers/tokenStorage';
 
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -53,8 +54,7 @@ const Navbar: React.FC = () => {
 
   const handleLogoutUser = async () => {
     try {
-      let lsItem = item && JSON.parse(item).accessT;
-      const { data, status } = await logoutUser(lsItem);
+      const { data, status } = await logoutUser(getAccessToken());
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -137,7 +137,8 @@ const Navbar: React.FC = () => {
               onClick={() => setDropdown(!dropdown)}
             >
               <Image
-                src={ user?.profile_picture || '/ProfileDP/Dummy.png'}
+                // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                src={'/ProfileDP/Dummy.png'}
                 width={50}
                 height={50}
                 alt='User'
@@ -155,7 +156,10 @@ const Navbar: React.FC = () => {
                     <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
                       Privacy
                     </li>
-                    <Link href={'/user-profile/settings'} className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
+                    <Link
+                      href={'/user-profile/settings'}
+                      className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'
+                    >
                       Settings
                     </Link>
                   </ul>
