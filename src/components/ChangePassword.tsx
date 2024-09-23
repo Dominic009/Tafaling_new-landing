@@ -4,7 +4,7 @@ import InputField from "./Input File/Text Input/InputField";
 const ChangePassword = () => {
   return (
     <div>
-      <form className="px-6 w-[50%]">
+      <form className="px-6 w-full lg:w-[50%]">
         {/* Old Password */}
         <InputField htmlFor="old-password" labelTitle="Old password" type="password" name="old-password" />
 
