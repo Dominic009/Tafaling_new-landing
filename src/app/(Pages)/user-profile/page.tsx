@@ -131,8 +131,7 @@ const Page = () => {
             </button>
           </div>
           <Image
-            // src={user?.cover_photo || '/Profile banner/banner.png'}
-            src={'/Profile banner/banner.png'}
+            src={user?.cover_photo || '/Profile banner/banner.png'}
             alt='Banner Image'
             layout='fill'
             objectFit='cover'
@@ -186,8 +185,7 @@ const Page = () => {
               </button>
             </div>
             <Image
-              // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
-              src={'/ProfileDP/Dummy.png'}
+              src={user?.profile_picture || '/ProfileDP/Dummy.png'}
               width={400}
               height={400}
               alt='User DP'
