@@ -7,19 +7,35 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
-import { forgotPassword, verifyForgetPasswordOTP } from "@/api/auth/auth";
+import {
+  forgotPassword,
+  resendForgetPasswordOTP,
+  resetPassword,
+  verifyForgetPasswordOTP,
+} from "@/api/auth/auth";
 import { AxiosError } from "axios";
+import OTPInput from "react-otp-input";
 
 const Page = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [validationToken, setValidationToken] = useState<string>("");
+
+  const [otp, setOtp] = useState<string>("");
   const [isForgetPasswordLoading, setIsForgetPasswordLoading] =
     useState<boolean>(false);
+  const [isOtpResendLoading, setOtpResendLoading] = useState<boolean>(false);
+  const [isOtpSubmitLoading, setOtpSubmitLoading] = useState<boolean>(false);
+  const [isSubmitPassword, setIsSubmitPasswordLoading] =
+    useState<boolean>(false);
+
   const [step, setStep] = useState(1);
 
   const {
     register,
-    handleSubmit,
+    handleSubmit,resetField,
+    setValue,
     watch,
     formState: { errors },
   } = useForm({ mode: "onSubmit" });
@@ -31,30 +47,29 @@ const Page = () => {
     const userData = {
       email: data.email,
     };
-    console.log(userData, "userData");
+
     try {
       const { data, status } = await forgotPassword(userData);
 
       console.log(data);
-      console.log(status);
-      // toast.success(data.message);
+      setEmail(userData.email);
+
+      setStep(2);
+      toast.success(data.message);
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
       console.log(error.response?.data.message);
       setIsForgetPasswordLoading(false);
     }
-
-    // toast.success("An OTP has been sent to your email");
-    setStep(2);
   };
 
   // OTP VERIFICATION
   const handleOtpSubmit = async (data: any) => {
-    setIsForgetPasswordLoading(true);
+    setOtpSubmitLoading(true);
 
     const userData = {
-      email: data.email,
+      email: email,
       otp: data.otp,
     };
     console.log(userData, "userData");
@@ -63,21 +78,66 @@ const Page = () => {
 
       console.log(data);
       console.log(status);
+      toast.success("OTP verified successfully");
+      setValidationToken(data.data.otpValidationToken);
+      setStep(3);
       // toast.success(data.message);
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
       console.log(error.response?.data.message);
-      setIsForgetPasswordLoading(false);
+      resetField("otp");
+      setOtpSubmitLoading(false);
     }
-
-    toast.success("OTP verified successfully");
-    setStep(3);
   };
 
-  const handlePasswordSubmit = () => {
-    toast.success("Password changed successfully!");
-    router.push("login");
+  // OTP RESEND
+  const handleOtpResend = async () => {
+    setOtpResendLoading(true);
+    const userData = {
+      email: email,
+    };
+    console.log(email);
+    try {
+      const { data, status } = await resendForgetPasswordOTP(userData);
+      console.log(data);
+      console.log(status);
+      toast.success(data.message);
+      setOtpResendLoading(false);
+    } catch (e) {
+      const error = e as AxiosError<any>;
+      toast.error(error.response?.data.message);
+
+      console.log(error);
+      console.log(error.response?.data.message);
+      setOtpResendLoading(false);
+    }
+  };
+
+  // SUBMIT PASSWORD
+  const handlePasswordSubmit = async (data: any) => {
+    setIsSubmitPasswordLoading(true);
+    const userData = {
+      email: email,
+      token: validationToken,
+      password: data.newPassword,
+      password_confirmation: data.confirmPassword,
+    };
+    console.log(userData);
+    try {
+      const { data, status } = await resetPassword(userData);
+      console.log(data);
+      console.log(status);
+      toast.success(data.message);
+      setIsSubmitPasswordLoading(false);
+    } catch (e) {
+      const error = e as AxiosError<any>;
+      toast.error(error.response?.data.message);
+
+      console.log(error);
+      console.log(error.response?.data.message);
+      setIsSubmitPasswordLoading(false);
+    }
   };
 
   return (
@@ -153,22 +213,22 @@ const Page = () => {
                 onSubmit={handleSubmit(handleOtpSubmit)}
                 className="flex flex-col gap-5 w-[80%]"
               >
-                <input
-                  {...register("otp", {
-                    required: "OTP is required",
-                    minLength: {
-                      value: 6,
-                      message: "OTP must be 6 characters",
-                    },
-                    maxLength: {
-                      value: 6,
-                      message: "OTP must be 6 characters",
-                    },
-                  })}
-                  placeholder="Enter OTP"
-                  className={`px-4 py-2 rounded-md outline-none w-full ${
-                    errors.otp ? "border-2 border-red-600" : ""
-                  }`}
+                <OTPInput
+                  value={otp}
+                  onChange={(value: string) => {
+                    setOtp(value);
+                    setValue("otp", value);
+                  }}
+                  numInputs={6}
+                  inputStyle={{
+                    width: "2.5rem",
+                    height: "2.5rem",
+                    margin: "0.5rem",
+                    fontSize: "1rem",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(0,0,0,0.3)",
+                  }}
+                  renderInput={(props) => <input {...props} />}
                 />
                 {errors.otp && (
                   <span className="text-red-300">
@@ -179,22 +239,22 @@ const Page = () => {
                 <div className="grid grid-cols-2 gap-4 ">
                   <PrimaryBtn
                     text={`Submit OTP`}
-                    disabled={isForgetPasswordLoading}
+                    disabled={isOtpSubmitLoading}
                     width={"100%"}
-                    size={"2xl"}
-                    weight={"bold"}
+                    size={"xl"}
+                    weight={"semibold"}
                     type="submit"
-                    isLoading={isForgetPasswordLoading}
+                    isLoading={isOtpSubmitLoading}
                   />
                   <PrimaryBtn
                     text={`Resend OTP`}
-                    disabled={isForgetPasswordLoading}
+                    disabled={isOtpResendLoading}
                     width={"100%"}
-                    size={"2xl"}
-                    weight={"bold"}
+                    size={"xl"}
+                    weight={"semibold"}
                     type="button"
-                    isLoading={isForgetPasswordLoading}
-                    // onclick={() => handleEmailSubmit()}
+                    isLoading={isOtpResendLoading}
+                    onclick={() => handleOtpResend()}
                   />
                 </div>
               </form>
@@ -260,12 +320,12 @@ const Page = () => {
 
                 <PrimaryBtn
                   text={`Change Password`}
-                  disabled={isForgetPasswordLoading}
+                  disabled={isSubmitPassword}
                   width={"100%"}
                   size={"2xl"}
                   weight={"bold"}
                   type="submit"
-                  isLoading={isForgetPasswordLoading}
+                  isLoading={isSubmitPassword}
                 />
               </form>
             )}
