@@ -12,6 +12,7 @@ const ChangePassword = () => {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
     watch,
   } = useForm();
@@ -39,6 +40,10 @@ const ChangePassword = () => {
 
       toast.success(data?.message);
       setIsChangePasswordLoading(false);
+
+      resetField("oldPassword");
+      resetField("newPassword");
+      resetField("confirmPassword");
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
@@ -58,7 +63,7 @@ const ChangePassword = () => {
         {/* Old Password */}
         <div className="relative">
           <input
-            placeholder="Enter Old Password"
+            placeholder=""
             type="password"
             {...register("oldPassword", {
               required: "Old password is required",
@@ -67,10 +72,16 @@ const ChangePassword = () => {
                 message: "Old password must be at least 6 characters",
               },
             })}
-            className={`px-4 py-2 rounded-md  w-full ${
+            className={`block px-4 py-2 w-[70%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
               errors.oldPassword ? "border-2 border-red-600" : ""
             }`}
           />
+          <label
+            htmlFor="oldPassword"
+            className="absolute text-sm text-gray-700 font-medium duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2 peer-focus:scale-80 peer-focus:-translate-y-4 left-1"
+          >
+            Enter Old Password
+          </label>
           {errors.oldPassword && (
             <p className="text-red-300 mt-1">
               {String(errors.oldPassword.message)}
@@ -81,7 +92,7 @@ const ChangePassword = () => {
         {/* New Password */}
         <div className="relative">
           <input
-            placeholder="Enter New Password"
+            placeholder=""
             type={isOpen ? "text" : "password"}
             {...register("newPassword", {
               required: "New password is required",
@@ -90,19 +101,25 @@ const ChangePassword = () => {
                 message: "New password must be at least 6 characters",
               },
             })}
-            className={`px-4 py-2 rounded-md outline-none w-full ${
+            className={`block px-4 py-2 w-[70%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
               errors.newPassword ? "border-2 border-red-600" : ""
             }`}
           />
+          <label
+            htmlFor="oldPassword"
+            className="absolute text-sm text-gray-700 font-medium duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2 peer-focus:scale-80 peer-focus:-translate-y-4 left-1"
+          >
+            Enter New Password
+          </label>
           {isOpen ? (
             <IoEyeOutline
               onClick={() => setIsOpen(!isOpen)}
-              className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
+              className="absolute w-[70%] right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
             />
           ) : (
             <IoEyeOffOutline
               onClick={() => setIsOpen(!isOpen)}
-              className="absolute right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
+              className="absolute w-[70%] right-3 top-3 cursor-pointer text-xl text-[#00B4DB]"
             />
           )}
           {errors.newPassword && (
@@ -115,17 +132,23 @@ const ChangePassword = () => {
         {/* Confirm Password */}
         <div className="relative">
           <input
-            placeholder="Confirm New Password"
+            placeholder=""
             type="password"
             {...register("confirmPassword", {
               required: "Please confirm your new password",
               validate: (value) =>
                 value === newPassword || "Passwords do not match",
             })}
-            className={`px-4 py-2 rounded-md outline-none w-full ${
+            className={`block px-4 py-2 w-[70%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
               errors.confirmPassword ? "border-2 border-red-600" : ""
             }`}
           />
+          <label
+            htmlFor="confirmPassword"
+            className="absolute text-sm text-gray-700 font-medium duration-300 transform -translate-y-4 scale-75 top-1 z-10 origin-[0] bg-white px-2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-2 peer-focus:scale-80 peer-focus:-translate-y-4 left-1"
+          >
+            Confirm New Password
+          </label>
           {errors.confirmPassword && (
             <p className="text-red-300 mt-1">
               {String(errors.confirmPassword.message)}
@@ -137,9 +160,9 @@ const ChangePassword = () => {
         <PrimaryBtn
           text={"Change Password"}
           disabled={isChangePasswordLoading}
-          width={"100%"}
-          size={"2xl"}
-          weight={"bold"}
+          width={"70%"}
+          size={"xl"}
+          weight={"semibold"}
           type="submit"
           isLoading={isChangePasswordLoading}
         />
