@@ -34,7 +34,8 @@ const Page = () => {
 
   const {
     register,
-    handleSubmit,resetField,
+    handleSubmit,
+    resetField,
     setValue,
     watch,
     formState: { errors },
@@ -63,6 +64,7 @@ const Page = () => {
       setIsForgetPasswordLoading(false);
     }
   };
+  
 
   // OTP VERIFICATION
   const handleOtpSubmit = async (data: any) => {
@@ -235,7 +237,6 @@ const Page = () => {
                     {String(errors.otp.message)}
                   </span>
                 )}
-
                 <div className="grid grid-cols-2 gap-4 ">
                   <PrimaryBtn
                     text={`Submit OTP`}
