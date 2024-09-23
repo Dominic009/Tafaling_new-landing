@@ -22,7 +22,7 @@ const InputField: React.FC<InputFieldProps> = ({
           type={type}
           name={name}
           required
-          className="block px-4 py-2 w-[70%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer"
+          className="block px-4 py-2 w-[100%] lg:w-[70%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer"
           placeholder={""}
         />
         <label
