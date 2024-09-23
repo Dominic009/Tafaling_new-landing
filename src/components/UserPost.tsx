@@ -197,7 +197,8 @@ const UserPost: React.FC = () => {
             <div>
               <Image
                 alt='User DP'
-                src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                src={'/ProfileDP/Dummy.png'}
                 width={65}
                 height={65}
                 className='mt-1 rounded-full'

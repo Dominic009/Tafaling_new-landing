@@ -33,7 +33,8 @@ const Post: React.FC = () => {
           <div className='flex items-center gap-3 '>
             <Image
               alt='User DP'
-              src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+              // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+              src={'/ProfileDP/Dummy.png'}
               width={50}
               height={50}
               className='mt-1 rounded-full'
