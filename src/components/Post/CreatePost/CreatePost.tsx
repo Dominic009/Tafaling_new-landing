@@ -142,7 +142,7 @@ const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
 
                 <label
                   onClick={() => handleRemovePreview(index)}
-                  className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-4 right-2'
+                  className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-4 right-2 cursor-pointer'
                 >
                   X
                 </label>
