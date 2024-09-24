@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import PrimaryBtn from "@/components/PrimaryBtn";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
@@ -29,6 +29,8 @@ const Page = () => {
   const [isSubmitPassword, setIsSubmitPasswordLoading] =
     useState<boolean>(false);
   const [step, setStep] = useState(1);
+  const [timeLeft, setTimeLeft] = useState<number>(0);
+  const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
 
   const {
     register,
@@ -53,6 +55,10 @@ const Page = () => {
       setEmail(userData.email);
       setStep(2);
       toast.success(data.message);
+      // set otp timer
+      const otpTimeInSeconds = data.data.otpValidationTime * 60;
+      setTimeLeft(otpTimeInSeconds);
+      setIsTimerActive(true);
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
@@ -94,6 +100,11 @@ const Page = () => {
       console.log(data);
       toast.success(data.message);
       setOtpResendLoading(false);
+
+      // Restart OTP timer
+      const otpTimeInSeconds = data.data.otpValidationTime * 60;
+      setTimeLeft(otpTimeInSeconds);
+      setIsTimerActive(true);
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
@@ -122,6 +133,27 @@ const Page = () => {
     }
   };
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (isTimerActive && timeLeft > 0) {
+      timer = setTimeout(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      setIsTimerActive(false); // Stop the timer when it hits 0
+    }
+
+    return () => clearTimeout(timer);
+  }, [timeLeft, isTimerActive]);
+
+  // Format time in mm:ss format
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+  };
+
   return (
     <main className="flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]">
       <div
@@ -134,7 +166,7 @@ const Page = () => {
         }}
       >
         <div className="z-50 flex flex-col items-center justify-center lg:border-r scale-50 lg:scale-100 h-[50%] ">
-          <h1 className="font-semibold text-[#08B7EB] text-4xl mb-3">
+          <h1 className="font-semimedium text-[#08B7EB] text-4xl mb-3">
             Welcome to
           </h1>
           <Link href={"/"}>
@@ -182,8 +214,8 @@ const Page = () => {
                   text={`Request OTP`}
                   disabled={isForgetPasswordLoading}
                   width={"100%"}
-                  size={"2xl"}
-                  weight={"bold"}
+                  size={"base"}
+                  weight={"semibold"}
                   type="submit"
                   isLoading={isForgetPasswordLoading}
                 />
@@ -235,16 +267,18 @@ const Page = () => {
                     text={`Submit OTP`}
                     disabled={isOtpSubmitLoading}
                     width={"100%"}
-                    size={"xl"}
+                    size={"base"}
                     weight={"semibold"}
                     type="submit"
                     isLoading={isOtpSubmitLoading}
                   />
                   <PrimaryBtn
-                    text={`Resend OTP`}
-                    disabled={isOtpResendLoading}
+                    text={`Resend OTP ${
+                      isTimerActive ? `(${formatTime(timeLeft)})` : ""
+                    }`}
+                    disabled={isTimerActive || isOtpResendLoading}
                     width={"100%"}
-                    size={"xl"}
+                    size={"base"}
                     weight={"semibold"}
                     type="button"
                     isLoading={isOtpResendLoading}
@@ -317,8 +351,8 @@ const Page = () => {
                   text={`Change Password`}
                   disabled={isSubmitPassword}
                   width={"100%"}
-                  size={"2xl"}
-                  weight={"bold"}
+                  size={"base"}
+                  weight={"semibold"}
                   type="submit"
                   isLoading={isSubmitPassword}
                 />
@@ -328,7 +362,7 @@ const Page = () => {
 
           <h2 className="mt-7 text-white text-center text-xl font-light">
             New to Tafaling?{" "}
-            <Link href="/register" className="text-[#025C70] font-semibold">
+            <Link href="/register" className="text-[#025C70] font-semimedium">
               JOIN NOW
             </Link>
           </h2>

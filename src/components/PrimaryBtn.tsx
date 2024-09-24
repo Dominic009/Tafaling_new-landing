@@ -27,7 +27,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
 }) => {
   const bgColor = `${disabled ? 'bg-[#0b819c]' : 'bg-[#00B4DB]'}`;
   const bgHoverColor = `${
-    disabled ? 'hover:bg-[#0b819c]' : 'hover:bg-[#10a6c8]'
+    disabled ? 'hover:bg-[#0b819c] cursor-not-allowed' : 'hover:bg-[#10a6c8]'
   }`;
 
   return (
@@ -36,6 +36,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
       style={{ width }}
       onClick={onclick}
       type={type}
+      disabled={disabled}
     >
       {icon && (
         <Image
