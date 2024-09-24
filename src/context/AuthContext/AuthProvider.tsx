@@ -33,9 +33,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const decodedToken = jwtDecode<AuthJwtPayload>(accessToken);
       const isExpired =
         dayjs.unix(decodedToken.exp as number).diff(dayjs()) < 1;
-      // console.log(
-      //   `${isExpired === true ? 'token is expired' : 'token has validation'}`
-      // );
+      console.log(
+        `${isExpired === true ? 'token is expired' : 'token is valid'}`
+      );
 
       if (isExpired) {
         setUser(null);

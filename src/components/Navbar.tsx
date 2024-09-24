@@ -139,7 +139,7 @@ const Navbar: React.FC = () => {
             >
               <Image
                 // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
-                src={'/ProfileDP/Dummy.png'}
+                src={ user?.profile_picture || '/ProfileDP/Dummy.png'}
                 width={50}
                 height={50}
                 alt='User'

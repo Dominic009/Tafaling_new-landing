@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import Post from '@/components/Post';
+import MainPost from '@/components/Post/MainPost';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import UserPost from '@/components/UserPost';
 import React from 'react';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { FaRegNewspaper } from 'react-icons/fa6';
 import { TiHome } from 'react-icons/ti';
+import NextNProgress from 'nextjs-progressbar';
 
 const page = () => {
   //const router = useRouter();
@@ -18,11 +20,11 @@ const page = () => {
         <div className='h-[80vh] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl '>
           Left Section
         </div>
-
+        <NextNProgress options={{ easing: 'ease', speed: 500 }} />
         <div className='lg:col-span-2 py-6 relative'>
           {/* Create Post section */}
           <div>
-            <Post></Post>
+            <MainPost></MainPost>
           </div>
           {/* User Posts */}
           <div>
