@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext/AuthProvider";
 import { Toaster } from "react-hot-toast";
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ["latin"] });
 const blinker = Blinker({
@@ -30,7 +31,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
           <div className="sticky top-0 z-50 w-full">
             <Navbar></Navbar>
           </div>
-
+          <NextTopLoader showSpinner={false}/>
           {children}
           <Toaster />
         </body>

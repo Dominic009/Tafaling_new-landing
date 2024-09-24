@@ -2,16 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Custom class for smooth hovering */
 .custom-hover {
-    transition: 200ms ease-in-out;
+  transition: 200ms ease-in-out;
 }
 
 .custom-hover-img {
-    transition: 500ms ease-in-out;
+  transition: 500ms ease-in-out;
 }
 
 .no-scroll {
-    overflow: hidden;
+  overflow: hidden;
 }

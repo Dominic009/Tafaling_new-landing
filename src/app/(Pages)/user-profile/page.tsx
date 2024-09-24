@@ -13,12 +13,14 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import toast from 'react-hot-toast';
 import { getAuthUser } from '@/api/auth/auth';
 import { AxiosError } from 'axios';
+import ContentLoader from '@/components/Loader/ContentLoader';
 
 const Page = () => {
   const { user, login } = useAuth();
   const [modalProfilePicture, setModalProfilePicture] =
     useState<boolean>(false);
   const [modalCoverPhoto, setModalCoverPhoto] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { item: accessToken } = useLocalStorage('auth-token');
 
   const closeModalProfilePicture = () => {
@@ -120,7 +122,7 @@ const Page = () => {
         {/* Timeline IMG */}
         <div className='relative h-[240px] md:h-[300px] lg:h-[450px] group transition ease-in-out duration-500'>
           {/* overlay div */}
-          <div className='w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg'></div>
+          <div className='w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-b-lg'></div>
           {/* Change timeline image button */}
           <div className='absolute bottom-6 right-6 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible'>
             <button
@@ -135,8 +137,10 @@ const Page = () => {
             alt='Banner Image'
             layout='fill'
             objectFit='cover'
-            className=' rounded-b-lg '
-          />
+            className=' rounded-b-lg'
+            onLoadingComplete={() => setIsLoading(false)}
+            />
+            { isLoading && <ContentLoader/> }
         </div>
         {/* modal for profile picture upload */}
         <Modal
@@ -191,6 +195,7 @@ const Page = () => {
               alt='User DP'
               objectFit='fill'
               className='bottom-0 rounded-lg drop-shadow-md z-30 group'
+              onLoadingComplete={() => setIsLoading(false)}
             ></Image>
           </div>
           <div className='grid'>
