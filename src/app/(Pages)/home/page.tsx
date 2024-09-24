@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import Post from '@/components/Post';
+import MainPost from '@/components/Post/MainPost';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import UserPost from '@/components/UserPost';
 import React from 'react';
@@ -22,7 +23,7 @@ const page = () => {
         <div className='lg:col-span-2 py-6 relative'>
           {/* Create Post section */}
           <div>
-            <Post></Post>
+            <MainPost></MainPost>
           </div>
           {/* User Posts */}
           <div>
