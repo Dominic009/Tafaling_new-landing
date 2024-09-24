@@ -143,6 +143,7 @@ import PostTimeConverter from './PostTimeConverter';
 import ContentViewer from './Content Viewer/ContentViewer';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import ContentLoader from './Loader/ContentLoader';
+import SkeletonLoader from '@/app/loading';
 
 interface Post {
   profilePicture: string;
@@ -160,7 +161,7 @@ const UserPost: React.FC = () => {
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
   const [postContentType, setPostContentType] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useAuth();
+  const { user, isAuthLoading } = useAuth();
 
   useEffect(() => {
     fetch('data.json')
@@ -189,9 +190,10 @@ const UserPost: React.FC = () => {
     <div>
       {posts.map((post, idx) => (
         <div
-          key={idx}
-          className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow'
+        key={idx}
+        className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow'
         >
+          {isLoading && <SkeletonLoader/>}
           {/* Header */}
           <div className='flex items-center'>
             <div>
