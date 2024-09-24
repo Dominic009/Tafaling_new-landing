@@ -1,13 +1,16 @@
+import { createUserPost } from '@/api/posts/posts';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
+import { getAccessToken } from '@/helpers/tokenStorage';
 import { FileInput, Label } from 'flowbite-react';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 interface PostProps {
   modal?: React.ReactNode;
+  setModal: Dispatch<SetStateAction<boolean>>;
 }
 
 interface CreatePostType {
@@ -15,7 +18,7 @@ interface CreatePostType {
   file: string | any;
 }
 
-const CreatePost: React.FC<PostProps> = ({ modal }) => {
+const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
   const [previews, setPreviews] = useState<{ url: string; type: string }[]>([]);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -65,7 +68,7 @@ const CreatePost: React.FC<PostProps> = ({ modal }) => {
     }
   };
 
-  const createPostHandler = (data: CreatePostType) => {
+  const createPostHandler = async (data: CreatePostType) => {
     if (!data.file && !data.post.length) {
       toast.error('Can not create empty post!');
       return;
@@ -76,7 +79,20 @@ const CreatePost: React.FC<PostProps> = ({ modal }) => {
     formData.append('privacy_id', '1');
     // console.log(data);
     for (let key in data.file) {
-      formData.append(`attachments[${key}]`, data.file[key]);
+      if (typeof data.file[key] === 'object') {
+        formData.append(`attachments[${key}]`, data.file[key]);
+      }
+    }
+
+    try {
+      const { data, status } = await createUserPost(formData, getAccessToken());
+      if (status === 201) {
+        toast.success('Post created successfully!');
+        setModal(false);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Post creation failed');
     }
 
     // Log formData entries

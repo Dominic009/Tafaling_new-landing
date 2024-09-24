@@ -85,7 +85,7 @@ const MainPost = () => {
 
       {/* Post Modal */}
       <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
-        <CreatePost modal={modal} />
+        <CreatePost modal={modal} setModal={setModal}/>
       </Modal>
     </div>
   );
