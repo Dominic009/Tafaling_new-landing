@@ -44,7 +44,7 @@ const MainPost = () => {
           {/* Interaction Buttons */}
           <ul className='grid grid-cols-3 text-gray-400'>
             <button
-              //   onClick={() => openModalForTab('photo-video')}
+              onClick={() => openModalForTab(null)}
               className={`hover:bg-gray-100 px-4 rounded-full cursor-pointer flex items-center justify-center gap-1`}
             >
               <Image
