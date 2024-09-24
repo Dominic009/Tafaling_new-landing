@@ -1,7 +1,23 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from '../Modal/Modal';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import CreatePost from './CreatePost/CreatePost';
 
 const MainPost = () => {
+  const [modal, setModal] = useState<boolean>(false);
+  const { user } = useAuth();
+
+  const openModalForTab = (tab: string | null) => {
+    // setActiveTab(tab);
+    setModal(true); // Open the modal
+  };
+
+  const closeModal = () => {
+    setModal(false);
+    // setActiveTab(null);
+  };
+
   return (
     <div>
       <div className='w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white'>
@@ -10,14 +26,13 @@ const MainPost = () => {
           <div className='flex items-center gap-3 '>
             <Image
               alt='User DP'
-              // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
-              src={'/ProfileDP/Dummy.png'}
+              src={user?.profile_picture || '/ProfileDP/Dummy.png'}
               width={50}
               height={50}
               className='mt-1 rounded-full'
             />
             <button
-              //   onClick={() => openModalForTab(null)}
+              onClick={() => openModalForTab(null)}
               className='text-gray-400 font-light w-full outline-none bg-gray-100 px-4 py-2 rounded-full text-left transition duration-300 ease-in-out'
             >
               Thinking about something...?
@@ -67,6 +82,11 @@ const MainPost = () => {
           </ul>
         </div>
       </div>
+
+      {/* Post Modal */}
+      <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
+        <CreatePost modal={modal} />
+      </Modal>
     </div>
   );
 };
