@@ -1,5 +1,5 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import PrimaryBtn from "@/components/PrimaryBtn";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +21,6 @@ const Page = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [validationToken, setValidationToken] = useState<string>("");
-
   const [otp, setOtp] = useState<string>("");
   const [isForgetPasswordLoading, setIsForgetPasswordLoading] =
     useState<boolean>(false);
@@ -29,65 +28,56 @@ const Page = () => {
   const [isOtpSubmitLoading, setOtpSubmitLoading] = useState<boolean>(false);
   const [isSubmitPassword, setIsSubmitPasswordLoading] =
     useState<boolean>(false);
-
   const [step, setStep] = useState(1);
 
   const {
     register,
     handleSubmit,
     resetField,
-    setValue,
+    control,
     watch,
     formState: { errors },
   } = useForm({ mode: "onSubmit" });
+
   const watchNewPassword = watch("newPassword");
+
   // SEND OTP
   const handleEmailSubmit = async (data: any) => {
     setIsForgetPasswordLoading(true);
-
     const userData = {
       email: data.email,
     };
-
     try {
       const { data, status } = await forgotPassword(userData);
-
       console.log(data);
       setEmail(userData.email);
-
       setStep(2);
       toast.success(data.message);
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
-      console.log(error.response?.data.message);
+
       setIsForgetPasswordLoading(false);
     }
   };
-  
 
   // OTP VERIFICATION
   const handleOtpSubmit = async (data: any) => {
     setOtpSubmitLoading(true);
-
     const userData = {
       email: email,
       otp: data.otp,
     };
-    console.log(userData, "userData");
     try {
       const { data, status } = await verifyForgetPasswordOTP(userData);
-
-      console.log(data);
-      console.log(status);
       toast.success("OTP verified successfully");
       setValidationToken(data.data.otpValidationToken);
       setStep(3);
+      console.log(data);
       // toast.success(data.message);
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
-      console.log(error.response?.data.message);
       resetField("otp");
       setOtpSubmitLoading(false);
     }
@@ -99,19 +89,14 @@ const Page = () => {
     const userData = {
       email: email,
     };
-    console.log(email);
     try {
       const { data, status } = await resendForgetPasswordOTP(userData);
       console.log(data);
-      console.log(status);
       toast.success(data.message);
       setOtpResendLoading(false);
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
-
-      console.log(error);
-      console.log(error.response?.data.message);
       setOtpResendLoading(false);
     }
   };
@@ -125,19 +110,14 @@ const Page = () => {
       password: data.newPassword,
       password_confirmation: data.confirmPassword,
     };
-    console.log(userData);
     try {
       const { data, status } = await resetPassword(userData);
-      console.log(data);
-      console.log(status);
       toast.success(data.message);
+      router.push("login");
       setIsSubmitPasswordLoading(false);
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
-
-      console.log(error);
-      console.log(error.response?.data.message);
       setIsSubmitPasswordLoading(false);
     }
   };
@@ -213,31 +193,44 @@ const Page = () => {
             {step === 2 && (
               <form
                 onSubmit={handleSubmit(handleOtpSubmit)}
-                className="flex flex-col gap-5 w-[80%]"
+                className="flex flex-col gap-5 items-center"
               >
-                <OTPInput
-                  value={otp}
-                  onChange={(value: string) => {
-                    setOtp(value);
-                    setValue("otp", value);
+                <Controller
+                  name="otp"
+                  control={control}
+                  rules={{
+                    required: "OTP is required",
+                    validate: (value) =>
+                      value.length === 6 || "OTP must be 6 characters long",
                   }}
-                  numInputs={6}
-                  inputStyle={{
-                    width: "2.5rem",
-                    height: "2.5rem",
-                    margin: "0.5rem",
-                    fontSize: "1rem",
-                    borderRadius: "8px",
-                    border: "1px solid rgba(0,0,0,0.3)",
-                  }}
-                  renderInput={(props) => <input {...props} />}
+                  render={({ field }) => (
+                    <OTPInput
+                      value={field.value}
+                      onChange={(value: string) => {
+                        setOtp(value);
+                        field.onChange(value);
+                      }}
+                      numInputs={6}
+                      inputStyle={{
+                        width: "2.5rem",
+                        height: "2.5rem",
+                        margin: "0.5rem",
+                        fontSize: "1rem",
+                        borderRadius: "8px",
+                        border: "1px solid rgba(0,0,0,0.3)",
+                      }}
+                      renderInput={(props) => <input {...props} />}
+                    />
+                  )}
                 />
+
                 {errors.otp && (
                   <span className="text-red-300">
-                    {String(errors.otp.message)}
+                    {errors.otp.message as string}
                   </span>
                 )}
-                <div className="grid grid-cols-2 gap-4 ">
+
+                <div className="grid grid-cols-2 gap-4 w-full">
                   <PrimaryBtn
                     text={`Submit OTP`}
                     disabled={isOtpSubmitLoading}
@@ -261,6 +254,7 @@ const Page = () => {
               </form>
             )}
 
+            {/* step password submit */}
             {step === 3 && (
               <form
                 onSubmit={handleSubmit(handlePasswordSubmit)}
