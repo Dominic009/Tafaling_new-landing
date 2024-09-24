@@ -151,66 +151,68 @@ const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
           </div>
         </div>
       )}
-      {previews.length === 0 && (
-        <div className='flex flex-col items-center justify-center w-full'>
-          <Label
-            htmlFor='dropzone-file'
-            className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-[#00B4DB] bg-gray-50 hover:bg-blue-100 custom-hover hover:text-white ${
-              previews.length > 0 ? 'h-12' : 'h-64'
-            }`}
+      <div
+        className={`flex flex-col items-center justify-center w-full ${
+          previews.length && 'mt-3'
+        }`}
+      >
+        <Label
+          htmlFor='dropzone-file'
+          className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-[#00B4DB] bg-gray-50 hover:bg-blue-100 custom-hover hover:text-white ${
+            previews.length > 0 ? 'h-12' : 'h-64'
+          }`}
+        >
+          <div
+            className={`flex flex-col items-center justify-center ${
+              previews.length > 0 ? 'pb-0' : 'pb-6'
+            } pt-5`}
           >
-            <div
-              className={`flex flex-col items-center justify-center ${
-                previews.length > 0 ? 'pb-0' : 'pb-6'
-              } pt-5`}
+            <svg
+              className='mb-4 h-8 w-8 text-[#00B4DB]'
+              aria-hidden='true'
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 20 16'
             >
-              <svg
-                className='mb-4 h-8 w-8 text-[#00B4DB]'
-                aria-hidden='true'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 20 16'
-              >
-                <path
-                  stroke='currentColor'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2'
-                />
-              </svg>
-              <div className={`${previews.length > 0 ? 'hidden' : 'block'}`}>
-                <p className='mb-2 text-sm text-gray-500'>
-                  <span className='font-semibold'>Click to upload</span> or drag
-                  and drop
-                </p>
-                <p className='text-xs text-gray-500'>
-                  SVG, PNG, JPG, GIF, or MP4 (MAX. 800x400px)
-                </p>
-              </div>
+              <path
+                stroke='currentColor'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2'
+              />
+            </svg>
+            <div className={`${previews.length > 0 ? 'hidden' : 'block'}`}>
+              <p className='mb-2 text-sm text-gray-500'>
+                <span className='font-semibold'>Click to upload</span> or drag
+                and drop
+              </p>
+              <p className='text-xs text-gray-500'>
+                SVG, PNG, JPG, GIF, or MP4 (MAX. 800x400px)
+              </p>
             </div>
+          </div>
 
-            <Controller
-              name='file'
-              control={control}
-              defaultValue={''}
-              render={({ field }) => (
-                <FileInput
-                  id='dropzone-file'
-                  ref={fileInputRef} // Attach ref to the file input
-                  className='hidden'
-                  onChange={e => {
-                    field.onChange(e.target.files);
-                    handleFileChange(e);
-                  }} // Capture file input change
-                  multiple // Enable multiple file uploads
-                  accept='video/*, image/*'
-                />
-              )}
-            ></Controller>
-          </Label>
-        </div>
-      )}
+          <Controller
+            name='file'
+            control={control}
+            defaultValue={''}
+            render={({ field }) => (
+              <FileInput
+                id='dropzone-file'
+                ref={fileInputRef} // Attach ref to the file input
+                className='hidden'
+                onChange={e => {
+                  field.onChange(e.target.files);
+                  handleFileChange(e);
+                }} // Capture file input change
+                multiple // Enable multiple file uploads
+                accept='video/*, image/*'
+              />
+            )}
+          ></Controller>
+        </Label>
+      </div>
       <div className='mt-3 flex justify-between items-center'>
         <div>
           {/* Interaction Buttons */}
