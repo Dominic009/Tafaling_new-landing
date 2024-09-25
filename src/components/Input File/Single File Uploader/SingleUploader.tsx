@@ -122,7 +122,7 @@ const SingleUploader: React.FC<ISingleUploaderProps> = ({
       </button> */}
       <div className='w-full flex justify-center items-center flex-col-reverse mt-8'>
         {(progress as number) > 0 ? (
-          <progress value={progress} max='100' className='mb-2'>
+          <progress value={progress} max='100' className='mb-2 progress-bar'>
             {progress}%
           </progress>
         ) : (
