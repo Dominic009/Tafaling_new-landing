@@ -12,8 +12,8 @@ import { logoutUser } from "@/api/auth/auth";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import "animate.css";
 import { getAccessToken } from "@/helpers/tokenStorage";
-import DropDownMenu from "./Drop down menu/DropDownMenu";
 import Notification from "./Notification panel/Notification";
+import DropDownMenu from "./Drop down menu/DropDownMenu";
 
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -158,7 +158,7 @@ const Navbar: React.FC = () => {
               ></Image>
 
               {dropdown && (
-                <DropDownMenu top="14" right="4">
+                <DropDownMenu>
                   {" "}
                   {dropdownRoutes.map((path) => {
                     return (

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 
 interface DropDownMenuProps {
   children: React.ReactNode;
-  top: string;
-  right: string;
+  top?: string;
+  right?: string;
   bg?: string;
   duration?: number;
 }
@@ -31,7 +31,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
 
   return (
     <div
-      className={`absolute top-${top} right-${right} bg-${bg} w-48 rounded-lg p-4 flex flex-col justify-between ${
+      className={`absolute top-14 right-5 bg-[#0d1f31] w-48 rounded-lg p-4 flex flex-col justify-between ${
         isClosing
           ? "animate__animated animate__fadeOut animate__faster"
           : "animate__animated animate__fadeIn animate__faster"

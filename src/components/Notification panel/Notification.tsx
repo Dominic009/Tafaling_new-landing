@@ -18,7 +18,7 @@ const Notification = () => {
       </button>
 
       {dropdown && (
-        <DropDownMenu top="13" right="5">
+        <DropDownMenu bg="[#0d1f31]" top="13" right="5">
           Notifications{" "}
         </DropDownMenu>
       )}
