@@ -14,6 +14,20 @@ export async function registerUser(
   return await axiosClient.post('auth/register', JSON.stringify(data));
 }
 
+export async function forgotPassword(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('auth/forgot-password', JSON.stringify(data));
+}
+export async function verifyForgetPasswordOTP(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('auth/verify-forgot-password-otp', JSON.stringify(data));
+}
+export async function resendForgetPasswordOTP(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('/auth/resend-forgot-password-otp', JSON.stringify(data));
+}
+
+export async function resetPassword(data: AuthUser): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post('/auth/reset-password', JSON.stringify(data));
+}
+
 export async function logoutUser(
   token: string
 ): Promise<AxiosResponse<any, ResponseType>> {

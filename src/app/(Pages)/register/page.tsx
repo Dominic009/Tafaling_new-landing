@@ -12,6 +12,7 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import 'animate.css';
+import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 
 const Page = () => {
   const router = useRouter();
@@ -46,6 +47,7 @@ const Page = () => {
     } catch (e) {
       const error = e as AxiosError<any>;
       toast.error(error.response?.data.message);
+      console.log(error.response?.data.message);
       setIsRegisterLoading(false);
     }
   };
@@ -60,7 +62,7 @@ const Page = () => {
     );
   }
 
-  if (user?.user_name) {
+  if (user?.user_name && user.email_verified_at) {
     router.push('home');
   } else {
     return (
