@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import { jwtDecode } from 'jwt-decode';
 import toast from 'react-hot-toast';
 const axiosClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_TAFALING_API,
+  baseURL: "http://99.237.86.169:7070/api",
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

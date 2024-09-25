@@ -1,4 +1,6 @@
 'use client';
+import { getAuthUser } from '@/api/auth/auth';
+import { getAccessToken } from '@/helpers/tokenStorage';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { AuthUser } from '@/types/Auth';
 import dayjs from 'dayjs';
@@ -28,35 +30,55 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const { item, removeItem } = useLocalStorage('auth-token');
 
   useEffect(() => {
+    // if (item) {
+    //   const accessToken = JSON.parse(item).accessT;
+    //   const decodedToken = jwtDecode<AuthJwtPayload>(accessToken);
+    //   const isExpired =
+    //     dayjs.unix(decodedToken.exp as number).diff(dayjs()) < 1;
+    //   console.log(
+    //     `${isExpired === true ? 'token is expired' : 'token is valid'}`
+    //   );
+
+    //   if (isExpired) {
+    //     setUser(null);
+    //     localStorage.removeItem('auth-token');
+    //     router.push('login');
+    //   } else {
+    //     const userData = decodedToken.user && decodedToken.user;
+    //     // console.log(userData);
+
+    //     login({
+    //       user_name: userData.user_name,
+    //       email: userData.email,
+    //       cover_photo: userData.cover_photo,
+    //       profile_picture: userData.profile_picture,
+    //       name: userData.name,
+    //       email_verified_at: userData.email_verified_at ? true : false,
+    //     });
+    //   }
+    // }
+
+    const refetchUserData = async () => {
+      const { data } = await getAuthUser(getAccessToken());
+      const { data: userData } = data;
+
+      console.log(userData);
+      login({
+        user_name: userData.user_name,
+        email: userData.email,
+        cover_photo: userData.cover_photo,
+        profile_picture: userData.profile_picture,
+        name: userData.name,
+        email_verified_at: userData.email_verified_at ? true : false,
+      });
+      setIsAuthLoading(false);
+    };
+
     if (item) {
-      const accessToken = JSON.parse(item).accessT;
-      const decodedToken = jwtDecode<AuthJwtPayload>(accessToken);
-      const isExpired =
-        dayjs.unix(decodedToken.exp as number).diff(dayjs()) < 1;
-      console.log(
-        `${isExpired === true ? 'token is expired' : 'token is valid'}`
-      );
-
-      if (isExpired) {
-        setUser(null);
-        localStorage.removeItem('auth-token');
-        router.push('login');
-      } else {
-        const userData = decodedToken.user && decodedToken.user;
-        // console.log(userData);
-
-        login({
-          user_name: userData.user_name,
-          email: userData.email,
-          cover_photo: userData.cover_photo,
-          profile_picture: userData.profile_picture,
-          name: userData.name,
-          email_verified_at: userData.email_verified_at ? true : false,
-        });
-      }
+      refetchUserData();
+    } else {
+      setIsAuthLoading(false);
     }
-
-    setIsAuthLoading(false);
   }, [item, router]);
 
   const login = (authData: AuthUser) => {

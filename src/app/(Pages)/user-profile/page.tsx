@@ -46,6 +46,7 @@ const Page = () => {
         cover_photo: userData.cover_photo,
         profile_picture: userData.profile_picture,
         name: userData.name,
+        email_verified_at: userData.email_verified_at ? true : false,
       });
     } catch (error) {
       console.log(error);
@@ -139,8 +140,8 @@ const Page = () => {
             objectFit='cover'
             className=' rounded-b-lg'
             onLoadingComplete={() => setIsLoading(false)}
-            />
-            { isLoading && <ContentLoader/> }
+          />
+          {isLoading && <ContentLoader />}
         </div>
         {/* modal for profile picture upload */}
         <Modal
