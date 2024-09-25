@@ -31,7 +31,7 @@ const Page = () => {
     setModalCoverPhoto(false);
   };
 
-  console.log(user);
+  // console.log(user);
 
   const fetchUserData = async () => {
     let lsItem = accessToken && JSON.parse(accessToken).accessT;
@@ -75,7 +75,9 @@ const Page = () => {
       if (status === 201) {
         closeModalProfilePicture();
         toast.success(data.message);
-        fetchUserData();
+        console.log('updateProfilePicture: ', data);
+
+        // fetchUserData();
       }
     } catch (e) {
       const error = e as AxiosError<any, ResponseType>;
@@ -107,7 +109,9 @@ const Page = () => {
       if (status === 201) {
         closeModalCoverPhoto();
         toast.success(data.message);
-        fetchUserData();
+        console.log('updateProfilePicture: ', data);
+        login({ ...user, cover_photo: data.cover_photo });
+        // fetchUserData();
       }
     } catch (e) {
       const error = e as AxiosError<any, ResponseType>;
