@@ -49,6 +49,14 @@ const PrivateRoute = <T extends {}>(Component: ComponentType<T>) => {
       );
     }
 
+    if (user?.user_name && !user.email_verified_at) {
+      // console.log(
+      //   'redirected to email verify page in private route: ',
+      //   user.email_verified_at
+      // );
+      return router.push('/verifyEmail');
+    }
+
     if (user?.user_name) {
       return <Component {...props} />;
     } else {
