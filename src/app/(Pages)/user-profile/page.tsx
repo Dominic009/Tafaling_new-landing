@@ -5,7 +5,7 @@ import Modal from '@/components/Modal/Modal';
 import UserPost from '@/components/UserPost';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import Image from 'next/legacy/image';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdEditSquare, MdOutlineEdit, MdSettings } from 'react-icons/md';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import { updateCoverPhoto, updateProfilePicture } from '@/api/user/user';
@@ -31,7 +31,9 @@ const Page = () => {
     setModalCoverPhoto(false);
   };
 
-  // console.log(user);
+  useEffect(() => {
+    user?.user_name && console.log(user);
+  }, [user]);
 
   const fetchUserData = async () => {
     let lsItem = accessToken && JSON.parse(accessToken).accessT;
@@ -75,7 +77,8 @@ const Page = () => {
       if (status === 201) {
         closeModalProfilePicture();
         toast.success(data.message);
-        console.log('updateProfilePicture: ', data);
+        // console.log('updateProfilePicture: ', data);
+        login({ ...user, profile_picture: data.data.profile_picture });
 
         // fetchUserData();
       }
@@ -109,8 +112,8 @@ const Page = () => {
       if (status === 201) {
         closeModalCoverPhoto();
         toast.success(data.message);
-        console.log('updateProfilePicture: ', data);
-        login({ ...user, cover_photo: data.cover_photo });
+        // console.log('updateProfilePicture: ', data);
+        login({ ...user, cover_photo: data.data.cover_photo });
         // fetchUserData();
       }
     } catch (e) {
