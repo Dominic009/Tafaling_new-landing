@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/legacy/image";
-import React, { useState } from "react";
+import React from "react";
 import { TiHome } from "react-icons/ti";
 import { FaRegNewspaper } from "react-icons/fa6";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { HiOutlineSearch } from "react-icons/hi";
-import { FaRegBell } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
@@ -14,6 +13,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import "animate.css";
 import { getAccessToken } from "@/helpers/tokenStorage";
 import DropDownMenu from "./Drop down menu/DropDownMenu";
+import Notification from "./Notification panel/Notification";
 
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -141,12 +141,7 @@ const Navbar: React.FC = () => {
 
           <div className="grid grid-cols-2 items-center gap-2">
             {/* Notification icon */}
-            <div className="relative h-full flex items-center justify-center">
-              <FaRegBell className="text-2xl text-white hover:text-white hover:scale-105 cursor-pointer transition-all duration-200 ease-in-out" />
-              <div className="absolute top-1 right-1 bg-[#D6042A] text-center rounded-full w-5 h-5 text-white text-sm">
-                5
-              </div>
-            </div>
+          <Notification/>
 
             {/* User Profile */}
             <div
@@ -162,37 +157,8 @@ const Navbar: React.FC = () => {
                 className="rounded-full cursor-pointer"
               ></Image>
 
-              {/* {dropdown ? (
-                <div className='absolute top-14 right-4 bg-[#0d1f31] w-48 rounded-lg p-4 flex flex-col justify-between animate__animated animate__fadeIn animate__faster'>
-                  <ul className='font-semibold flex flex-col gap-2 text-gray-200'>
-                    <Link href={'/user-profile'}>
-                      <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
-                        Profile
-                      </li>
-                    </Link>
-                    <li className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'>
-                      Privacy
-                    </li>
-                    <Link
-                      href={'/user-profile/settings'}
-                      className='hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear'
-                    >
-                      Settings
-                    </Link>
-                  </ul>
-                  <button
-                    onClick={handleLogoutUser}
-                    className='bg-[#D6042A] text-white px-6 py-1 rounded-md hover:bg-[#b91a37]  transition ease-in-out duration-200 mt-12 w-full'
-                  >
-                    LogOut
-                  </button>
-                </div>
-              ) : (
-                ''
-              )} */}
-
               {dropdown && (
-                <DropDownMenu>
+                <DropDownMenu top="14" right="4">
                   {" "}
                   {dropdownRoutes.map((path) => {
                     return (
