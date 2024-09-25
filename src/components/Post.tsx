@@ -1,27 +1,46 @@
 'use client';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import React, { useState } from 'react';
-import PrimaryBtn from './PrimaryBtn';
+import Modal from './Modal/Modal';
+import PostBody from './PostBody';
+import FileUploader from './Input File/FileUploader';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
 
 const Post: React.FC = () => {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<string | null>(null);
+  const { user } = useAuth();
 
-  console.log(modal);
+  // Function to handle the opening of the modal for different tabs
+  const openModalForTab = (tab: string | null) => {
+    setActiveTab(tab);
+    setModal(true); // Open the modal
+  };
+
+  // Function to close the modal and reset the active tab
+  const closeModal = () => {
+    setModal(false);
+    setActiveTab(null);
+  };
+
+  // console.log(activeTab)
 
   return (
     <div>
-      <div className='w-[90%] mx-auto backdrop-blur-md rounded-xl p-3 shadow mb-12 bg-white'>
+      <div className='w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white'>
         <div>
-          <div className='flex items-center gap-3'>
+          {/* User Profile and Post Button */}
+          <div className='flex items-center gap-3 '>
             <Image
               alt='User DP'
-              src={'/ProfileDP/Profile.png'}
+              // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+              src={'/ProfileDP/Dummy.png'}
               width={50}
               height={50}
-              className='mt-1'
-            ></Image>
+              className='mt-1 rounded-full'
+            />
             <button
-              onClick={() => setModal(!modal)}
+              onClick={() => openModalForTab(null)}
               className='text-gray-400 font-light w-full outline-none bg-gray-100 px-4 py-2 rounded-full text-left transition duration-300 ease-in-out'
             >
               Thinking about something...?
@@ -30,103 +49,93 @@ const Post: React.FC = () => {
 
           <div className='border-b w-full mt-2 mb-2'></div>
 
-          <div>
-            <ul className='grid grid-cols-3 text-gray-400'>
-              <li className='hover:bg-gray-100 px-4 rounded-full cursor-pointer flex items-center justify-center gap-1'>
-                <Image
-                  src={'/Icons/media.png'}
-                  width={30}
-                  height={30}
-                  alt='Media icon'
-                ></Image>
-                Photo/Video
-              </li>
-              <li className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1'>
-                <Image
-                  src={'/Icons/location.png'}
-                  width={30}
-                  height={30}
-                  alt='Media icon'
-                ></Image>
-                Location
-              </li>
-              <li className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1'>
-                <Image
-                  src={'/Icons/emoji.png'}
-                  width={30}
-                  height={30}
-                  alt='Media icon'
-                ></Image>
-                Activity
-              </li>
-            </ul>
-          </div>
+          {/* Interaction Buttons */}
+          <ul className='grid grid-cols-3 text-gray-400'>
+            <button
+              onClick={() => openModalForTab('photo-video')}
+              className={`hover:bg-gray-100 px-4 rounded-full cursor-pointer flex items-center justify-center gap-1`}
+            >
+              <Image
+                src={'/Icons/media.png'}
+                width={30}
+                height={30}
+                alt='Media icon'
+              />
+              Photo/Video
+            </button>
+            <li
+              onClick={() => openModalForTab('location')}
+              className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1'
+            >
+              <Image
+                src={'/Icons/location.png'}
+                width={30}
+                height={30}
+                alt='Location icon'
+              />
+              Location
+            </li>
+            <li
+              onClick={() => openModalForTab('activity')}
+              className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1'
+            >
+              <Image
+                src={'/Icons/emoji.png'}
+                width={30}
+                height={30}
+                alt='Activity icon'
+              />
+              Activity
+            </li>
+          </ul>
         </div>
       </div>
-      {modal ? (
-        <div className='bg-gray-600/50 fixed w-full h-full backdrop-blur-sm left-0 top-0 z-30 flex items-center justify-center'>
-          <div className='w-[40%] mx-auto rounded-xl p-3 shadow mb-12 bg-white relative'>
-            <div className='h-28 border-b border-gray-200'>
-              <div className='flex items-center gap-3'>
-                <Image
-                  alt='User DP'
-                  src={'/Profile.png'}
-                  width={50}
-                  height={65}
-                ></Image>
-                <input
-                  type='text'
-                  placeholder='Thinking of something...?'
-                  className='text-gray-400 font-light w-full outline-none h-[100px]'
-                />
-              </div>
-            </div>
-            <div className='mt-3 flex justify-between items-center'>
-              <div>
-                <ul className='flex text-gray-400'>
-                  <li className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center gap-1'>
-                    <Image
-                      src={'/Icons/media.png'}
-                      width={30}
-                      height={30}
-                      alt='Media icon'
-                    ></Image>
-                    Photo/Video
-                  </li>
-                  <li className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center gap-1'>
-                    <Image
-                      src={'/Icons/location.png'}
-                      width={30}
-                      height={30}
-                      alt='Media icon'
-                    ></Image>
-                    Location
-                  </li>
-                  <li className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center gap-1'>
-                    <Image
-                      src={'/Icons/emoji.png'}
-                      width={30}
-                      height={30}
-                      alt='Media icon'
-                    ></Image>
-                    Activity
-                  </li>
-                </ul>
-              </div>
-              <PrimaryBtn text={'Create Post'} width={'15%'}></PrimaryBtn>
-            </div>
 
-            <button
-              onClick={() => setModal(false)}
-              className='absolute top-2 right-2 font-semibold text-gray-500 bg-gray-100 px-3 py-1 rounded-full hover:bg-rose-600 hover:text-white transition duration-300 ease-in-out'
-            >
-              X
-            </button>
+      {/* Modal Content Based on Active Tab */}
+      <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
+        {/* Default Modal for "Thinking about something...?" */}
+        {!activeTab && <PostBody></PostBody>}
+
+        {/* Modal for Photo/Video Upload */}
+        {activeTab === 'photo-video' && (
+          <div>
+            <PostBody>
+              {/* new */}
+              <FileUploader></FileUploader>
+            </PostBody>
           </div>
-        </div>
-      ) : (
-        ''
-      )}
+        )}
+
+        {/* Modal for Location */}
+        {activeTab === 'location' && (
+          <PostBody>
+            {' '}
+            <div>
+              <h2 className='text-xl mb-4'>Add Location</h2>
+              <input
+                type='text'
+                placeholder='Enter location...'
+                className='w-full border border-gray-300 p-2 rounded-md mb-4'
+              />
+            </div>
+          </PostBody>
+        )}
+
+        {/* Modal for Activity */}
+        {activeTab === 'activity' && (
+          <PostBody>
+            {' '}
+            <div>
+              <h2 className='text-xl mb-4'>Add Activity</h2>
+              <input
+                type='text'
+                placeholder='What are you doing?'
+                className='w-full border border-gray-300 p-2 rounded-md mb-4'
+              />
+            </div>
+          </PostBody>
+        )}
+      </Modal>
     </div>
   );
 };

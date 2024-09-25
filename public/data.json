@@ -4,10 +4,11 @@
     "location": "London, UK",
     "profilePicture": "/ProfileDP/Profile.png",
     "bio": "Passionate about photography and traveling. Love exploring new cultures.",
-    "postContent": "https://images.unsplash.com/photo-1544894079-e81a9eb1da8b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "postContent": "https://videos.pexels.com/video-files/28119842/12304293_1080_1920_30fps.mp4",
     "caption": "Sipping tea and enjoying the view of Big Ben!",
+    "contentType": "video",
     "hashtags": ["#London", "#Travelgram", "#BigBen"],
-    "postedTime": "2024-08-26T12:00:00Z"
+    "postedTime": "2024-09-01T12:00:00Z"
   },
   {
     "username": "Maria Garcia",
@@ -15,13 +16,14 @@
     "profilePicture": "/ProfileDP/Profile2.jpg",
     "bio": "Fitness enthusiast and health blogger. Sharing my journey to a healthier lifestyle.",
     "postContent": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "contentType": "image",
     "caption": "Just crushed a new workout!  Feeling energized and ready for the day.",
     "hashtags": [
       "#FitnessMotivation",
       "#WorkoutWednesday",
       "#HealthyLifestyle"
     ],
-    "postedTime": "2024-08-26T08:00:00Z"
+    "postedTime": "2024-08-15T08:00:00Z"
   },
   {
     "username": "Aisha Khan",
@@ -30,8 +32,9 @@
     "bio": "Student and aspiring writer. Love reading and learning new things.",
     "postContent": "https://plus.unsplash.com/premium_photo-1723824192447-4350f0213f46?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "caption": "Curled up with a good book and a cup of coffee. ☕️ What are you reading today?",
+    "contentType": "image",
     "hashtags": ["#Bookstagram", "#CoffeeLover", "#ReadingLife"],
-    "postedTime": "2024-08-26T15:00:00Z"
+    "postedTime": "2024-06-26T15:00:00Z"
   },
   {
     "username": "Emily Chen",
@@ -40,6 +43,7 @@
     "bio": "Tech enthusiast and gamer. Always on the lookout for the latest gadgets.",
     "postContent": "https://plus.unsplash.com/premium_photo-1710679068253-8d2ad20c68e9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "caption": "Just got the new VR headset! Can't wait to explore virtual worlds.",
+    "contentType": "image",
     "hashtags": ["#VRGaming", "#TechLife", "#NewGadgets"],
     "postedTime": "2024-08-26T10:30:00Z"
   },
@@ -50,6 +54,7 @@
     "bio": "Musician and songwriter. Passionate about creating original music.",
     "postContent": "https://plus.unsplash.com/premium_photo-1661717575011-b8444ef10525?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "caption": "In the studio working on a new song! Can't wait to share it with you all.",
+    "contentType": "image",
     "hashtags": ["#MusicianLife", "#Songwriting", "#NewMusicComingSoon"],
     "postedTime": "2024-08-26T17:00:00Z"
   },
@@ -60,6 +65,7 @@
     "bio": "Fashion blogger and stylist. Sharing my love for fashion and beauty.",
     "postContent": "https://plus.unsplash.com/premium_photo-1661478068756-de70c3e39c3a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "caption": "New outfit alert! Loving this summer look. What do you think?",
+    "contentType": "image",
     "hashtags": ["#FashionBlogger", "#OOTD", "#SummerStyle"],
     "postedTime": "2024-08-26T13:00:00Z"
   },
@@ -70,7 +76,8 @@
     "bio": "Nature lover and hiker. Exploring the beauty of the outdoors.",
     "postContent": "https://plus.unsplash.com/premium_photo-1661313698910-ae27320898d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "caption": "Hiking through the mountains. Feeling refreshed and energized!",
+    "contentType": "image",
     "hashtags": ["#HikingAdventure", "#NatureLover", "#OutdoorLife"],
-    "postedTime": "2024-08-26T11:00:00Z"
+    "postedTime": "2024-09-01T05:25:00Z"
   }
 ]
