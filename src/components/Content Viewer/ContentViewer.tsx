@@ -69,7 +69,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
               <div className="">
                 <Image
                   alt="Image"
-                  src={object.postContent}
+                  src={`${object.attachments[0]?.fileURL}/${object.attachments[0]?.fileName}`}
                   layout="fill"
                   objectFit="contain"
                   onLoadingComplete={() => setIsLoading(false)}
@@ -104,10 +104,11 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
                 ></Image>
               </div>
               <div className="flex-1 text-left">
-                <h1 className="font-semibold text-xl">{object.username}</h1>
+                <h1 className="font-semibold text-xl">{object.creator.name}</h1>
                 <span className="text-sm text-gray-400 flex items-center">
                   <IoLocationOutline />
-                  {object.location}
+                  {/* {object.location} */}
+                  Location
                 </span>
               </div>
               <div>
@@ -117,7 +118,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
 
             {/* Post Caption */}
             <div className="mt-6">
-              <p className="text-left leading-4">{object.caption}</p>
+              <p className="text-left leading-4">{object.body}</p>
             </div>
           </div>
           <button
