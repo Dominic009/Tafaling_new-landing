@@ -180,7 +180,7 @@ const UserPost: React.FC = () => {
           let lsItem = accessToken && JSON.parse(accessToken).accessT;
           const response = await getUserPost(lsItem);
           setPosts(response?.data?.data);
-          console.log( response?.data?.data);
+          console.log( response?.data?.data[0]);
         } catch (error) {
           console.error('Error fetching posts:', error);
         } finally {
@@ -230,7 +230,7 @@ const UserPost: React.FC = () => {
               ></Image>
             </div>
             <div className='flex-1 text-left px-2'>
-              <h1 className='font-semibold text-xl'>{post.username}</h1>
+              <h1 className='font-semibold text-xl'>{post.creator?.name}</h1>
               <span className='text-sm text-gray-400 flex gap items-center'>
                 <IoLocationOutline className='text-lg' />
                 {post.location}
