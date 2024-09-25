@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import OTPInput from 'react-otp-input';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
+import { loginUser } from '@/api/auth/auth';
 
 const Page = () => {
   const router = useRouter();
@@ -17,7 +18,7 @@ const Page = () => {
   const [otp, setOtp] = useState<string>(''); // State to manage OTP
   const [isOtpVerifyLoading, setOtpVerifyLoading] = useState<boolean>(false);
   const [isOtpResendLoading, setOtpResendLoading] = useState<boolean>(false);
-  const { user, isAuthLoading } = useAuth();
+  const { user, isAuthLoading, login } = useAuth();
 
   const {
     register,
@@ -54,7 +55,7 @@ const Page = () => {
       const { data, status } = await verifyUserEmail(userData, lsItem);
       console.log(data);
       console.log(status);
-
+      login({ ...user, email_verified_at: true });
       router.push('home');
       toast.success(data.message);
     } catch (e) {
