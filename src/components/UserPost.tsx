@@ -144,6 +144,8 @@ import ContentViewer from './Content Viewer/ContentViewer';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import ContentLoader from './Loader/ContentLoader';
 import SkeletonLoader from '@/app/loading';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { getUserPost } from '@/api/posts/posts';
 
 interface Post {
   profilePicture: string;
@@ -153,7 +155,7 @@ interface Post {
   postContent: string;
   caption: string;
   hashtags: string[];
-  postedTime: string;
+  createdAt: string;
 }
 
 const UserPost: React.FC = () => {
@@ -162,12 +164,33 @@ const UserPost: React.FC = () => {
   const [postContentType, setPostContentType] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const { user, isAuthLoading } = useAuth();
+  const { item: accessToken } = useLocalStorage('auth-token');
+
+  // useEffect(() => {
+  //   fetch('data.json')
+  //     .then(res => res.json())
+  //     .then(data => setPosts(data));
+  // }, []);
 
   useEffect(() => {
-    fetch('data.json')
-      .then(res => res.json())
-      .then(data => setPosts(data));
-  }, []);
+    const fetchPosts = async () => {
+      if (user) {
+        try {
+          setIsLoading(true);
+          let lsItem = accessToken && JSON.parse(accessToken).accessT;
+          const response = await getUserPost(lsItem);
+          setPosts(response?.data?.data);
+          console.log( response?.data?.data);
+        } catch (error) {
+          console.error('Error fetching posts:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchPosts();
+  }, [accessToken, user]);
 
   const handleContentView = (object: any) => {
     setViewImagePost(object);
@@ -252,14 +275,15 @@ const UserPost: React.FC = () => {
             <p className='text-left text-lg'>{post.caption}</p>
 
             <div className='flex mt-1 gap-3'>
-              {post?.hashtags.map((tag, idx) => (
+              {post?.hashtags?.map((tag, idx) => (
                 <ul key={idx} className='text-[#07a1bc] font-light lowercase'>
                   <li>{tag}</li>
                 </ul>
               ))}
             </div>
             <div className='text-end text-gray-400 text-sm font-light'>
-              <PostTimeConverter time={post.postedTime}></PostTimeConverter>
+              {/* <PostTimeConverter time={post?.postedTime}></PostTimeConverter> */}
+              <PostTimeConverter time={post?.createdAt}></PostTimeConverter>
             </div>
           </div>
         </div>
