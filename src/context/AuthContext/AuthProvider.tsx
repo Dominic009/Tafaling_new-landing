@@ -43,6 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         router.push('login');
       } else {
         const userData = decodedToken.user && decodedToken.user;
+        // console.log(userData);
 
         login({
           user_name: userData.user_name,
@@ -50,6 +51,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           cover_photo: userData.cover_photo,
           profile_picture: userData.profile_picture,
           name: userData.name,
+          email_verified_at: userData.email_verified_at ? true : false,
         });
       }
     }

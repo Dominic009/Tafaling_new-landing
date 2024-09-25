@@ -50,25 +50,21 @@ const Page = () => {
           cover_photo: data.data.user.cover_photo,
           profile_picture: data.data.user.profile_picture,
           name: data.data.user.name,
+          email_verified_at: data.data.user.email_verified_at ? true : false,
         });
 
-        // setItem(
-        //   JSON.stringify({
-        //     accessT: data.data.access_token,
-        //     refreshT: data.data.refresh_token,
-        //   })
-        // );
+        setItem(
+          JSON.stringify({
+            accessT: data.data.access_token,
+            refreshT: data.data.refresh_token,
+          })
+        );
 
         // check if email is verified, if not, redirect to email verification page
         if (data?.data?.user?.email_verified_at === null) {
+          console.log('redirected to email verify page after login api call');
           router.push('verifyEmail');
         } else {
-          setItem(
-            JSON.stringify({
-              accessT: data.data.access_token,
-              refreshT: data.data.refresh_token,
-            })
-          );
           router.push('home');
         }
 
@@ -82,7 +78,7 @@ const Page = () => {
     }
   };
 
-  if (user?.user_name) {
+  if (user?.user_name && user.email_verified_at) {
     router.push('home');
   } else {
     return (
