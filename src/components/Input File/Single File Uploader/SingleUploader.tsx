@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FileInput, Label } from "flowbite-react";
 import Image from "next/image"; // Import Next.js Image component
 import toast from "react-hot-toast";
+import PrimaryBtn from "@/components/PrimaryBtn";
 
 interface ISingleUploaderProps {
   handleUploadPicture: (
@@ -108,14 +109,18 @@ const SingleUploader: React.FC<ISingleUploaderProps> = ({
           >
             X
           </button>
-          <button
-            onClick={() => handleUploadPicture(fileInputRef)}
-            className="mt-2 bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600"
-          >
-            Upload
-          </button>
         </div>
       )}
+      {/* <button
+        onClick={() => handleUploadPicture(fileInputRef)}
+        disabled = {preview ? false : true}
+        className="mt-2 bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600"
+      >
+        Upload
+      </button> */}
+      <div className="w-full flex justify-center mt-8">
+      <PrimaryBtn text="Upload" disabled={preview ? false : true} onclick={() => handleUploadPicture(fileInputRef)} width="40%" />
+        </div>
     </div>
   );
 };

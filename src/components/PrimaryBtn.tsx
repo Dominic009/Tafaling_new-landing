@@ -36,6 +36,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
       style={{ width }}
       onClick={onclick}
       type={type}
+      disabled = {disabled}
     >
       {icon && (
         <Image
