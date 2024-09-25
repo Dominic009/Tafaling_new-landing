@@ -177,6 +177,19 @@ const Page = () => {
                     <p className="text-red-300">{errors.password.message}</p>
                   )}
                 </div>
+                
+                {/* Sign In button */}
+                <div className="w-full flex justify-center">
+                  <PrimaryBtn
+                    text={`Login`}
+                    disabled={isLoginLoading}
+                    width={"100%"}
+                    size={"2xl"}
+                    weight={"bold"}
+                    type="submit"
+                    isLoading={isLoginLoading}
+                  />
+                </div>
                 <div>
                   <Link
                     href="/forgotPassword"
@@ -190,22 +203,11 @@ const Page = () => {
                     <p className="text-[#D6EAFF]/50">Remember Me</p>
                   </div> */}
                 </div>
-                {/* Sign In button */}
-                <div className="w-full flex justify-center">
-                  <PrimaryBtn
-                    text={`Login`}
-                    disabled={isLoginLoading}
-                    width={"100%"}
-                    size={"2xl"}
-                    weight={"bold"}
-                    type="submit"
-                    isLoading={isLoginLoading}
-                  />
-                </div>
               </form>
+             
 
               {/* Third party log in */}
-              <div className="w-[80%] mt-7 flex gap-2 items-center mb-3">
+              <div className="w-[80%] mt-3 flex gap-2 items-center mb-3">
                 <div className="border-b border-[#BFB0B0] w-[33%]"></div>
                 <div className="text-[#D6EAFF]/50 flex-1 text-center hidden md:block">
                   or continue with
