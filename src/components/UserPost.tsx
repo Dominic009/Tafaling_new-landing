@@ -144,6 +144,7 @@ import ContentViewer from "./Content Viewer/ContentViewer";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
 import ContentLoader from "./Loader/ContentLoader";
 import SkeletonLoader from "@/app/loading";
+import Loader from "@/app/loading";
 
 interface Post {
   profilePicture: string;
@@ -193,7 +194,8 @@ const UserPost: React.FC = () => {
   return (
     <div>
       {isLoading ? (
-        <SkeletonLoader height="600px"></SkeletonLoader>
+        // <SkeletonLoader height="600px"></SkeletonLoader>
+        <Loader/>
       ) : (
         <div>
           {posts.map((post, idx) => (
