@@ -62,9 +62,14 @@ const Page = () => {
 
         // check if email is verified, if not, redirect to email verification page
         if (data?.data?.user?.email_verified_at === null) {
-          console.log('redirected to email verify page after login api call');
           router.push('verifyEmail');
         } else {
+          setItem(
+            JSON.stringify({
+              accessT: data.data.access_token,
+              refreshT: data.data.refresh_token,
+            })
+          );
           router.push('home');
         }
 
@@ -186,10 +191,23 @@ const Page = () => {
                     isLoading={isLoginLoading}
                   />
                 </div>
+                <div>
+                  <Link
+                    href='/forgotPassword'
+                    className='text-[#D6EAFF]/50 -mt-5 text-sm'
+                  >
+                    Forgot password?
+                  </Link>
+
+                  {/* <div className="flex items-center gap-1 w-[80%] mt-4">
+                    <input type="checkbox" />
+                    <p className="text-[#D6EAFF]/50">Remember Me</p>
+                  </div> */}
+                </div>
               </form>
 
               {/* Third party log in */}
-              <div className='w-[80%] mt-7 flex gap-2 items-center mb-3'>
+              <div className='w-[80%] mt-3 flex gap-2 items-center mb-3'>
                 <div className='border-b border-[#BFB0B0] w-[33%]'></div>
                 <div className='text-[#D6EAFF]/50 flex-1 text-center hidden md:block'>
                   or continue with

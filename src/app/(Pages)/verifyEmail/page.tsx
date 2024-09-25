@@ -15,7 +15,7 @@ import { loginUser } from '@/api/auth/auth';
 const Page = () => {
   const router = useRouter();
   const { item: accessToken } = useLocalStorage('auth-token');
-  const [otp, setOtp] = useState<string>(''); // State to manage OTP
+  const [otp, setOtp] = useState<string>('');
   const [isOtpVerifyLoading, setOtpVerifyLoading] = useState<boolean>(false);
   const [isOtpResendLoading, setOtpResendLoading] = useState<boolean>(false);
   const { user, isAuthLoading, login } = useAuth();
@@ -124,7 +124,6 @@ const Page = () => {
               onSubmit={handleSubmit(handleOtpSubmit)}
               className='flex flex-col gap-5 w-[80%] items-center'
             >
-              {/* OTP Input using react-otp-input */}
               <OTPInput
                 value={otp}
                 onChange={(value: string) => {
@@ -142,7 +141,7 @@ const Page = () => {
                 }}
                 renderInput={props => <input {...props} />}
               />
-              {/* Show error message if validation fails */}
+
               {errors.otp && (
                 <span className='text-red-300'>
                   {String(errors.otp.message)}
