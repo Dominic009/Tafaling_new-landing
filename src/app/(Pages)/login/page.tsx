@@ -29,13 +29,13 @@ const Page = () => {
     formState: { errors },
   } = useForm<AuthUser>();
 
-  // if (isAuthLoading) {
-  //   return (
-  //     <div className='h-[90vh] flex justify-center items-center'>
-  //       <h1 className='text-2xl'>Loading... ⏳</h1>
-  //     </div>
-  //   );
-  // }
+  if (isAuthLoading) {
+    return (
+      <div className='h-[90vh] flex justify-center items-center'>
+        <h1 className='text-2xl'>Loading... ⏳</h1>
+      </div>
+    );
+  }
 
   const handleLoginUser = async (userData: AuthUser) => {
     toast.dismiss();

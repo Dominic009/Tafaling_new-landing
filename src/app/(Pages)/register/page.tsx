@@ -54,13 +54,13 @@ const Page = () => {
 
   const password = watch('password');
 
-  // if (isAuthLoading) {
-  //   return (
-  //     <div className='h-[90vh] flex justify-center items-center'>
-  //       <h1 className='text-2xl'>Loading... ⏳</h1>
-  //     </div>
-  //   );
-  // }
+  if (isAuthLoading) {
+    return (
+      <div className='h-[90vh] flex justify-center items-center'>
+        <h1 className='text-2xl'>Loading... ⏳</h1>
+      </div>
+    );
+  }
 
   if (user?.user_name && user.email_verified_at) {
     router.push('home');

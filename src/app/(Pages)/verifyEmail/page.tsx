@@ -87,13 +87,13 @@ const Page = () => {
     }
   };
 
-  // if (isAuthLoading) {
-  //   return (
-  //     <div className='h-[90vh] flex justify-center items-center'>
-  //       <h1 className='text-2xl'>Loading... ⏳</h1>
-  //     </div>
-  //   );
-  // }
+  if (isAuthLoading) {
+    return (
+      <div className='h-[90vh] flex justify-center items-center'>
+        <h1 className='text-2xl'>Loading... ⏳</h1>
+      </div>
+    );
+  }
 
   if (!user) {
     return router.push('login');
