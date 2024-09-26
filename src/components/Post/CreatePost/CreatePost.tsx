@@ -1,8 +1,10 @@
+import axiosClient from '@/api/config';
 import { createUserPost } from '@/api/posts/posts';
 import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { getAccessToken } from '@/helpers/tokenStorage';
+import { AxiosProgressEvent } from 'axios';
 import { FileInput, Label } from 'flowbite-react';
 import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -26,7 +28,7 @@ const CreatePost: React.FC<PostProps> = ({
 }) => {
   const [previews, setPreviews] = useState<{ url: string; type: string }[]>([]);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
-
+  const [progress, setProgress] = useState(0);
   const { user } = useAuth();
   const {
     register,
@@ -90,11 +92,34 @@ const CreatePost: React.FC<PostProps> = ({
     }
 
     try {
-      const { data, status } = await createUserPost(formData, getAccessToken());
+      // const { data, status } = await createUserPost(formData, getAccessToken());
+      // if (status === 201) {
+      //   toast.success('Post created successfully!');
+      //   setModal(false);
+      //   setRefetchUserPost(true);
+      // }
+      const { data, status } = await axiosClient.post<any>(
+        'posts/create',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+            'content-type': 'multipart/form-data',
+          },
+          onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total!
+            );
+            setProgress(percentCompleted);
+          },
+        }
+      );
+
       if (status === 201) {
         toast.success('Post created successfully!');
         setModal(false);
-        setRefetchUserPost(true);
+        setRefetchUserPost && setRefetchUserPost(true);
+        setProgress(0);
       }
     } catch (error) {
       console.log(error);
@@ -279,7 +304,18 @@ const CreatePost: React.FC<PostProps> = ({
             </li>
           </ul>
         </div>
-        <PrimaryBtn text={'Create Post'} width={'15%'}></PrimaryBtn>
+        {(progress as number) > 0 ? (
+          <div className='flex items-center pr-4'>
+            <progress
+              value={progress}
+              max='100'
+              className='progress-bar'
+            ></progress>
+            <p className='ml-2'>{progress} %</p>
+          </div>
+        ) : (
+          <PrimaryBtn text={'Create Post'} width={'15%'}></PrimaryBtn>
+        )}
       </div>
     </form>
   );

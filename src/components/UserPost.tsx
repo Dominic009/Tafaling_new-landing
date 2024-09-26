@@ -215,7 +215,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
           console.error('Error fetching posts:', error);
         } finally {
           setIsLoading(false);
-          setRefetchUserPost(false);
+          setRefetchUserPost && setRefetchUserPost(false);
         }
       }
     };

@@ -10,7 +10,7 @@ import { TiHome } from 'react-icons/ti';
 import NextNProgress from 'nextjs-progressbar';
 
 export interface IRefetchUserPostProp {
-  setRefetchUserPost: React.Dispatch<React.SetStateAction<boolean>>;
+  setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
   refetchUserPost?: boolean;
 }
 
