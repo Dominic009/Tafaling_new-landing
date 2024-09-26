@@ -124,6 +124,7 @@ const CreatePost: React.FC<PostProps> = ({
     } catch (error) {
       console.log(error);
       toast.error('Post creation failed');
+      setProgress(0);
     }
 
     // Log formData entries

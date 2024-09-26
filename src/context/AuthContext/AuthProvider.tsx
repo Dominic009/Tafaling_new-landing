@@ -47,12 +47,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       setIsAuthLoading(false);
     };
 
+    if (!item) {
+      setIsAuthLoading(false);
+    }
+
     if (item && !didFetchUser.current) {
       didFetchUser.current = true; // Prevent duplicate calls
       refetchUserData();
       console.log('user refetched');
-    } else if (!item && didFetchUser.current) {
-      setIsAuthLoading(false);
     }
   }, [item]);
 
