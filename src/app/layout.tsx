@@ -5,7 +5,9 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext/AuthProvider";
 import { Toaster } from "react-hot-toast";
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader";
+import { SkeletonTheme } from "react-loading-skeleton";
+import VirtualNav from "@/components/VirtualNav";
 
 const inter = Inter({ subsets: ["latin"] });
 const blinker = Blinker({
@@ -18,23 +20,28 @@ export const metadata: Metadata = {
   description: "Share the madness",
 };
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <head>
         <link rel="icon" type="image/png" href="/favicon.png" />
       </head>
       <AuthProvider>
-        <body
-          className={`${inter.className} ${blinker.className} bg-[#f4f7f8]`}
-        >
-          <div className="sticky top-0 z-50 w-full">
-            <Navbar></Navbar>
-          </div>
-          <NextTopLoader showSpinner={false}/>
-          {children}
-          <Toaster />
-        </body>
+        <SkeletonTheme baseColor="#D0D0D0" highlightColor="#DCDCDC">
+          <body
+            className={`${inter.className} ${blinker.className} bg-[#f4f7f8] relative`}
+          >
+            <div className="sticky top-0 z-50 w-full">
+              <Navbar></Navbar>
+            </div>
+            <NextTopLoader showSpinner={false} />
+            {children}
+            <Toaster />
+            <VirtualNav />
+          </body>
+        </SkeletonTheme>
       </AuthProvider>
     </html>
   );
