@@ -260,7 +260,18 @@ const UserPost: React.FC = () => {
           {/* Content body */}
           <div className="mt-2 cursor-pointer flex items-center justify-center">
             {isLoading && <ContentLoader />}
-            {post.attachments[0]?.mimeType  ? (
+            {post.attachments[0]?.mimeType  && 
+              <Image
+                alt="Post content"
+                src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
+                width={800}
+                height={600}
+                className="rounded-md h-[500px] object-cover hover:scale-105 custom-hover-img"
+                onClick={() => handleContentView(post)}
+                onLoadingComplete={() => setIsLoading(false)}
+                loading="lazy"
+              />}
+            {/* {post.attachments[0]?.mimeType  ? (
               <Image
                 alt="Post content"
                 src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
@@ -283,7 +294,7 @@ const UserPost: React.FC = () => {
                 <source src={post.postContent} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-            )}
+            )} */}
           </div>
 
           {/* Footer */}
