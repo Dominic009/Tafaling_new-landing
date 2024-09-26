@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import 'animate.css';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import Loader from '@/app/loading';
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
@@ -32,7 +33,7 @@ const Page = () => {
   if (isAuthLoading) {
     return (
       <div className='h-[90vh] flex justify-center items-center'>
-        <h1 className='text-2xl'>Loading... ⏳</h1>
+        <Loader></Loader>
       </div>
     );
   }

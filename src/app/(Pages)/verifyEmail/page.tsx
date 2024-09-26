@@ -11,6 +11,7 @@ import OTPInput from 'react-otp-input';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { loginUser } from '@/api/auth/auth';
+import Loader from '@/app/loading';
 
 const Page = () => {
   const router = useRouter();
@@ -90,7 +91,7 @@ const Page = () => {
   if (isAuthLoading) {
     return (
       <div className='h-[90vh] flex justify-center items-center'>
-        <h1 className='text-2xl'>Loading... ⏳</h1>
+        <Loader></Loader>
       </div>
     );
   }

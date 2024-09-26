@@ -149,13 +149,19 @@ import { getUserPost } from "@/api/posts/posts";
 
 interface Post {
   profilePicture: string;
-  username: string;
+  name: string[];
   location: string;
   contentType: string;
   postContent: string;
   caption: string;
   hashtags: string[];
+  creator: string[];
+  attachments: string[];
   createdAt: string;
+  mimeType: string;
+  body: string[];
+  fileName: string;
+  fileURL: string;
 }
 
 const UserPost: React.FC = () => {

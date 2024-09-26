@@ -5,15 +5,17 @@ import Modal from '@/components/Modal/Modal';
 import UserPost from '@/components/UserPost';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import Image from 'next/legacy/image';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdEditSquare, MdOutlineEdit, MdSettings } from 'react-icons/md';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import { updateCoverPhoto, updateProfilePicture } from '@/api/user/user';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import toast from 'react-hot-toast';
 import { getAuthUser } from '@/api/auth/auth';
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosProgressEvent, AxiosResponse } from 'axios';
 import ContentLoader from '@/components/Loader/ContentLoader';
+import axiosClient from '@/api/config';
+import { getAccessToken } from '@/helpers/tokenStorage';
 
 const Page = () => {
   const { user, login } = useAuth();
@@ -22,6 +24,7 @@ const Page = () => {
   const [modalCoverPhoto, setModalCoverPhoto] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const { item: accessToken } = useLocalStorage('auth-token');
+  const [progress, setProgress] = useState(0);
 
   const closeModalProfilePicture = () => {
     setModalProfilePicture(false);
@@ -31,7 +34,9 @@ const Page = () => {
     setModalCoverPhoto(false);
   };
 
-  console.log(user);
+  useEffect(() => {
+    user?.user_name && console.log(user);
+  }, [user]);
 
   const fetchUserData = async () => {
     let lsItem = accessToken && JSON.parse(accessToken).accessT;
@@ -69,18 +74,35 @@ const Page = () => {
     }
 
     try {
-      const { data, status } = await updateProfilePicture(formData, lsItem);
-      //console.log(data);
+      const { data, status } = await axiosClient.post<any>(
+        'user/profile/picture/update',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+            'content-type': 'multipart/form-data',
+          },
+          onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total!
+            );
+            setProgress(percentCompleted);
+          },
+        }
+      );
 
       if (status === 201) {
         closeModalProfilePicture();
         toast.success(data.message);
-        fetchUserData();
+        // console.log('updateProfilePicture: ', data);
+        login({ ...user, profile_picture: data.data.profile_picture });
+        setProgress(0);
+        // fetchUserData();
       }
     } catch (e) {
       const error = e as AxiosError<any, ResponseType>;
       //console.log(error);
-
+      setProgress(0);
       error.response?.data.message && toast.error(error.response?.data.message);
     }
   };
@@ -101,18 +123,36 @@ const Page = () => {
     }
 
     try {
-      const { data, status } = await updateCoverPhoto(formData, lsItem);
+      const { data, status } = await axiosClient.post<any>(
+        'user/cover/picture/update',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+            'content-type': 'multipart/form-data',
+          },
+          onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total!
+            );
+            setProgress(percentCompleted);
+          },
+        }
+      );
       //console.log(data);
 
       if (status === 201) {
         closeModalCoverPhoto();
         toast.success(data.message);
-        fetchUserData();
+        // console.log('updateProfilePicture: ', data);
+        login({ ...user, cover_photo: data.data.cover_photo });
+        // fetchUserData();
+        setProgress(0);
       }
     } catch (e) {
       const error = e as AxiosError<any, ResponseType>;
       //console.log(error);
-
+      setProgress(0);
       error.response?.data.message && toast.error(error.response?.data.message);
     }
   };
@@ -155,6 +195,7 @@ const Page = () => {
             </h1>
             <SingleUploader
               handleUploadPicture={handleUploadProfilePicture}
+              progress={progress}
             ></SingleUploader>
           </div>
         </Modal>
@@ -171,6 +212,7 @@ const Page = () => {
             </h1>
             <SingleUploader
               handleUploadPicture={handleUploadCoverPhoto}
+              progress={progress}
             ></SingleUploader>
           </div>
         </Modal>

@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const { data } = await getAuthUser(getAccessToken());
       const { data: userData } = data;
 
-      console.log(userData);
+      // console.log(userData);
       login({
         user_name: userData.user_name,
         email: userData.email,
