@@ -49,14 +49,15 @@ import React, { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import ContentLoader from "../Loader/ContentLoader";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
 
 interface ContentProps {
   onClose: () => void;
   postContentType: string;
   object: any;
 }
-
 const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
+  const { user, isAuthLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   return (
     <div className="bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-16">
@@ -97,7 +98,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
               <div className="flex items-center">
                 <Image
                   alt="User DP"
-                  src={object?.profile_picture || '/ProfileDP/Dummy.png'}
+                  src={user?.profile_picture || '/ProfileDP/Dummy.png'}
                   width={50}
                   height={50}
                   className="mt-1 rounded-full"
