@@ -49,14 +49,15 @@ import React, { useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import ContentLoader from "../Loader/ContentLoader";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
 
 interface ContentProps {
   onClose: () => void;
   postContentType: string;
   object: any;
 }
-
 const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
+  const { user, isAuthLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   return (
     <div className="bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-16">
@@ -65,11 +66,11 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
           <div className=" lg:col-span-2 flex justify-center items-center relative scale-90 flex-1">
             {/* Content loading */}
             {isLoading && <ContentLoader />}
-            {object.contentType === "image" ? (
+            {object.attachments[0]?.mimeType ? (
               <div className="">
                 <Image
                   alt="Image"
-                  src={object.postContent}
+                  src={`${object.attachments[0]?.fileURL}/${object.attachments[0]?.fileName}`}
                   layout="fill"
                   objectFit="contain"
                   onLoadingComplete={() => setIsLoading(false)}
@@ -97,17 +98,18 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
               <div className="flex items-center">
                 <Image
                   alt="User DP"
-                  src={object.profilePicture}
+                  src={user?.profile_picture || '/ProfileDP/Dummy.png'}
                   width={50}
                   height={50}
                   className="mt-1 rounded-full"
                 ></Image>
               </div>
               <div className="flex-1 text-left">
-                <h1 className="font-semibold text-xl">{object.username}</h1>
+                <h1 className="font-semibold text-xl">{object.creator.name}</h1>
                 <span className="text-sm text-gray-400 flex items-center">
                   <IoLocationOutline />
-                  {object.location}
+                  {/* {object.location} */}
+                  Location
                 </span>
               </div>
               <div>
@@ -117,7 +119,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
 
             {/* Post Caption */}
             <div className="mt-6">
-              <p className="text-left leading-4">{object.caption}</p>
+              <p className="text-left leading-4">{object.body}</p>
             </div>
           </div>
           <button

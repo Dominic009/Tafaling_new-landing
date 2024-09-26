@@ -2,7 +2,7 @@
 import Image from 'next/legacy/image';
 import React, { useState } from 'react';
 import Modal from './Modal/Modal';
-import PostBody from './PostBody';
+import PostBody from './PostBodyCopy';
 import FileUploader from './Input File/FileUploader';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 

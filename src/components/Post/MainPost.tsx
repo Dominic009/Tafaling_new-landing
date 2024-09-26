@@ -1,12 +1,12 @@
-"use client";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import Modal from "../Modal/Modal";
-import { useAuth } from "@/context/AuthContext/AuthProvider";
-import CreatePost from "./CreatePost/CreatePost";
-import MainPostSkeleton from "../Loader/Skeleton/MainPostSkeleton";
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import Modal from '../Modal/Modal';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import CreatePost from './CreatePost/CreatePost';
+import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
+import MainPostSkeleton from '../Loader/Skeleton/MainPostSkeleton';
 
-const MainPost = () => {
+const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
   const [modal, setModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
@@ -98,8 +98,12 @@ const MainPost = () => {
       )}
 
       {/* Post Modal */}
-      <Modal isOpen={modal} onClose={closeModal} width={"40%"}>
-        <CreatePost modal={modal} setModal={setModal} />
+      <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
+        <CreatePost
+          modal={modal}
+          setModal={setModal}
+          setRefetchUserPost={setRefetchUserPost}
+        />
       </Modal>
     </div>
   );
