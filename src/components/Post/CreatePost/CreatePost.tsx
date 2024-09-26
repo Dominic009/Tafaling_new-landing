@@ -1,4 +1,5 @@
 import { createUserPost } from '@/api/posts/posts';
+import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { getAccessToken } from '@/helpers/tokenStorage';
@@ -8,7 +9,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
-interface PostProps {
+interface PostProps extends IRefetchUserPostProp {
   modal?: React.ReactNode;
   setModal: Dispatch<SetStateAction<boolean>>;
 }
@@ -18,7 +19,11 @@ interface CreatePostType {
   file: string | any;
 }
 
-const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
+const CreatePost: React.FC<PostProps> = ({
+  modal,
+  setModal,
+  setRefetchUserPost,
+}) => {
   const [previews, setPreviews] = useState<{ url: string; type: string }[]>([]);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -89,6 +94,7 @@ const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
       if (status === 201) {
         toast.success('Post created successfully!');
         setModal(false);
+        setRefetchUserPost(true);
       }
     } catch (error) {
       console.log(error);

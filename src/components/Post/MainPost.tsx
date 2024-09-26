@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import Modal from '../Modal/Modal';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import CreatePost from './CreatePost/CreatePost';
+import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 
-const MainPost = () => {
+const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
   const [modal, setModal] = useState<boolean>(false);
   const { user } = useAuth();
 
@@ -85,7 +86,11 @@ const MainPost = () => {
 
       {/* Post Modal */}
       <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
-        <CreatePost modal={modal} setModal={setModal}/>
+        <CreatePost
+          modal={modal}
+          setModal={setModal}
+          setRefetchUserPost={setRefetchUserPost}
+        />
       </Modal>
     </div>
   );

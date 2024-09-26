@@ -3,15 +3,22 @@
 import MainPost from '@/components/Post/MainPost';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import UserPost from '@/components/UserPost';
-import React from 'react';
+import React, { useState } from 'react';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { FaRegNewspaper } from 'react-icons/fa6';
 import { TiHome } from 'react-icons/ti';
 import NextNProgress from 'nextjs-progressbar';
 
+export interface IRefetchUserPostProp {
+  setRefetchUserPost: React.Dispatch<React.SetStateAction<boolean>>;
+  refetchUserPost?: boolean;
+}
+
 const page = () => {
   //const router = useRouter();
   //const { user} = useAuth();
+  const [refetchUserPost, setRefetchUserPost] = useState<boolean>(false);
+
   return (
     <div>
       {/* Page Layout */}
@@ -23,11 +30,14 @@ const page = () => {
         <div className='lg:col-span-2 py-6 relative'>
           {/* Create Post section */}
           <div>
-            <MainPost></MainPost>
+            <MainPost setRefetchUserPost={setRefetchUserPost}></MainPost>
           </div>
           {/* User Posts */}
           <div>
-            <UserPost></UserPost>
+            <UserPost
+              refetchUserPost={refetchUserPost}
+              setRefetchUserPost={setRefetchUserPost}
+            ></UserPost>
           </div>
 
           {/* Virtual navigation for mobile devices */}
