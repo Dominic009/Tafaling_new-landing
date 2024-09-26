@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
-import Post from '@/components/Post';
 import MainPost from '@/components/Post/MainPost';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import UserPost from '@/components/UserPost';
