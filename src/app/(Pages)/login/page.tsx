@@ -52,6 +52,7 @@ const Page = () => {
           profile_picture: data.data.user.profile_picture,
           name: data.data.user.name,
           email_verified_at: data.data.user.email_verified_at ? true : false,
+          userId: data.data.user.user_id,
         });
 
         setItem(

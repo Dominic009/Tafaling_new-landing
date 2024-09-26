@@ -12,3 +12,14 @@ export async function createUserPost(
     },
   });
 }
+
+export async function getUserPost(
+  token: string,
+  userId?: number,
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.get(`posts/user/${userId}?start_record=0&page_size=3`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
