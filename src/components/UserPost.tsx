@@ -190,7 +190,6 @@ const UserPost: React.FC = () => {
     const fetchPosts = async () => {
       if (user) {
         try {
-          console.log(user?.userId, "here");
           setIsLoading(true);
           let lsItem = accessToken && JSON.parse(accessToken).accessT;
           const response = await getUserPost(lsItem, user?.userId);
@@ -238,8 +237,8 @@ const UserPost: React.FC = () => {
             <div>
               <Image
                 alt="User DP"
-                // src={user?.profile_picture || '/ProfileDP/Dummy.png'}
-                src={"/ProfileDP/Dummy.png"}
+                src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                // src={"/ProfileDP/Dummy.png"}
                 width={65}
                 height={65}
                 className="mt-1 rounded-full"

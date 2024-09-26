@@ -97,7 +97,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
               <div className="flex items-center">
                 <Image
                   alt="User DP"
-                  src={object.profilePicture} //object.creator.profilePicture
+                  src={object?.profile_picture || '/ProfileDP/Dummy.png'}
                   width={50}
                   height={50}
                   className="mt-1 rounded-full"
