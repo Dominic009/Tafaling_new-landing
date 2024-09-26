@@ -70,6 +70,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         profile_picture: userData.profile_picture,
         name: userData.name,
         email_verified_at: userData.email_verified_at ? true : false,
+        userId: userData.user_id,
       });
       setIsAuthLoading(false);
     };

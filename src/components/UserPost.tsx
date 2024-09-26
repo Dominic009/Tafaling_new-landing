@@ -147,23 +147,31 @@ import SkeletonLoader from "@/app/loading";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { getUserPost } from "@/api/posts/posts";
 
+
+
 interface Post {
   profilePicture: string;
-  name: string[];
   location: string;
   contentType: string;
   postContent: string;
   caption: string;
-  hashtags: string[];
-  creator: string[];
-  attachments: string[];
+  hashtags: string;
+  creator: Creator;
+  attachments: Attachments[];
   createdAt: string;
   mimeType: string;
-  body: string[];
+  body: string;
   fileName: string;
   fileURL: string;
 }
-
+interface Creator {
+  name: string;
+}
+interface Attachments {
+  fileName: string;
+  fileURL: string;
+  mimeType: string;
+}
 const UserPost: React.FC = () => {
   const [posts, setPosts] = React.useState<Post[]>([]);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
@@ -182,11 +190,12 @@ const UserPost: React.FC = () => {
     const fetchPosts = async () => {
       if (user) {
         try {
+          console.log(user?.userId, "here");
           setIsLoading(true);
           let lsItem = accessToken && JSON.parse(accessToken).accessT;
-          const response = await getUserPost(lsItem);
+          const response = await getUserPost(lsItem, user?.userId);
           setPosts(response?.data?.data);
-          console.log(response?.data?.data);
+          // console.log(response?.data?.data);
         } catch (error) {
           console.error("Error fetching posts:", error);
         } finally {
@@ -237,7 +246,7 @@ const UserPost: React.FC = () => {
               ></Image>
             </div>
             <div className="flex-1 text-left px-2">
-              <h1 className="font-semibold text-xl">{post.creator?.name}</h1>
+              <h1 className="font-semibold text-xl">{post?.creator?.name}</h1>
               <span className="text-sm text-gray-400 flex gap items-center">
                 <IoLocationOutline className="text-lg" />
                 {/* {post.location} */}
@@ -306,7 +315,7 @@ const UserPost: React.FC = () => {
       {viewImagePost && (
         <ContentViewer
           object={viewImagePost}
-          postContentType={postContentType}
+          postContentType="image"
           onClose={() => setViewImagePost(null)}
         />
       )}

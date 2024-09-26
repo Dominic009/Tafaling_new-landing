@@ -65,7 +65,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
           <div className=" lg:col-span-2 flex justify-center items-center relative scale-90 flex-1">
             {/* Content loading */}
             {isLoading && <ContentLoader />}
-            {object.contentType === "image" ? (
+            {object.attachments[0]?.mimeType ? (
               <div className="">
                 <Image
                   alt="Image"
@@ -97,7 +97,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
               <div className="flex items-center">
                 <Image
                   alt="User DP"
-                  src={object.profilePicture}
+                  src={object.profilePicture} //object.creator.profilePicture
                   width={50}
                   height={50}
                   className="mt-1 rounded-full"
