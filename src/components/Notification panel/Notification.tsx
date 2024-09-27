@@ -19,7 +19,7 @@ const Notification = () => {
 
       {dropdown && (
         <DropDownMenu bg="[#0d1f31]" top="13" right="5">
-          Notifications{" "}
+          Coming soon..!{" "}
         </DropDownMenu>
       )}
     </div>

@@ -7,7 +7,7 @@ const MainPostSkeleton = () => {
       <div className="w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white">
         <div>
           {/* User Profile and Post Button */}
-          <div className="flex items-center gap-3 ">
+          <div className="flex items-center gap-3">
             <div>
               <Skeleton circle width={50} height={50} />
             </div>
