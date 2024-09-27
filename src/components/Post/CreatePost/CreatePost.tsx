@@ -4,27 +4,32 @@ import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { getAccessToken } from '@/helpers/tokenStorage';
+import { PrivacySetting } from '@/types/Auth';
 import { AxiosProgressEvent } from 'axios';
 import { FileInput, Label } from 'flowbite-react';
 import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { FaEye } from 'react-icons/fa6';
 
 interface PostProps extends IRefetchUserPostProp {
   modal?: React.ReactNode;
   setModal: Dispatch<SetStateAction<boolean>>;
+  userPrivacy: PrivacySetting[] | [];
 }
 
 interface CreatePostType {
   post: string;
   file: string | any;
+  privacy: string;
 }
 
 const CreatePost: React.FC<PostProps> = ({
   modal,
   setModal,
   setRefetchUserPost,
+  userPrivacy,
 }) => {
   const [previews, setPreviews] = useState<{ url: string; type: string }[]>([]);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
@@ -83,7 +88,7 @@ const CreatePost: React.FC<PostProps> = ({
 
     const formData = new FormData();
     formData.append('body', data.post);
-    formData.append('privacy_id', '1');
+    formData.append('privacy_id', data.privacy);
     // console.log(data);
     for (let key in data.file) {
       if (typeof data.file[key] === 'object') {
@@ -314,7 +319,26 @@ const CreatePost: React.FC<PostProps> = ({
             <p className='ml-2'>{progress} %</p>
           </div>
         ) : (
-          <PrimaryBtn text={'Create Post'} width={'15%'}></PrimaryBtn>
+          <>
+            <div>
+              <label>
+                <FaEye className='inline-block' />
+              </label>
+              <select {...register('privacy')} className='cursor-pointer'>
+                {userPrivacy.map(item => {
+                  return (
+                    <option
+                      key={item.privacy_setting_id}
+                      value={item.privacy_setting_id}
+                    >
+                      {item.privacy_setting_name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <PrimaryBtn text={'Create Post'} width={'15%'}></PrimaryBtn>
+          </>
         )}
       </div>
     </form>

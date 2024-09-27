@@ -11,3 +11,10 @@ export type AuthUser = {
   otp?: string;
   userId?: number;
 };
+
+export type PrivacySetting = {
+  privacy_setting_id: number;
+  privacy_setting_name: string;
+  remarks: string;
+  created_date: string;
+};
