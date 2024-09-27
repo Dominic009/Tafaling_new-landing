@@ -164,11 +164,7 @@ const Page = () => {
     );
   }
 
-  if (!user) {
-    return router.push('login');
-  }
-
-  if (user.user_name && user.email_verified_at) {
+  if (user?.user_name && user?.email_verified_at) {
     return router.push('/home');
   }
 
