@@ -1,27 +1,39 @@
+import axiosClient from '@/api/config';
 import { createUserPost } from '@/api/posts/posts';
+import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { getAccessToken } from '@/helpers/tokenStorage';
+import { PrivacySetting } from '@/types/Auth';
+import { AxiosProgressEvent } from 'axios';
 import { FileInput, Label } from 'flowbite-react';
 import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { FaEye } from 'react-icons/fa6';
 
-interface PostProps {
+interface PostProps extends IRefetchUserPostProp {
   modal?: React.ReactNode;
   setModal: Dispatch<SetStateAction<boolean>>;
+  userPrivacy: PrivacySetting[] | [];
 }
 
 interface CreatePostType {
   post: string;
   file: string | any;
+  privacy: string;
 }
 
-const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
+const CreatePost: React.FC<PostProps> = ({
+  modal,
+  setModal,
+  setRefetchUserPost,
+  userPrivacy,
+}) => {
   const [previews, setPreviews] = useState<{ url: string; type: string }[]>([]);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
-
+  const [progress, setProgress] = useState(0);
   const { user } = useAuth();
   const {
     register,
@@ -76,7 +88,7 @@ const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
 
     const formData = new FormData();
     formData.append('body', data.post);
-    formData.append('privacy_id', '1');
+    formData.append('privacy_id', data.privacy);
     // console.log(data);
     for (let key in data.file) {
       if (typeof data.file[key] === 'object') {
@@ -85,14 +97,39 @@ const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
     }
 
     try {
-      const { data, status } = await createUserPost(formData, getAccessToken());
+      // const { data, status } = await createUserPost(formData, getAccessToken());
+      // if (status === 201) {
+      //   toast.success('Post created successfully!');
+      //   setModal(false);
+      //   setRefetchUserPost(true);
+      // }
+      const { data, status } = await axiosClient.post<any>(
+        'posts/create',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+            'content-type': 'multipart/form-data',
+          },
+          onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total!
+            );
+            setProgress(percentCompleted);
+          },
+        }
+      );
+
       if (status === 201) {
         toast.success('Post created successfully!');
         setModal(false);
+        setRefetchUserPost && setRefetchUserPost(true);
+        setProgress(0);
       }
     } catch (error) {
       console.log(error);
       toast.error('Post creation failed');
+      setProgress(0);
     }
 
     // Log formData entries
@@ -183,9 +220,8 @@ const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
               />
             </svg>
             <div className={`${previews.length > 0 ? 'hidden' : 'block'}`}>
-              <p className='mb-2 text-sm text-gray-500'>
-                <span className='font-semibold'>Click to upload</span> or drag
-                and drop
+              <p className='mb-2 text-sm text-gray-500 text-center'>
+                Click to upload (Multiple photos)
               </p>
               <p className='text-xs text-gray-500'>
                 SVG, PNG, JPG, GIF, or MP4 (MAX. 800x400px)
@@ -273,7 +309,37 @@ const CreatePost: React.FC<PostProps> = ({ modal, setModal }) => {
             </li>
           </ul>
         </div>
-        <PrimaryBtn text={'Create Post'} width={'15%'}></PrimaryBtn>
+        {(progress as number) > 0 ? (
+          <div className='flex items-center pr-4'>
+            <progress
+              value={progress}
+              max='100'
+              className='progress-bar'
+            ></progress>
+            <p className='ml-2'>{progress} %</p>
+          </div>
+        ) : (
+          <>
+            <div>
+              <label>
+                <FaEye className='inline-block' />
+              </label>
+              <select {...register('privacy')} className='cursor-pointer'>
+                {userPrivacy.map(item => {
+                  return (
+                    <option
+                      key={item.privacy_setting_id}
+                      value={item.privacy_setting_id}
+                    >
+                      {item.privacy_setting_name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <PrimaryBtn text={'Create Post'} width={'15%'}></PrimaryBtn>
+          </>
+        )}
       </div>
     </form>
   );

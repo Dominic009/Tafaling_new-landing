@@ -1,27 +1,13 @@
-// components/SkeletonLoader.tsx
 import React from "react";
 
-interface SkeletonLoaderProps {
-  width?: string;
-  height?: string;
-  borderRadius?: string;
-}
-
-const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
-  width = "100%",
-  height = "20px",
-  borderRadius = "0.375rem", // Tailwind's default rounded-md
-}) => {
+const Loader = () => {
   return (
-    <div
-      className="bg-gray-300 animate-pulse"
-      style={{
-        width,
-        height,
-        borderRadius,
-      }}
-    />
+    <div className="loader">
+      <div className="box1"></div>
+      <div className="box2"></div>
+      <div className="box3"></div>
+    </div>
   );
 };
 
-export default SkeletonLoader;
+export default Loader;
