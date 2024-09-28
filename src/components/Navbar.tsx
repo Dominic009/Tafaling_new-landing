@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
       ),
     },
     {
-      name: "News Feed",
+      name: "Profile",
       path: "/user-profile",
       icon: (
         <FaUserCircle

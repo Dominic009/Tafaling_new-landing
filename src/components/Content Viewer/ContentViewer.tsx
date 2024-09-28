@@ -124,7 +124,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
           </div>
           <button
             onClick={onClose}
-            className={`absolute -top-[790px] -right-3 lg:-top-3 font-semibold text-red-600 bg-gray-200 px-3 py-1 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
+            className={`absolute -top-[570px] -right-3 lg:-top-3 font-semibold text-red-600 bg-gray-200 px-3 py-1 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
           >
             X
           </button>
