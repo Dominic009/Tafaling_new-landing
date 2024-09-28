@@ -149,6 +149,7 @@ const CreatePost: React.FC<PostProps> = ({
         />
         <input
           type='text'
+          disabled={progress === 0 ? false : true}
           placeholder='Thinking of something...?'
           {...register('post')}
           className='text-gray-400 font-light w-full outline-none h-[100px]'
@@ -177,12 +178,14 @@ const CreatePost: React.FC<PostProps> = ({
                   />
                 )}
 
-                <label
-                  onClick={() => handleRemovePreview(index)}
-                  className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-4 right-2 cursor-pointer'
-                >
-                  X
-                </label>
+                {progress === 0 && (
+                  <label
+                    onClick={() => handleRemovePreview(index)}
+                    className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-4 right-2 cursor-pointer'
+                  >
+                    X
+                  </label>
+                )}
               </div>
             ))}
           </div>
@@ -235,6 +238,7 @@ const CreatePost: React.FC<PostProps> = ({
             defaultValue={''}
             render={({ field }) => (
               <FileInput
+                disabled={progress === 0 ? false : true}
                 id='dropzone-file'
                 ref={fileInputRef} // Attach ref to the file input
                 className='hidden'
@@ -263,6 +267,7 @@ const CreatePost: React.FC<PostProps> = ({
                 defaultValue={''}
                 render={({ field }) => (
                   <FileInput
+                    disabled={progress === 0 ? false : true}
                     id='dropzone-file'
                     ref={fileInputRef} // Attach ref to the file input
                     className='hidden'
