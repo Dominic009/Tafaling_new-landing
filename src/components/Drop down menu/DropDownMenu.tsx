@@ -13,7 +13,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   top,
   right,
   bg = "[#0d1f31]",
-  duration = 3000, // default to 3 seconds
+  duration = 50000, // default to 3 seconds
 }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isClosing, setIsClosing] = useState(false);

@@ -230,7 +230,7 @@ const Page = () => {
           {/* User DP */}
           <div className="flex flex-col lg:flex-row gap-5 w-[90%] mx-auto -mt-16">
             {/* overlay div */}
-            <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[300px] group relative">
+            <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[280px] group relative">
               <div className="w-full h-full bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg overflow-hidden"></div>
               {/* Change timeline image button */}
               <div className="absolute bottom-6 right-6 z-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible">
