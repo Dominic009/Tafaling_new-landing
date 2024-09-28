@@ -284,7 +284,8 @@ const Page = () => {
 
                 <div className="flex items-center gap-5 w-[50%]">
                   <ActionBtn
-                    text="Edit Info"
+                    text="Edit"
+                    secondaryText="Info"
                     icon={MdOutlineEdit}
                     add={"/user-profile/settings/edit-info"}
                   />
@@ -305,7 +306,7 @@ const Page = () => {
         <div className="h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center">
           Left Section
         </div>
-        <div className="w-[60%]">
+        <div className="lg:w-[60%]">
           <UserPost></UserPost>
         </div>
       </section>
