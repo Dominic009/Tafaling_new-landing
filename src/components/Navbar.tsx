@@ -4,7 +4,7 @@ import React from "react";
 import { TiHome } from "react-icons/ti";
 import { FaRegNewspaper } from "react-icons/fa6";
 import { BsFillPeopleFill } from "react-icons/bs";
-import { HiOutlineSearch } from "react-icons/hi";
+import { HiOutlineLogout, HiOutlineSearch } from "react-icons/hi";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
@@ -14,6 +14,9 @@ import "animate.css";
 import { getAccessToken } from "@/helpers/tokenStorage";
 import Notification from "./Notification panel/Notification";
 import DropDownMenu from "./Drop down menu/DropDownMenu";
+import { FaUserCircle } from "react-icons/fa";
+import { GrUserSettings } from "react-icons/gr";
+import { MdOutlinePrivacyTip, MdSettings } from "react-icons/md";
 
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -34,11 +37,11 @@ const Navbar: React.FC = () => {
     },
     {
       name: "News Feed",
-      path: "/news-feed",
+      path: "/user-profile",
       icon: (
-        <FaRegNewspaper
-          title="News Feed"
-          className="text-2xl  hover:text-white custom-hover"
+        <FaUserCircle
+          title="Profile"
+          className="text-2xl mb-1 hover:text-white custom-hover"
         />
       ),
     },
@@ -58,14 +61,17 @@ const Navbar: React.FC = () => {
     {
       name: "Profile",
       path: "/user-profile",
+      icon: <FaUserCircle className="text-xl" />,
     },
     {
       name: "Privacy",
       path: "/user-profile/settings/privacy",
+      icon: <MdOutlinePrivacyTip className="text-xl" />,
     },
     {
       name: "Settings",
       path: "/user-profile/settings",
+      icon: <MdSettings className="text-xl" />,
     },
   ];
 
@@ -141,7 +147,7 @@ const Navbar: React.FC = () => {
 
           <div className="grid grid-cols-2 items-center gap-2">
             {/* Notification icon */}
-          <Notification/>
+            <Notification />
 
             {/* User Profile */}
             <div
@@ -167,7 +173,9 @@ const Navbar: React.FC = () => {
                         key={path.name}
                         className="hover:bg-[#223a52] p-1 rounded-md cursor-pointer transition-colors ease-linear"
                       >
-                        <span>{path.name}</span>
+                        <span className="flex items-center gap-2">
+                          {path.icon} {path.name}
+                        </span>
                       </Link>
                     );
                   })}
@@ -175,7 +183,10 @@ const Navbar: React.FC = () => {
                     onClick={handleLogoutUser}
                     className="bg-[#D6042A] text-white px-6 py-1 rounded-md hover:bg-[#b91a37]  transition ease-in-out duration-200 mt-12 w-full"
                   >
-                    LogOut
+                    <span className="flex items-center justify-center gap-1">
+                      <HiOutlineLogout className="text-xl" />
+                      LogOut
+                    </span>
                   </button>
                 </DropDownMenu>
               )}
