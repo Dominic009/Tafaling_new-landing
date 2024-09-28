@@ -6,8 +6,8 @@ import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import NextTopLoader from "nextjs-toploader";
-import { SkeletonTheme } from "react-loading-skeleton";
 import VirtualNav from "@/components/VirtualNav";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const inter = Inter({ subsets: ["latin"] });
 const blinker = Blinker({
