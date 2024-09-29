@@ -104,12 +104,14 @@ const SingleUploader: React.FC<ISingleUploaderProps> = ({
             height={200}
             className='rounded-lg object-cover'
           />
-          <button
-            onClick={handleRemovePreview}
-            className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute top-0 right-2'
-          >
-            X
-          </button>
+          {(progress as number) === 0 && (
+            <button
+              onClick={handleRemovePreview}
+              className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute top-0 right-2'
+            >
+              X
+            </button>
+          )}
         </div>
       )}
       {/* <button
