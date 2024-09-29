@@ -111,13 +111,6 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     return () => document.body.classList.remove("no-scroll");
   }, [viewImagePost]);
 
-  // Setting the loading state to false
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
-
   return (
     <div>
       {isLoading ? (
