@@ -6,6 +6,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { FaRegNewspaper } from "react-icons/fa6";
 import { TiHome } from "react-icons/ti";
 import Link from "next/link";
+import { FaUserCircle } from "react-icons/fa";
 
 const VirtualNav = () => {
   const { user } = useAuth();
@@ -23,12 +24,12 @@ const VirtualNav = () => {
       ),
     },
     {
-      name: "News Feed",
-      path: "/news-feed",
+      name: "Profile",
+      path: "/user-profile",
       icon: (
-        <FaRegNewspaper
-          title="News Feed"
-          className="text-2xl  hover:text-white custom-hover"
+        <FaUserCircle
+          title="Profile"
+          className="text-2xl mb-1 hover:text-white custom-hover"
         />
       ),
     },

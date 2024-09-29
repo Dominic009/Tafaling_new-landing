@@ -111,13 +111,6 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     return () => document.body.classList.remove("no-scroll");
   }, [viewImagePost]);
 
-  // Setting the loading state to false
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
-
   return (
     <div>
       {isLoading ? (
@@ -135,7 +128,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                 {/* Header */}
                 <div className="flex items-center">
                   <div>
-                    <Link href={'/user-profile'}>
+                    <Link href={"/user-profile"}>
                       <Image
                         alt="User DP"
                         src={user?.profile_picture || "/ProfileDP/Dummy.png"}
@@ -147,9 +140,11 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                     </Link>
                   </div>
                   <div className="flex-1 text-left px-2">
-                    <h1 className="font-semibold text-xl">
-                      {post?.creator?.name}
-                    </h1>
+                    <Link href={"/user-profile"}>
+                      <h1 className="font-semibold text-xl">
+                        {post?.creator?.name}
+                      </h1>
+                    </Link>
                     <span className="text-sm text-gray-400 flex gap items-center">
                       <IoLocationOutline className="text-lg" />
                       {/* {post.location} */}

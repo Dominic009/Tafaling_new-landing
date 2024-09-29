@@ -17,6 +17,7 @@ import ContentLoader from "@/components/Loader/ContentLoader";
 import axiosClient from "@/api/config";
 import { getAccessToken } from "@/helpers/tokenStorage";
 import ProfileSkeleton from "@/components/Loader/Skeleton/ProfileSkeleton";
+import ComingSoon from "@/components/ComingSoon";
 
 const Page = () => {
   const { user, login } = useAuth();
@@ -142,7 +143,7 @@ const Page = () => {
       );
       //console.log(data);
 
-      if (status === 201) { 
+      if (status === 201) {
         closeModalCoverPhoto();
         toast.success(data.message);
         // console.log('updateProfilePicture: ', data);
@@ -161,9 +162,9 @@ const Page = () => {
   // Change the setisLoading false
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
-  } ,[])
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   return (
     <div className="w-full lg:w-[80%] mx-auto">
@@ -243,10 +244,9 @@ const Page = () => {
               </div>
               <Image
                 src={user?.profile_picture || "/ProfileDP/Dummy.png"}
-                width={400}
-                height={400}
+                layout="fill"
                 alt="User DP"
-                objectFit="fill"
+                objectFit="cover"
                 className="bottom-0 rounded-lg drop-shadow-md z-30 group"
                 onLoadingComplete={() => setIsLoading(false)}
               ></Image>
@@ -284,7 +284,8 @@ const Page = () => {
 
                 <div className="flex items-center gap-5 w-[50%]">
                   <ActionBtn
-                    text="Edit Info"
+                    text="Edit"
+                    secondaryText="Info"
                     icon={MdOutlineEdit}
                     add={"/user-profile/settings/edit-info"}
                   />
@@ -303,9 +304,9 @@ const Page = () => {
       {/* User Content section */}
       <section className="mt-9 flex justify-center w-[80%] gap-5 mx-auto">
         <div className="h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center">
-          Left Section
+          <ComingSoon />
         </div>
-        <div className="w-[60%]">
+        <div className="lg:w-[60%]">
           <UserPost></UserPost>
         </div>
       </section>
