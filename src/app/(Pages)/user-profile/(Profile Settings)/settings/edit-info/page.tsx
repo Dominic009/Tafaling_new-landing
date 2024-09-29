@@ -2,11 +2,12 @@
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import React from 'react';
 import 'animate.css';
+import ComingSoon from '@/components/ComingSoon';
 
 const page = () => {
   return (
-    <div className='text-center animate__animated animate__fadeIn animate__faster'>
-      This is Edit your Information page
+    <div className='text-center animate__animated animate__fadeIn animate__faster h-full'>
+      <ComingSoon/>
     </div>
   );
 };

@@ -17,6 +17,7 @@ import ContentLoader from "@/components/Loader/ContentLoader";
 import axiosClient from "@/api/config";
 import { getAccessToken } from "@/helpers/tokenStorage";
 import ProfileSkeleton from "@/components/Loader/Skeleton/ProfileSkeleton";
+import ComingSoon from "@/components/ComingSoon";
 
 const Page = () => {
   const { user, login } = useAuth();
@@ -142,7 +143,7 @@ const Page = () => {
       );
       //console.log(data);
 
-      if (status === 201) { 
+      if (status === 201) {
         closeModalCoverPhoto();
         toast.success(data.message);
         // console.log('updateProfilePicture: ', data);
@@ -161,9 +162,9 @@ const Page = () => {
   // Change the setisLoading false
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
-  } ,[])
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   return (
     <div className="w-full lg:w-[80%] mx-auto">
@@ -231,7 +232,7 @@ const Page = () => {
           <div className="flex flex-col lg:flex-row gap-5 w-[90%] mx-auto -mt-16">
             {/* overlay div */}
             <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[280px] group relative">
-              <div className="w-full h-[107%] bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg overflow-hidden"></div>
+              <div className="w-full h-full bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg overflow-hidden"></div>
               {/* Change timeline image button */}
               <div className="absolute bottom-6 right-6 z-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible">
                 <button
@@ -243,10 +244,9 @@ const Page = () => {
               </div>
               <Image
                 src={user?.profile_picture || "/ProfileDP/Dummy.png"}
-                width={400}
-                height={400}
+                layout="fill"
                 alt="User DP"
-                objectFit="fill"
+                objectFit="cover"
                 className="bottom-0 rounded-lg drop-shadow-md z-30 group"
                 onLoadingComplete={() => setIsLoading(false)}
               ></Image>
@@ -304,7 +304,7 @@ const Page = () => {
       {/* User Content section */}
       <section className="mt-9 flex justify-center w-[80%] gap-5 mx-auto">
         <div className="h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center">
-          Left Section
+          <ComingSoon />
         </div>
         <div className="lg:w-[60%]">
           <UserPost></UserPost>
