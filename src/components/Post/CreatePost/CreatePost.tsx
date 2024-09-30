@@ -5,7 +5,7 @@ import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import { PrivacySetting } from '@/types/Auth';
-import { AxiosProgressEvent } from 'axios';
+import { AxiosError, AxiosProgressEvent } from 'axios';
 import { FileInput, Label } from 'flowbite-react';
 import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -60,7 +60,8 @@ const CreatePost: React.FC<PostProps> = ({
         url: URL.createObjectURL(file),
         type: file.type, // Capture the file type (image or video)
       }));
-      setPreviews(prevPreviews => [...prevPreviews, ...newFilePreviews]);
+      // setPreviews(prevPreviews => [...prevPreviews, ...newFilePreviews]);
+      setPreviews(newFilePreviews); // for now user can upload single photo
       // Set the preview URLs for all the files
     }
   };
@@ -126,10 +127,12 @@ const CreatePost: React.FC<PostProps> = ({
         setRefetchUserPost && setRefetchUserPost(true);
         setProgress(0);
       }
-    } catch (error) {
-      console.log(error);
-      toast.error('Post creation failed');
+    } catch (e) {
+      const error = e as AxiosError<any, ResponseType>;
       setProgress(0);
+      console.log(error);
+      // toast.error(error?.response?.data.message);
+      toast.error('Post creation failed!');
     }
 
     // Log formData entries
@@ -223,8 +226,11 @@ const CreatePost: React.FC<PostProps> = ({
               />
             </svg>
             <div className={`${previews.length > 0 ? 'hidden' : 'block'}`}>
-              <p className='mb-2 text-sm text-gray-500 text-center'>
+              {/* <p className='mb-2 text-sm text-gray-500 text-center'>
                 Click to upload (Multiple photos)
+              </p> */}
+              <p className='mb-2 text-sm text-gray-500 text-center'>
+                Click to upload
               </p>
               <p className='text-xs text-gray-500'>
                 SVG, PNG, JPG, GIF, or MP4 (MAX. 800x400px)
@@ -246,7 +252,7 @@ const CreatePost: React.FC<PostProps> = ({
                   field.onChange(e.target.files);
                   handleFileChange(e);
                 }} // Capture file input change
-                multiple // Enable multiple file uploads
+                //multiple // Enable multiple file uploads
                 accept='video/*, image/*'
               />
             )}
@@ -275,7 +281,7 @@ const CreatePost: React.FC<PostProps> = ({
                       field.onChange(e.target.files);
                       handleFileChange(e);
                     }} // Capture file input change
-                    multiple // Enable multiple file uploads
+                    //multiple // Enable multiple file uploads
                     accept='video/*, image/*'
                   />
                 )}

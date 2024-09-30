@@ -12,6 +12,7 @@ import { getUserPost } from '@/api/posts/posts';
 import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import UserPostSkeleton from './Loader/Skeleton/UserPostSkeleton';
+import Link from 'next/link';
 
 interface Post {
   profilePicture: string;
@@ -27,6 +28,7 @@ interface Post {
   body: string;
   fileName: string;
   fileURL: string;
+  postId: number;
 }
 interface Creator {
   name: string;
@@ -47,6 +49,12 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
   const { user, isAuthLoading } = useAuth();
   const { item: accessToken } = useLocalStorage('auth-token');
   const isPostsFetched = useRef(false);
+  const [expandedPostId, setExpandedPostId] = useState<number | null>(null); // for post.body hiding
+
+  // Post caption/body minimization
+  const toggleText = (postId: number) => {
+    setExpandedPostId(expandedPostId === postId ? null : postId);
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -110,12 +118,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     return () => document.body.classList.remove('no-scroll');
   }, [viewImagePost]);
 
-  // Setting the loading state to false
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
+  const textLimit = 90;
 
   return (
     <div>
@@ -126,105 +129,125 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
           {posts
             .slice(0)
             .reverse()
-            .map((post, idx) => (
-              <div
-                key={idx}
-                className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow'
-              >
-                {/* Header */}
-                <div className='flex items-center'>
-                  <div>
-                    <Image
-                      alt='User DP'
-                      src={user?.profile_picture || '/ProfileDP/Dummy.png'}
-                      // src={"/ProfileDP/Dummy.png"}
-                      width={65}
-                      height={65}
-                      className='mt-1 rounded-full'
-                    ></Image>
+            .map((post, idx) => {
+              const isLongText = post.body.length > textLimit;
+              return (
+                <div
+                  key={idx}
+                  className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow'
+                >
+                  {/* Header */}
+                  <div className='flex items-center'>
+                    <div>
+                      <Link href={'/user-profile'}>
+                        <Image
+                          alt='User DP'
+                          src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                          // src={"/ProfileDP/Dummy.png"}
+                          width={65}
+                          height={65}
+                          className='mt-1 rounded-full'
+                        ></Image>
+                      </Link>
+                    </div>
+                    <div className='flex-1 text-left px-2'>
+                      <Link href={'/user-profile'}>
+                        <h1 className='font-semibold text-xl'>
+                          {post?.creator?.name}
+                        </h1>
+                      </Link>
+                      <span className='text-sm text-gray-400 flex gap items-center'>
+                        <IoLocationOutline className='text-lg' />
+                        {/* {post.location} */}
+                        Location
+                      </span>
+                    </div>
+                    <div>
+                      <HiDotsHorizontal className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl' />
+                    </div>
                   </div>
-                  <div className='flex-1 text-left px-2'>
-                    <h1 className='font-semibold text-xl'>
-                      {post?.creator?.name}
-                    </h1>
-                    <span className='text-sm text-gray-400 flex gap items-center'>
-                      <IoLocationOutline className='text-lg' />
-                      {/* {post.location} */}
-                      Location
-                    </span>
+
+                  {/* Content body */}
+                  <div className='mt-2 cursor-pointer flex items-center justify-center'>
+                    {isLoading && <ContentLoader />}
+                    {post.attachments[0]?.mimeType.includes('image') && (
+                      <Image
+                        alt='Post content'
+                        src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
+                        width={800}
+                        height={600}
+                        className='rounded-md h-[500px] object-cover hover:scale-105 custom-hover-img'
+                        onClick={() => handleContentView(post)}
+                        onLoadingComplete={() => setIsLoading(false)}
+                        loading='lazy'
+                      />
+                    )}
+                    {post.attachments[0]?.mimeType.includes('video') && (
+                      <video
+                        width='800'
+                        height='500'
+                        controls
+                        className='rounded-md h-[500px]'
+                        onClick={() => handleContentView(post)}
+                        onCanPlay={() => setIsLoading(false)}
+                        src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
+                      >
+                        <source src={post.postContent} type='video/mp4' />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
                   </div>
-                  <div>
-                    <HiDotsHorizontal className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl' />
-                  </div>
-                </div>
 
-                {/* Content body */}
-                <div className='mt-2 cursor-pointer flex items-center justify-center'>
-                  {isLoading && <ContentLoader />}
-                  {post.attachments[0]?.mimeType && (
-                    <Image
-                      alt='Post content'
-                      src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
-                      width={800}
-                      height={600}
-                      className='rounded-md h-[500px] object-cover hover:scale-105 custom-hover-img'
-                      onClick={() => handleContentView(post)}
-                      onLoadingComplete={() => setIsLoading(false)}
-                      loading='lazy'
-                    />
-                  )}
-                  {/* {post.attachments[0]?.mimeType  ? (
-              <Image
-                alt="Post content"
-                src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
-                width={800}
-                height={600}
-                className="rounded-md h-[500px] object-cover hover:scale-105 custom-hover-img"
-                onClick={() => handleContentView(post)}
-                onLoadingComplete={() => setIsLoading(false)}
-                loading="lazy"
-              />
-            ) : (
-              <video
-                width="800"
-                height="500"
-                controls
-                className="rounded-md h-[500px]"
-                onClick={() => handleContentView(post)}
-                onCanPlay={() => setIsLoading(false)}
-              >
-                <source src={post.postContent} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            )} */}
-                </div>
+                  {/* Footer */}
+                  <div className='mt-3'>
+                    {/* <p className="text-left text-lg text-wrap">{post?.body}</p> */}
+                    <p className='text-left text-lg text-wrap'>
+                      {expandedPostId === post.postId || !isLongText
+                        ? post.body
+                        : `${post.body.slice(0, textLimit)}...`}
 
-                {/* Footer */}
-                <div className='mt-3'>
-                  <p className='text-left text-lg'>{post?.body}</p>
+                      {/* Show 'Read More' only if the text exceeds the limit and is not expanded */}
+                      {isLongText && expandedPostId !== post.postId && (
+                        <small
+                          onClick={() => toggleText(post.postId)}
+                          className='text-blue-500 cursor-pointer bg-gray-200 px-2 rounded-full'
+                        >
+                          See more
+                        </small>
+                      )}
+                      {expandedPostId === post.postId && (
+                        <small
+                          onClick={() => toggleText(post.postId)}
+                          className='text-blue-500 cursor-pointer bg-gray-200 px-2 rounded-full'
+                        >
+                          Hide
+                        </small>
+                      )}
+                    </p>
 
-                  <div className='flex mt-1 gap-3'>
-                    {/* {post?.hashtags?.map((tag, idx) => (
+                    <div className='flex mt-1 gap-3'>
+                      {/* {post?.hashtags?.map((tag, idx) => (
                 <ul key={idx} className='text-[#07a1bc] font-light lowercase'>
                   <li>{tag}</li>
                 </ul>
               ))} */}
-                    <ul className='text-[#07a1bc] font-light lowercase'>
-                      <li>#dummy</li>
-                    </ul>
-                    <ul className='text-[#07a1bc] font-light lowercase'>
-                      <li>#dummy</li>
-                    </ul>
-                  </div>
-                  <div className='text-end text-gray-400 text-sm font-light'>
-                    {/* <PostTimeConverter time={post?.postedTime}></PostTimeConverter> */}
-                    <PostTimeConverter
-                      time={post?.createdAt}
-                    ></PostTimeConverter>
+                      <ul className='text-[#07a1bc] font-light lowercase'>
+                        <li>#dummy</li>
+                      </ul>
+                      <ul className='text-[#07a1bc] font-light lowercase'>
+                        <li>#dummy</li>
+                      </ul>
+                    </div>
+                    <div className='text-end text-gray-400 text-sm font-light'>
+                      {/* <PostTimeConverter time={post?.postedTime}></PostTimeConverter> */}
+                      <PostTimeConverter
+                        time={post?.createdAt}
+                      ></PostTimeConverter>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
           {viewImagePost && (
             <ContentViewer
