@@ -60,7 +60,8 @@ const CreatePost: React.FC<PostProps> = ({
         url: URL.createObjectURL(file),
         type: file.type, // Capture the file type (image or video)
       }));
-      setPreviews(prevPreviews => [...prevPreviews, ...newFilePreviews]);
+      // setPreviews(prevPreviews => [...prevPreviews, ...newFilePreviews]);
+      setPreviews(newFilePreviews); // for now user can upload single photo
       // Set the preview URLs for all the files
     }
   };
@@ -225,8 +226,11 @@ const CreatePost: React.FC<PostProps> = ({
               />
             </svg>
             <div className={`${previews.length > 0 ? 'hidden' : 'block'}`}>
-              <p className='mb-2 text-sm text-gray-500 text-center'>
+              {/* <p className='mb-2 text-sm text-gray-500 text-center'>
                 Click to upload (Multiple photos)
+              </p> */}
+              <p className='mb-2 text-sm text-gray-500 text-center'>
+                Click to upload
               </p>
               <p className='text-xs text-gray-500'>
                 SVG, PNG, JPG, GIF, or MP4 (MAX. 800x400px)
@@ -248,7 +252,7 @@ const CreatePost: React.FC<PostProps> = ({
                   field.onChange(e.target.files);
                   handleFileChange(e);
                 }} // Capture file input change
-                multiple // Enable multiple file uploads
+                //multiple // Enable multiple file uploads
                 accept='video/*, image/*'
               />
             )}
@@ -277,7 +281,7 @@ const CreatePost: React.FC<PostProps> = ({
                       field.onChange(e.target.files);
                       handleFileChange(e);
                     }} // Capture file input change
-                    multiple // Enable multiple file uploads
+                    //multiple // Enable multiple file uploads
                     accept='video/*, image/*'
                   />
                 )}
