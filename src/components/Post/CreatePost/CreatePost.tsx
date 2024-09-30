@@ -5,7 +5,7 @@ import PrimaryBtn from '@/components/PrimaryBtn';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import { PrivacySetting } from '@/types/Auth';
-import { AxiosProgressEvent } from 'axios';
+import { AxiosError, AxiosProgressEvent } from 'axios';
 import { FileInput, Label } from 'flowbite-react';
 import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -126,10 +126,12 @@ const CreatePost: React.FC<PostProps> = ({
         setRefetchUserPost && setRefetchUserPost(true);
         setProgress(0);
       }
-    } catch (error) {
-      console.log(error);
-      toast.error('Post creation failed');
+    } catch (e) {
+      const error = e as AxiosError<any, ResponseType>;
       setProgress(0);
+      console.log(error);
+      // toast.error(error?.response?.data.message);
+      toast.error('Post creation failed!');
     }
 
     // Log formData entries
