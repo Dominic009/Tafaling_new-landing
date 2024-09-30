@@ -121,7 +121,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
   const textLimit = 90;
 
   return (
-    <div>
+    <>
       {isLoading ? (
         <UserPostSkeleton cards={8} />
       ) : (
@@ -258,7 +258,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

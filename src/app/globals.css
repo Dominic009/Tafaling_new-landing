@@ -12,7 +12,9 @@
 }
 
 .no-scroll {
-  overflow: hidden;
+  overflow-y: scroll;
+  position: fixed;
+  width: 100%;
 }
 
 .progress-bar {
@@ -270,7 +272,6 @@
 }
 
 /* ------------------------------------------------------------------------------------ */
-
 
 /* * {
   background: rgb(0 100 0/0.1) !important;
