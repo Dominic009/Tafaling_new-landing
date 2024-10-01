@@ -10,6 +10,9 @@ import { Post } from './UserPost';
 import ContentLoader from '@/components/Loader/ContentLoader';
 import { useEffect, useState } from 'react';
 import ContentViewer from '@/components/Content Viewer/ContentViewer';
+import { FaUserCircle } from 'react-icons/fa';
+import DropDownMenu from '@/components/Drop down menu/DropDownMenu';
+import Modal from '@/components/Modal/Modal';
 
 interface IPostProps {
   post: Post;
@@ -25,8 +28,10 @@ const IndividualPost: React.FC<IPostProps> = ({
   key,
 }) => {
   const { user, isAuthLoading } = useAuth();
-  const [isPostExpanded, setIsPostExpanded] = useState<boolean>(false); // for post.body hiding
+  const [isPostExpanded, setIsPostExpanded] = useState<boolean>(false);
+  const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
+  const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
   const textLimit = 90;
 
   const handleContentView = (object: any) => {
@@ -73,8 +78,37 @@ const IndividualPost: React.FC<IPostProps> = ({
             Location
           </span>
         </div>
-        <div>
-          <HiDotsHorizontal className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl' />
+        <div className='relative'>
+          <HiDotsHorizontal
+            onClick={() => setToggleEditPost(!toggleEditPost)}
+            className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl'
+          />
+          {toggleEditPost && (
+            <DropDownMenu bg='[#f4f7f8]' top='5' right='6'>
+              {/* dropdown buttons here */}
+              {/* <button
+            
+            onClick={() => {
+              setSelectedPost(post);  
+              openUpdatePostModal();  
+            }}
+              className="hover:bg-[#dfdfdf] p-1 rounded-md cursor-pointer transition-colors ease-linear"
+            >
+              <span className="flex items-center gap-2 text-gray-800">
+                <FaEdit className="text-xl text-[#00B4DB]" /> Edit Post
+              </span>
+            </button> */}
+              <button
+                className='hover:bg-[#dfdfdf] p-1 rounded-md cursor-pointer transition-colors ease-linear'
+                onClick={() => setEditPrivacyModal(true)}
+              >
+                <span className='flex items-center gap-2 text-gray-800'>
+                  <FaUserCircle className='text-xl text-[#00B4DB]' /> Edit
+                  Privacy
+                </span>
+              </button>
+            </DropDownMenu>
+          )}
         </div>
       </div>
 
@@ -169,6 +203,24 @@ const IndividualPost: React.FC<IPostProps> = ({
           onClose={() => setViewImagePost(null)}
         />
       )}
+
+      <Modal
+        isOpen={editPrivacyModal}
+        onClose={() => setEditPrivacyModal(!editPrivacyModal)}
+        width={'40%'}
+      >
+        <h1>Edit Privacy</h1>
+        {/* <ChangePrivacy
+          modal={modal}
+          setModal={setModal}
+          setRefetchUserPost={setRefetchUserPost}
+          userPrivacy={userPrivacy}
+          postData={{
+            postId: selectedPostId.postId,
+            privacyId: selectedPostId.privacyId,
+          }}
+        /> */}
+      </Modal>
     </div>
   );
 };
