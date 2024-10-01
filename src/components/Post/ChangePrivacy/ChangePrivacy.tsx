@@ -16,6 +16,7 @@ interface PostProps extends IRefetchUserPostProp {
     postId: number | null;
     privacyId: number | null;
   };
+  setToggleEditPost: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface ChangePrivacyType {
@@ -30,6 +31,7 @@ const ChangePrivacy: React.FC<PostProps> = ({
   setRefetchUserPost,
   userPrivacy,
   postData,
+  setToggleEditPost,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -62,6 +64,7 @@ const ChangePrivacy: React.FC<PostProps> = ({
       const response = await updatePostPrivacy(postBody, getAccessToken());
       toast.success(response.data.message);
       setModal(false);
+      setToggleEditPost(false);
 
       setRefetchUserPost && setRefetchUserPost(true);
     } catch (error) {

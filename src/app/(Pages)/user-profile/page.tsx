@@ -27,6 +27,7 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { item: accessToken } = useLocalStorage('auth-token');
   const [progress, setProgress] = useState(0);
+  const [refetchUserPost, setRefetchUserPost] = useState<boolean>(false);
 
   useEffect(() => {
     if (modalProfilePicture || modalCoverPhoto) {
@@ -44,10 +45,6 @@ const Page = () => {
   const closeModalCoverPhoto = () => {
     setModalCoverPhoto(false);
   };
-
-  useEffect(() => {
-    user?.user_name && console.log(user);
-  }, [user]);
 
   //upload picture handler
   const handleUploadProfilePicture = async (
@@ -296,7 +293,10 @@ const Page = () => {
           <ComingSoon />
         </div>
         <div className='lg:w-[60%]'>
-          <UserPost></UserPost>
+          <UserPost
+            refetchUserPost={refetchUserPost}
+            setRefetchUserPost={setRefetchUserPost}
+          ></UserPost>
         </div>
       </section>
     </div>

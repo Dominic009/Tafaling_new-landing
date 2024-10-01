@@ -18,7 +18,7 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
   useEffect(() => {
     async function fetchData() {
       const { data, status } = await getUserPrivacy();
-      console.log(data.data);
+      // console.log(data.data);
       // setUserPrivacy(data.data);
       login({ ...user, userPrivacy: data.data });
     }
@@ -28,10 +28,6 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
       isUserPrivacyFetched.current = true;
     }
   }, [user, login]);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   const openModalForTab = (tab: string | null) => {
     // setActiveTab(tab);

@@ -222,6 +222,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             postId: post.postId,
             privacyId: post.privacyId,
           }}
+          setToggleEditPost={setToggleEditPost}
         />
       </Modal>
     </div>
