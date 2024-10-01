@@ -90,7 +90,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             </h5>
             <span className='w-1 h-1 rounded-full bg-[#00274A]'></span>
             <h5 className='text-sm text-gray-400 flex gap items-center'>
-              <p>
+              <p className='flex items-center gap-1'>
                 <FaEye className='inline-block' />{' '}
                 {userPirvacyText?.privacy_setting_name}
               </p>
