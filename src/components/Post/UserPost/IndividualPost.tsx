@@ -87,7 +87,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl'
           />
           {toggleEditPost && (
-            <DropDownMenu bg='[#f4f7f8]' top='5' right='6'>
+            <DropDownMenu bg='[#f4f7f8]' top='6' right='3'>
               {/* dropdown buttons here */}
               {/* <button
             

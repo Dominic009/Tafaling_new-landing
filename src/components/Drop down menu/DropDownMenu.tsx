@@ -10,9 +10,9 @@ interface DropDownMenuProps {
 
 const DropDownMenu: React.FC<DropDownMenuProps> = ({
   children,
-  top = '14',
-  right = '5',
-  bg = '[#0d1f31]',
+  top,
+  right,
+  bg,
   duration = 50000, // default to 3 seconds
 }) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -29,9 +29,13 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
 
   if (!isVisible) return null;
 
+  const bgColor = bg ? `bg-${bg}` : `bg-[#0d1f31]`;
+  const topPosition = top ? `top-${top}` : `top-14`;
+  const rightPosition = right ? `right-${right}` : `right-5`;
+
   return (
     <div
-      className={`absolute top-${top} right-${right} bg-${bg} w-48 rounded-lg p-4 flex flex-col justify-between ${
+      className={`absolute ${topPosition} ${rightPosition} ${bgColor} w-48 rounded-lg p-4 flex flex-col justify-between ${
         isClosing
           ? 'animate__animated animate__fadeOut animate__faster'
           : 'animate__animated animate__fadeIn animate__faster'
