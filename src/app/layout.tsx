@@ -31,7 +31,7 @@ export default function RootLayout({
       <AuthProvider>
         <SkeletonTheme baseColor="#D0D0D0" highlightColor="#DCDCDC">
           <body
-            className={`${inter.className} ${blinker.className} bg-[#f4f7f8] relative`}
+            className={`${inter.className} ${blinker.className} bg-[#f4f7f8] relative custom-scrollbar`}
           >
             <div className="sticky top-0 z-50 w-full">
               <Navbar></Navbar>

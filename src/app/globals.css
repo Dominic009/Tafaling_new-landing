@@ -276,6 +276,7 @@
 /* * {
   background: rgb(0 100 0/0.1) !important;
 } */
+ 
 
 /* For hiding scroll bars in divs and also customizing scroll */
 .hide-scrollbar::-webkit-scrollbar {
@@ -300,7 +301,7 @@
 
 /* Handle (scroll thumb) */
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: #2ac6e9;
   border-radius: 10px;
   border: 2px solid #f1f1f1;
 }

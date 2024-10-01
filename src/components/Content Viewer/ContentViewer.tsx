@@ -86,7 +86,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
 
             {/* Post Caption */}
             <div className="mt-6 ">
-              <p className="text-left leading-4 h-60 custom-scrollbar overflow-y-auto">
+              <p className="text-left h-60 custom-scrollbar overflow-y-auto">
                 {" "}
                 {!isExpanded &&
                   object.body.length > textLimit &&
@@ -99,7 +99,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
                 {object.body.length > textLimit && !isExpanded && (
                   <small
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="text-blue-500 cursor-pointer bg-gray-200 px-2 rounded-full"
+                    className="text-gray-400 cursor-pointer"
                   >
                     See more
                   </small>
@@ -107,7 +107,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
                 {isExpanded && (
                   <small
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="text-blue-500 cursor-pointer bg-gray-200 px-2 rounded-full"
+                    className="text-gray-400 cursor-pointer"
                   >
                     ..Hide
                   </small>

@@ -35,7 +35,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
   const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
-  const textLimit = 90;
+  const textLimit = post.attachments.length === 0 ? 800 : 90;
 
   const handleContentView = (object: any) => {
     setViewImagePost(object);
@@ -53,6 +53,11 @@ const IndividualPost: React.FC<IPostProps> = ({
     return () => document.body.classList.remove("no-scroll");
   }, [viewImagePost]);
 
+  // Post selected privacy
+  const userPirvacyText = user?.userPrivacy?.find(
+    (item) => item.privacy_setting_id === post.privacyId
+  );
+
   return (
     <div
       key={key}
@@ -67,8 +72,8 @@ const IndividualPost: React.FC<IPostProps> = ({
               src={user?.profile_picture || "/ProfileDP/Dummy.png"}
               width={50}
               height={50}
-              objectFit='cover'
-              className='w-16 h-16 rounded-full'
+              objectFit="cover"
+              className="w-16 h-16 rounded-full"
             ></Image>
           </Link>
         </div>
@@ -76,11 +81,17 @@ const IndividualPost: React.FC<IPostProps> = ({
           <Link href={"/user-profile"}>
             <h1 className="font-semibold text-xl">{post?.creator?.name}</h1>
           </Link>
-          <span className="text-sm text-gray-400 flex gap items-center">
-            <IoLocationOutline className="text-lg" />
-            {/* {post.location} */}
-            Location
-          </span>
+          <div className="flex items-center gap-3">
+            <h5 className="text-sm text-gray-400 flex gap items-center">
+              <IoLocationOutline className="text-lg" />
+              {/* {post.location} */}
+              Location
+            </h5>
+            <span className="w-1 h-1 rounded-full bg-[#00274A]"></span>
+            <h5 className="text-sm text-gray-400 flex gap items-center">
+              <p>{userPirvacyText?.privacy_setting_name}</p>
+            </h5>
+          </div>
         </div>
         <div className="relative">
           <HiDotsHorizontal
@@ -117,7 +128,7 @@ const IndividualPost: React.FC<IPostProps> = ({
       </div>
 
       {/* Content body */}
-      <div className="mt-2 cursor-pointer flex items-center justify-center">
+      <div className="mt-2 cursor-pointer flex items-center justify-center overflow-hidden hover:drop-shadow-xl">
         {isLoading && <ContentLoader />}
         {post.attachments[0]?.mimeType.includes("image") && (
           <Image
@@ -125,7 +136,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
             width={800}
             height={500}
-            className="rounded-md object-contain hover:scale-105 custom-hover-img"
+            className="rounded-md object-contain hover:scale-[103%] custom-hover-img h-[500px]"
             onClick={() => handleContentView(post)}
             onLoadingComplete={() => setIsLoading(false)}
             loading="lazy"
@@ -164,7 +175,7 @@ const IndividualPost: React.FC<IPostProps> = ({
           {post.body.length > textLimit && !isPostExpanded && (
             <small
               onClick={() => setIsPostExpanded(!isPostExpanded)}
-              className="text-blue-500 cursor-pointer bg-gray-200 px-2 rounded-full"
+              className="text-gray-400 cursor-pointer"
             >
               See more
             </small>
@@ -172,7 +183,7 @@ const IndividualPost: React.FC<IPostProps> = ({
           {isPostExpanded && (
             <small
               onClick={() => setIsPostExpanded(!isPostExpanded)}
-              className="text-blue-500 cursor-pointer bg-gray-200 px-2 rounded-full"
+              className="text-gray-400 cursor-pointer"
             >
               ..Hide
             </small>
