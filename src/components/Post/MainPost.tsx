@@ -54,7 +54,7 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
         <div className='w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white'>
           {/* User Profile and Post Button */}
           <div className='flex items-center gap-3'>
-            <div className='rounded-full'>
+            <div className="w-14 h-14 rounded-full flex items-center justify-center">
               <Image
                 alt='User DP'
                 src={user?.profile_picture || '/ProfileDP/Dummy.png'}
