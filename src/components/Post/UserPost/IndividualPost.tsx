@@ -13,12 +13,14 @@ import ContentViewer from '@/components/Content Viewer/ContentViewer';
 import { FaUserCircle } from 'react-icons/fa';
 import DropDownMenu from '@/components/Drop down menu/DropDownMenu';
 import Modal from '@/components/Modal/Modal';
+import ChangePrivacy from '../ChangePrivacy/ChangePrivacy';
 
 interface IPostProps {
   post: Post;
   key: number;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setRefetchUserPost: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const IndividualPost: React.FC<IPostProps> = ({
@@ -26,8 +28,9 @@ const IndividualPost: React.FC<IPostProps> = ({
   isLoading,
   setIsLoading,
   key,
+  setRefetchUserPost,
 }) => {
-  const { user, isAuthLoading } = useAuth();
+  const { user } = useAuth();
   const [isPostExpanded, setIsPostExpanded] = useState<boolean>(false);
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
@@ -210,16 +213,16 @@ const IndividualPost: React.FC<IPostProps> = ({
         width={'40%'}
       >
         <h1>Edit Privacy</h1>
-        {/* <ChangePrivacy
-          modal={modal}
-          setModal={setModal}
+        <ChangePrivacy
+          modal={editPrivacyModal}
+          setModal={setEditPrivacyModal}
           setRefetchUserPost={setRefetchUserPost}
-          userPrivacy={userPrivacy}
+          userPrivacy={user?.userPrivacy && user?.userPrivacy}
           postData={{
-            postId: selectedPostId.postId,
-            privacyId: selectedPostId.privacyId,
+            postId: post.postId,
+            privacyId: post.privacyId,
           }}
-        /> */}
+        />
       </Modal>
     </div>
   );

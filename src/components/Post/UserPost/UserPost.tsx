@@ -23,6 +23,7 @@ export interface Post {
   fileName: string;
   fileURL: string;
   postId: number;
+  privacyId: number;
 }
 interface Creator {
   name: string;
@@ -102,6 +103,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                   key={post.postId}
                   setIsLoading={setIsLoading}
                   isLoading={isLoading}
+                  setRefetchUserPost={setRefetchUserPost!}
                 />
               );
             })}
