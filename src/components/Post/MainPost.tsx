@@ -11,22 +11,27 @@ import { PrivacySetting } from '@/types/Auth';
 const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
   const [modal, setModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useAuth();
-  const [userPrivacy, setUserPrivacy] = useState<PrivacySetting[] | []>([]);
+  const { user, login } = useAuth();
+  // const [userPrivacy, setUserPrivacy] = useState<PrivacySetting[] | []>([]);
   const isUserPrivacyFetched = useRef(false);
 
   useEffect(() => {
     async function fetchData() {
       const { data, status } = await getUserPrivacy();
-      // console.log(data.data);
-      setUserPrivacy(data.data);
+      console.log(data.data);
+      // setUserPrivacy(data.data);
+      login({ ...user, userPrivacy: data.data });
     }
 
     if (!isUserPrivacyFetched.current) {
       fetchData();
       isUserPrivacyFetched.current = true;
     }
-  }, []);
+  }, [user, login]);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   const openModalForTab = (tab: string | null) => {
     // setActiveTab(tab);
@@ -121,7 +126,7 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
           modal={modal}
           setModal={setModal}
           setRefetchUserPost={setRefetchUserPost}
-          userPrivacy={userPrivacy}
+          userPrivacy={user?.userPrivacy!}
         />
       </Modal>
     </>

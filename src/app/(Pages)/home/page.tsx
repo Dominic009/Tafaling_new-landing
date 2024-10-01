@@ -2,13 +2,13 @@
 'use client';
 import MainPost from '@/components/Post/MainPost';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
-import UserPost from '@/components/UserPost';
 import React, { useState } from 'react';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { FaRegNewspaper } from 'react-icons/fa6';
 import { TiHome } from 'react-icons/ti';
 import NextNProgress from 'nextjs-progressbar';
 import ComingSoon from '@/components/ComingSoon';
+import UserPost from '@/components/Post/UserPost/UserPost';
 
 export interface IRefetchUserPostProp {
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;

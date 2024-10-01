@@ -10,6 +10,7 @@ export type AuthUser = {
   email_verified_at?: boolean;
   otp?: string;
   userId?: number;
+  userPrivacy?: PrivacySetting[];
 };
 
 export type PrivacySetting = {

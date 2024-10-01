@@ -2,7 +2,6 @@
 import ActionBtn from '@/components/Buttons/User Profile buttons/ActionBtn';
 import SingleUploader from '@/components/Input File/Single File Uploader/SingleUploader';
 import Modal from '@/components/Modal/Modal';
-import UserPost from '@/components/UserPost';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import Image from 'next/legacy/image';
 import React, { useState, useEffect } from 'react';
@@ -18,6 +17,7 @@ import axiosClient from '@/api/config';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import ProfileSkeleton from '@/components/Loader/Skeleton/ProfileSkeleton';
 import ComingSoon from '@/components/ComingSoon';
+import UserPost from '@/components/Post/UserPost/UserPost';
 
 const Page = () => {
   const { user, login } = useAuth();
