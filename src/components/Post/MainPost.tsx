@@ -1,12 +1,33 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Modal from '../Modal/Modal';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import CreatePost from './CreatePost/CreatePost';
+import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
+import MainPostSkeleton from '../Loader/Skeleton/MainPostSkeleton';
+import { getUserPrivacy } from '@/api/auth/auth';
+import { PrivacySetting } from '@/types/Auth';
 
-const MainPost = () => {
+const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
   const [modal, setModal] = useState<boolean>(false);
-  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const { user, login } = useAuth();
+  // const [userPrivacy, setUserPrivacy] = useState<PrivacySetting[] | []>([]);
+  const isUserPrivacyFetched = useRef(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const { data, status } = await getUserPrivacy();
+      // console.log(data.data);
+      // setUserPrivacy(data.data);
+      login({ ...user, userPrivacy: data.data });
+    }
+
+    if (!isUserPrivacyFetched.current) {
+      fetchData();
+      isUserPrivacyFetched.current = true;
+    }
+  }, [user, login]);
 
   const openModalForTab = (tab: string | null) => {
     // setActiveTab(tab);
@@ -18,19 +39,31 @@ const MainPost = () => {
     // setActiveTab(null);
   };
 
+  // Setting the loading state to false
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
+
   return (
-    <div>
-      <div className='w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white'>
-        <div>
+    <>
+      {isLoading ? (
+        <MainPostSkeleton />
+      ) : (
+        <div className='w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white'>
           {/* User Profile and Post Button */}
-          <div className='flex items-center gap-3 '>
-            <Image
-              alt='User DP'
-              src={user?.profile_picture || '/ProfileDP/Dummy.png'}
-              width={50}
-              height={50}
-              className='mt-1 rounded-full'
-            />
+          <div className='flex items-center gap-3'>
+            <div className='rounded-full'>
+              <Image
+                alt='User DP'
+                src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                width={50}
+                height={50}
+                objectFit='cover'
+                className='w-14 h-14 rounded-full'
+              />
+            </div>
             <button
               onClick={() => openModalForTab(null)}
               className='text-gray-400 font-light w-full outline-none bg-gray-100 px-4 py-2 rounded-full text-left transition duration-300 ease-in-out'
@@ -81,13 +114,18 @@ const MainPost = () => {
             </li>
           </ul>
         </div>
-      </div>
+      )}
 
       {/* Post Modal */}
       <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
-        <CreatePost modal={modal} setModal={setModal}/>
+        <CreatePost
+          modal={modal}
+          setModal={setModal}
+          setRefetchUserPost={setRefetchUserPost}
+          userPrivacy={user?.userPrivacy!}
+        />
       </Modal>
-    </div>
+    </>
   );
 };
 

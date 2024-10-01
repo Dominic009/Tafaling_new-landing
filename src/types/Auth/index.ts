@@ -3,10 +3,19 @@ export type AuthUser = {
   password?: string;
   name?: string;
   password_confirmation?: string;
-  otp?: string;
   cover?: string;
   cover_photo?: string;
   profile_picture?: string;
   user_name?: string;
   email_verified_at?: boolean;
+  otp?: string;
+  userId?: number;
+  userPrivacy?: PrivacySetting[];
+};
+
+export type PrivacySetting = {
+  privacy_setting_id: number;
+  privacy_setting_name: string;
+  remarks: string;
+  created_date: string;
 };

@@ -8,7 +8,6 @@ import { GrUserSettings } from "react-icons/gr";
 import { MdOutlinePrivacyTip, MdOutlineEdit } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 
-
 const SideNav = () => {
   const currentPath = usePathname();
   const { user } = useAuth();
@@ -16,33 +15,33 @@ const SideNav = () => {
     {
       name: "General",
       path: "/user-profile/settings",
-        icon: (
-          <GrUserSettings
-            title='Settings'
-            className='text-2xl hover:text-white custom-hover'
-          />
-        ),
+      icon: (
+        <GrUserSettings
+          title="Settings"
+          className="text-2xl hover:text-white custom-hover"
+        />
+      ),
     },
     {
       name: "Privacy",
       path: "/user-profile/settings/privacy",
 
-        icon: (
-          <MdOutlinePrivacyTip
-            title='News Feed'
-            className='text-2xl hover:text-white custom-hover'
-          />
-        ),
+      icon: (
+        <MdOutlinePrivacyTip
+          title="News Feed"
+          className="text-2xl hover:text-white custom-hover"
+        />
+      ),
     },
     {
       name: "Edit Info",
       path: "/user-profile/settings/edit-info",
-        icon: (
-          <MdOutlineEdit
-            title='Requests'
-            className='text-2xl  hover:text-white custom-hover'
-          />
-        ),
+      icon: (
+        <MdOutlineEdit
+          title="Requests"
+          className="text-2xl  hover:text-white custom-hover"
+        />
+      ),
     },
   ];
   return (
@@ -56,14 +55,13 @@ const SideNav = () => {
       }}
     >
       <div className="block lg:hidden absolute text-white right-2">
-        <RxHamburgerMenu className=""/>
+        <RxHamburgerMenu className="" />
       </div>
       <div className="flex flex-col items-center justify-center mb-8">
-        <div>
+        <div className="rounded-full w-20 h-20 relative">
           <Image
             src={user?.profile_picture || "/ProfileDP/Dummy.png"}
-            width={80}
-            height={80}
+            layout="fill"
             alt="User"
             className="rounded-full"
           ></Image>

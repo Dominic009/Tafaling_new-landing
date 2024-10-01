@@ -1,5 +1,6 @@
 'use client';
 import { getAuthUser } from '@/api/auth/auth';
+import Loader from '@/app/loading';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { useRouter } from 'next/navigation';
@@ -44,7 +45,7 @@ const PrivateRoute = <T extends {}>(Component: ComponentType<T>) => {
     if (isAuthLoading) {
       return (
         <div className='h-[90vh] flex justify-center items-center'>
-          <h1 className='text-2xl'>Loading... ⏳</h1>
+          <Loader></Loader>
         </div>
       );
     }
