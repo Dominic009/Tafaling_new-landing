@@ -13,6 +13,12 @@ export async function createUserPost(
   });
 }
 
+export async function getPublicPost(): Promise<
+  AxiosResponse<any, ResponseType>
+> {
+  return await axiosClient.get(`posts/all/-1?start_record=0&page_size=3`);
+}
+
 export async function getUserPost(
   token: string,
   userId?: number
