@@ -21,7 +21,7 @@ interface IPostProps {
   key: number;
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setRefetchUserPost: React.Dispatch<React.SetStateAction<boolean>>;
+  setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const IndividualPost: React.FC<IPostProps> = ({

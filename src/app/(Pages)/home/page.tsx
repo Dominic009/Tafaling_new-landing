@@ -9,6 +9,8 @@ import { TiHome } from 'react-icons/ti';
 import NextNProgress from 'nextjs-progressbar';
 import ComingSoon from '@/components/ComingSoon';
 import UserPost from '@/components/Post/UserPost/UserPost';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import PublicPost from '@/components/Post/PublicPost/PublicPost';
 
 export interface IRefetchUserPostProp {
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,6 +19,7 @@ export interface IRefetchUserPostProp {
 
 const page = () => {
   const [refetchUserPost, setRefetchUserPost] = useState<boolean>(false);
+  const { user } = useAuth();
 
   return (
     <div className='grid lg:grid-cols-4 gap-8 w-full md:w-[90%] lg:w-[90%] mx-auto px-2 md:px-5 text-center'>
@@ -27,12 +30,20 @@ const page = () => {
 
       <main className='lg:col-span-2 py-6 relative'>
         {/* Create Post section */}
-        <MainPost setRefetchUserPost={setRefetchUserPost}></MainPost>
+        {user?.user_name && (
+          <MainPost setRefetchUserPost={setRefetchUserPost}></MainPost>
+        )}
+
         {/* User Posts */}
-        <UserPost
-          refetchUserPost={refetchUserPost}
-          setRefetchUserPost={setRefetchUserPost}
-        ></UserPost>
+        {user?.user_name ? (
+          <UserPost
+            refetchUserPost={refetchUserPost}
+            setRefetchUserPost={setRefetchUserPost}
+          ></UserPost>
+        ) : (
+          <PublicPost />
+        )}
+
         {/* Virtual navigation for mobile devices */}
       </main>
 
@@ -43,4 +54,4 @@ const page = () => {
   );
 };
 
-export default PrivateRoute(page);
+export default page;
