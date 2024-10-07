@@ -97,15 +97,16 @@ const IndividualPost: React.FC<IPostProps> = ({
             </h5>
           </div>
         </div>
-        <div className='relative'>
-          <HiDotsHorizontal
-            onClick={() => setToggleEditPost(!toggleEditPost)}
-            className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl'
-          />
-          {toggleEditPost && (
-            <DropDownMenu bg='[#f4f7f8]' top='6' right='3'>
-              {/* dropdown buttons here */}
-              {/* <button
+        {user?.user_name && (
+          <div className='relative'>
+            <HiDotsHorizontal
+              onClick={() => setToggleEditPost(!toggleEditPost)}
+              className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl'
+            />
+            {toggleEditPost && (
+              <DropDownMenu bg='[#f4f7f8]' top='6' right='3'>
+                {/* dropdown buttons here */}
+                {/* <button
             
             onClick={() => {
               setSelectedPost(post);  
@@ -117,18 +118,19 @@ const IndividualPost: React.FC<IPostProps> = ({
                 <FaEdit className="text-xl text-[#00B4DB]" /> Edit Post
               </span>
             </button> */}
-              <button
-                className='hover:bg-[#dfdfdf] p-1 rounded-md cursor-pointer transition-colors ease-linear'
-                onClick={() => setEditPrivacyModal(true)}
-              >
-                <span className='flex items-center gap-2 text-gray-800'>
-                  <FaUserCircle className='text-xl text-[#00B4DB]' /> Edit
-                  Privacy
-                </span>
-              </button>
-            </DropDownMenu>
-          )}
-        </div>
+                <button
+                  className='hover:bg-[#dfdfdf] p-1 rounded-md cursor-pointer transition-colors ease-linear'
+                  onClick={() => setEditPrivacyModal(true)}
+                >
+                  <span className='flex items-center gap-2 text-gray-800'>
+                    <FaUserCircle className='text-xl text-[#00B4DB]' /> Edit
+                    Privacy
+                  </span>
+                </button>
+              </DropDownMenu>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Content body */}
