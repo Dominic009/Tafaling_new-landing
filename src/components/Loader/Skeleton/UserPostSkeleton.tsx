@@ -12,7 +12,7 @@ const UserPostSkeleton: React.FC<UserPostSkeletonProps> = ({ cards }) => {
       {[...Array(cards)].map((_, idx) => (
         <div
           key={idx}
-          className="w-full h-full rounded-xl p-3 mb-4 border border-gray-200 bg-white"
+          className="w-full h-[700px] rounded-xl p-3 mb-4 border border-gray-200 bg-white"
         >
           {/* Header */}
           <div className="flex items-center">
