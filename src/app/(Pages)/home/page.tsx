@@ -31,13 +31,13 @@ const page = () => {
   }, []);
 
   return (
-    <div className="grid lg:grid-cols-4 gap-8 w-full md:w-[90%] lg:w-[90%] mx-auto px-2 md:px-5 text-center">
-      <aside className="h-[80vh] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl ">
+    <div className="grid lg:grid-cols-4 gap-8 w-full lg:w-[90%] lg:mx-auto px-2 md:px-5 text-center">
+      <aside className="h-[80vh] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl">
         <ComingSoon />
       </aside>
-      <NextNProgress options={{ easing: "ease", speed: 500 }} />
 
-      <main className="lg:col-span-2 py-6 relative">
+      <main className="lg:col-span-2 py-6">
+        <NextNProgress options={{ easing: "ease", speed: 500 }} />
         {/* Create Post section */}
         {user?.user_name && (
           <MainPost setRefetchUserPost={setRefetchUserPost}></MainPost>
