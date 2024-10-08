@@ -1,22 +1,22 @@
-import Image from 'next/legacy/image';
-import React, { ButtonHTMLAttributes, useEffect, useState } from 'react';
-import ButtonLoader from './Loader/ButtonLoader';
+import React, { useEffect, useState } from "react";
+import ButtonLoader from "./Loader/ButtonLoader";
+import { IconType } from "react-icons";
 
 interface PrimaryBtnProps {
   text: string;
-  icon?: boolean;
+  icon?: IconType;
   width?: string;
   size?: string;
   weight?: string;
   onclick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-  type?: 'submit' | 'reset' | 'button' | undefined;
+  type?: "submit" | "reset" | "button" | undefined;
   disabled?: boolean;
   isLoading?: boolean;
 }
 
 const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
   text,
-  icon,
+  icon: Icon,
   width,
   size,
   weight,
@@ -33,13 +33,13 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
       setIsSmallScreen(window.innerWidth < 640);
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const bgColor = `${disabled ? 'bg-[#0b819c]' : 'bg-[#10b9d8]'}`;
+  const bgColor = `${disabled ? "bg-[#0b819c]" : "bg-[#10b9d8]"}`;
   const bgHoverColor = `${
-    disabled ? 'hover:bg-[#0b819c] cursor-not-allowed' : 'hover:bg-[#10b9d8]'
+    disabled ? "hover:bg-[#0b819c] cursor-not-allowed" : "hover:bg-[#0c92ab]"
   }`;
 
   return (
@@ -50,14 +50,7 @@ const PrimaryBtn: React.FC<PrimaryBtnProps> = ({
       type={type}
       disabled={disabled}
     >
-      {icon && !isSmallScreen && (
-        <Image
-          src={'/Icons/login.png'}
-          alt='login'
-          width={35}
-          height={35}
-        ></Image>
-      )}
+      {Icon && !isSmallScreen && <Icon className="text-white text-2xl" />}
       {isLoading ? <ButtonLoader /> : text}
     </button>
   );

@@ -15,6 +15,8 @@ import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import 'animate.css';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import Loader from '@/app/loading';
+import { HiMail } from "react-icons/hi";
+import { BiSolidLock } from "react-icons/bi";
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
@@ -130,7 +132,8 @@ const Page = () => {
                 className='flex flex-col gap-5 w-[80%]'
               >
                 {/* Email */}
-                <div className='relative'>
+                <div className='relative flex items-center'>
+                  <HiMail className='absolute left-3 text-gray-600 text-xl'/>
                   <input
                     {...register('email', {
                       required: 'Email is required',
@@ -140,7 +143,7 @@ const Page = () => {
                       },
                     })}
                     placeholder='Your Email'
-                    className={`px-4 py-2 rounded-md outline-none w-full ${
+                    className={`px-12 py-2 rounded-md outline-none w-full ${
                       errors.email ? 'border-2 border-red-600' : ''
                     }`}
                   />
@@ -150,7 +153,8 @@ const Page = () => {
                 </div>
 
                 {/* Password */}
-                <div className='relative'>
+                <div className='relative flex items-center'>
+                  <BiSolidLock className='absolute left-3 text-gray-600 text-xl'/>
                   <input
                     {...register('password', {
                       required: 'Password is required',
@@ -161,7 +165,7 @@ const Page = () => {
                     })}
                     placeholder='Your Password'
                     type={isOpen ? 'text' : 'password'}
-                    className={`px-4 py-2 rounded-md outline-none w-full ${
+                    className={`px-12 py-2 rounded-md outline-none w-full ${
                       errors.password ? 'border-2 border-red-600' : ''
                     }`}
                   />
@@ -187,7 +191,7 @@ const Page = () => {
                     text={`Login`}
                     disabled={isLoginLoading}
                     width={'100%'}
-                    size={'2xl'}
+                    size={'xl'}
                     weight={'bold'}
                     type='submit'
                     isLoading={isLoginLoading}
