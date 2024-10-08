@@ -66,7 +66,7 @@ const IndividualPost: React.FC<IPostProps> = ({
     >
       {/* Header */}
       <div className='flex items-center mb-3'>
-        <div className='border w-16 h-16 rounded-full flex items-center justify-center'>
+        <div className='w-16 h-16 rounded-full flex items-center justify-center'>
           <Link href={'/user-profile'}>
             <Image
               alt='User DP'
@@ -88,7 +88,7 @@ const IndividualPost: React.FC<IPostProps> = ({
               {/* {post.location} */}
               Location
             </h5>
-            <span className='w-1 h-1 rounded-full bg-[#00274A]'></span>
+            <span className='w-1 h-1 rounded-full bg-[#d4d4d4]'></span>
             <h5 className='text-sm text-gray-400 flex gap items-center'>
               <p className='flex items-center gap-1'>
                 <FaEye className='inline-block' />{' '}
