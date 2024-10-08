@@ -23,7 +23,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
 
   return (
     <div className="bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-16">
-      <div className="mx-auto w-full lg:w-[80%] h-[85vh] flex flex-col lg:flex-row gap-1 border-2 border-white bg-black/80 rounded-md">
+      <div className="mx-auto w-full lg:w-[80%] lg:h-[85vh] flex flex-col lg:flex-row gap-1 border-2 border-white bg-black/80 rounded-md">
         {object ? (
           <div className=" lg:col-span-2 flex justify-center items-center relative scale-90 flex-1">
             {/* Content loading */}
@@ -58,7 +58,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
         )}
 
         {/* Interaction section */}
-        <div className="bg-[#f4f7f8] w-full lg:w-[25%] rounded-tr-sm rounded-br-sm p-4 relative">
+        <div className="bg-[#f4f7f8] w-full lg:w-[25%] rounded-tr-sm rounded-br-sm py-7 px-4 relative overflow-y-auto custom-scrollbar">
           <div className="py-2">
             {/* User Information */}
             <div className="flex items-center gap-2">
@@ -117,7 +117,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
           </div>
           <button
             onClick={onClose}
-            className={`absolute -top-[570px] -right-3 lg:-top-3 font-semibold text-red-600 bg-gray-200 px-3 py-1 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
+            className={`fixed top-5 right-5 font-semibold text-red-600 bg-gray-200 px-3 py-1 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
           >
             X
           </button>

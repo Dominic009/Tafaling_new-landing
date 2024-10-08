@@ -2,7 +2,6 @@
 import Image from "next/legacy/image";
 import React from "react";
 import { TiHome } from "react-icons/ti";
-import { FaRegNewspaper } from "react-icons/fa6";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { HiOutlineLogout, HiOutlineSearch } from "react-icons/hi";
 import Link from "next/link";
@@ -16,9 +15,9 @@ import Notification from "../Notification panel/Notification";
 import DropDownMenu from "../Drop down menu/DropDownMenu";
 import { FaUserCircle } from "react-icons/fa";
 import { GrUserSettings } from "react-icons/gr";
-import { MdOutlinePrivacyTip, MdSettings } from "react-icons/md";
 import AuthUserNavMenu from "./AuthUserNavMenu";
 import PrimaryBtn from "../PrimaryBtn";
+import { IoMdLogIn } from "react-icons/io";
 
 const Navbar: React.FC = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -112,12 +111,12 @@ const Navbar: React.FC = () => {
           </div>
           <HiOutlineSearch className="text-gray-100 text-3xl md:hidden cursor-pointer" />
 
-          <div className="w-[30%]">
+          <div className="w-[30%] border">
             {user?.user_name ? (
               <AuthUserNavMenu />
             ) : (
               <Link href={`login`} className="w-full">
-                <PrimaryBtn text="Login" width="100%" disabled={false} />
+                <PrimaryBtn text="Login" width="100%" disabled={false} icon={IoMdLogIn}/>
               </Link>
             )}
           </div>
