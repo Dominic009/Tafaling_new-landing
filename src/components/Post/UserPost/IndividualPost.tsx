@@ -142,7 +142,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
             width={800}
             height={500}
-            className='rounded-md object-contain hover:scale-[103%] custom-hover-img border border-red-500'
+            className='rounded-md object-cover hover:scale-[103%] custom-hover-img h-[500px] border border-red-500'
             onClick={() => handleContentView(post)}
             onLoadingComplete={() => setIsLoading(false)}
             loading='lazy'
