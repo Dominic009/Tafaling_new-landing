@@ -1,5 +1,5 @@
 import Image from "next/legacy/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import ContentLoader from "../Loader/ContentLoader";
@@ -14,6 +14,18 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
   const { user, isAuthLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [screenSize, setIsScreenSize] = useState(false);
+
+  //to hide the icon for small screens
+  useEffect(() => {
+    const handleResize = () => {
+      setIsScreenSize(window.innerWidth > 1440);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  console.log(screenSize);
 
   const toggleText = () => {
     setIsExpanded(!isExpanded);
@@ -22,22 +34,38 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
   const textLimit = 90;
 
   return (
-    <div className="bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-16">
-      <div className="mx-auto w-full lg:w-[80%] lg:h-[85vh] flex flex-col lg:flex-row gap-1 border-2 border-white bg-black/80 rounded-md">
+    <div className="bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-4 lg:p-16">
+      <div className="mx-auto w-full md:w-[90%] md:h-[80vh] lg:h-[85vh] flex flex-col lg:flex-row gap-1 border-2 border-white bg-black/80 rounded-md">
         {object ? (
-          <div className=" lg:col-span-2 flex justify-center items-center relative scale-90 flex-1">
+          <div className="flex justify-center items-center relative scale-90 flex-1">
             {/* Content loading */}
             {isLoading && <ContentLoader />}
             {object.attachments[0]?.mimeType.includes("image") && (
-              <Image
-                alt="Post content"
-                src={`${object.attachments[0]?.fileURL}/${object.attachments[0]?.fileName}`}
-                width={900}
-                height={700}
-                className="rounded-md object-contain"
-                onLoadingComplete={() => setIsLoading(false)}
-                loading="lazy"
-              />
+              <div>
+                {screenSize ? (
+                  // if screen size is bigger than 1440px
+                  <Image
+                    alt="Post content"
+                    src={`${object.attachments[0]?.fileURL}/${object.attachments[0]?.fileName}`}
+                    width={1800}
+                    height={1000}
+                    className="rounded-md object-contain"
+                    onLoadingComplete={() => setIsLoading(false)}
+                    loading="lazy"
+                  />
+                ) : (
+                  //regular devices
+                  <Image
+                    alt="Post content"
+                    src={`${object.attachments[0]?.fileURL}/${object.attachments[0]?.fileName}`}
+                    width={900}
+                    height={700}
+                    className="rounded-md object-contain"
+                    onLoadingComplete={() => setIsLoading(false)}
+                    loading="lazy"
+                  />
+                )}
+              </div>
             )}
             {object.attachments[0]?.mimeType.includes("video") && (
               <video
@@ -58,7 +86,7 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
         )}
 
         {/* Interaction section */}
-        <div className="bg-[#f4f7f8] w-full lg:w-[25%] rounded-tr-sm rounded-br-sm py-7 px-4 relative overflow-y-auto custom-scrollbar">
+        <div className="bg-[#f4f7f8] w-full lg:w-[25%] rounded-tr-sm rounded-br-sm py-4 px-4 relative overflow-y-auto custom-scrollbar">
           <div className="py-2">
             {/* User Information */}
             <div className="flex items-center gap-2">
