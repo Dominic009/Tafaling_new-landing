@@ -64,9 +64,6 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     }
   }, [user]);
 
-  console.log(posts)
-  console.log(user?.userPrivacy)
-
   useEffect(() => {
     const fetchPosts = async () => {
       if (user) {
