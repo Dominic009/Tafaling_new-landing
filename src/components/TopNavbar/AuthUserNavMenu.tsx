@@ -62,7 +62,7 @@ const AuthUserNavMenu = () => {
   // }
 
   return (
-    <div className='grid grid-cols-2 items-center gap-2'>
+    <div className='grid grid-cols-2'>
       {/* Notification icon */}
       <Notification />
 

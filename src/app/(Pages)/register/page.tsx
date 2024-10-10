@@ -238,7 +238,7 @@ const Page = () => {
                   text={'Sign Up'}
                   disabled={isRegisterLoading}
                   width={'100%'}
-                  size={'2xl'}
+                  size={'xl'}
                   weight={'bold'}
                   type='submit'
                   isLoading={isRegisterLoading}

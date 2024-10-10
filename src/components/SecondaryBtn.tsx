@@ -1,26 +1,22 @@
 import Image from "next/legacy/image";
-import React from 'react';
+import React from "react";
+import { IconType } from "react-icons";
 
 interface SecondaryBtnProps {
   text: string;
-  icon?: boolean;
+  Icon?: IconType;
   width?: string;
+  onClose: () => void;
 }
 
-const SecondaryBtn: React.FC<SecondaryBtnProps> = ({ text, icon, width }) => {
+const SecondaryBtn: React.FC<SecondaryBtnProps> = ({ text, Icon: Icon, width, onClose }) => {
   return (
     <button
-      className='border-2 border-[#64e3ff] py-2 rounded-md text-white font-bold text-2xl flex items-center justify-center gap-2 hover:bg-[#10a6c8] transition duration-300 ease-in-out hover:scale-105'
+    onClick={onClose}
+      className="border-2 border-[#64e3ff] py-2 rounded-md text-white font- text-xl flex items-center justify-center gap-2 hover:bg-[#10a6c8] transition duration-300 ease-in-out hover:scale-105"
       style={{ width }}
     >
-      {icon && (
-        <Image
-          src={'/Icons/register.png'}
-          alt='login'
-          width={30}
-          height={30}
-        ></Image>
-      )}
+      {Icon && <Icon className="text-white text-2xl" />}
       {text}
     </button>
   );
