@@ -156,6 +156,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             className='rounded-md h-[500px]'
             onClick={() => handleContentView(post)}
             onCanPlay={() => setIsLoading(false)}
+            autoPlay={false}
             src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
           >
             <source src={post.postContent} type='video/mp4' />
