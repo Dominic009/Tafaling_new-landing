@@ -42,7 +42,7 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
   }, [url]);
 
   return (
-    <div className='flex border border-gray-300 rounded-lg overflow-hidden w-full max-w-lg my-2 relative'>
+    <div className='flex border border-gray-300 rounded-lg overflow-hidden w-full my-2 relative'>
       {!disableCloseButton && (
         <button
           onClick={() => closeLinkPreview('')}
