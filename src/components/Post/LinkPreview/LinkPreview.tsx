@@ -42,16 +42,16 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
   }, [url]);
 
   return (
-    <Link href={metadata.url} target='_blank' className='w-full'>
-      <div className='flex border border-gray-300 rounded-lg overflow-hidden w-full my-2 relative'>
-        {!disableCloseButton && (
-          <button
-            onClick={() => closeLinkPreview('')}
-            className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-2 right-1 cursor-pointer z-[500]'
-          >
-            X
-          </button>
-        )}
+    <div className=' border border-gray-300 rounded-lg overflow-hidden w-full my-2 relative'>
+      {!disableCloseButton && (
+        <button
+          onClick={() => closeLinkPreview('')}
+          className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-2 right-1 cursor-pointer z-[1000]'
+        >
+          X
+        </button>
+      )}
+      <Link href={metadata.url} target='_blank' className='w-full flex'>
         {metadata.image && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -68,8 +68,8 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
             {metadata.description.slice(0, 80) + '...'}
           </p>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
