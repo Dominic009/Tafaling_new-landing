@@ -140,7 +140,7 @@ const CreatePost: React.FC<PostProps> = ({
   // for detecting links
 
   const [text, setText] = useState('');
-  const [links, setLinks] = useState<string | ''>();
+  const [links, setLinks] = useState<string | ''>('');
 
   useEffect(() => {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -152,6 +152,23 @@ const CreatePost: React.FC<PostProps> = ({
       setLinks('');
     }
   }, [text]);
+
+  const textAreaHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const inputText = e.target.value;
+
+    if (inputText.includes('http')) {
+      const indexOfHttpStart = inputText.indexOf('http');
+      const httpText = inputText.slice(indexOfHttpStart);
+
+      //handle white space after link
+      if (httpText.includes(' ')) {
+        const onlyHttpLink = httpText.split(' ')[0];
+        setText(onlyHttpLink);
+      } else {
+        setText(httpText);
+      }
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(createPostHandler)}>
@@ -169,10 +186,10 @@ const CreatePost: React.FC<PostProps> = ({
             disabled={progress === 0 ? false : true}
             placeholder='Thinking of something...?'
             {...register('post')}
-            onChange={e => setText(e.target.value)}
+            onChange={textAreaHandler}
             className='text-gray-500 font-light w-full outline-none h-[150px] bg-blue-100 rounded-md mb-2 p-2'
           />
-          {links && <LinkPreview url={links} />}
+          {links && <LinkPreview url={links} closeLinkPreview={setLinks} />}
         </div>
       </div>
       {/* Preview Section */}

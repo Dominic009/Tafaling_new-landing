@@ -5,9 +5,13 @@ import Link from 'next/link';
 
 interface ILinkPreviewProps {
   url: string;
+  closeLinkPreview: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const LinkPreview: React.FC<ILinkPreviewProps> = ({ url }) => {
+const LinkPreview: React.FC<ILinkPreviewProps> = ({
+  url,
+  closeLinkPreview,
+}) => {
   const [metadata, setMetadata] = useState({
     title: '',
     description: '',
@@ -36,7 +40,13 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({ url }) => {
   }, [url]);
 
   return (
-    <div className='flex border border-gray-300 rounded-lg overflow-hidden w-full max-w-lg my-2'>
+    <div className='flex border border-gray-300 rounded-lg overflow-hidden w-full max-w-lg my-2 relative'>
+      <button
+        onClick={() => closeLinkPreview('')}
+        className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-2 right-1 cursor-pointer z-[500]'
+      >
+        X
+      </button>
       {metadata.image && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
