@@ -88,6 +88,40 @@ const IndividualPost: React.FC<IPostProps> = ({
   const userPirvacyText = user?.userPrivacy?.find(
     item => item.privacy_setting_id === post.privacyId
   );
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  const createClickableLinks = (text: string) => {
+    const parts = text.split(urlRegex);
+    return parts.map((part: string, index: number) => {
+      if (part.match(urlRegex)) {
+        return (
+          <a
+            key={index}
+            href={part}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-500'
+          >
+            {part}
+          </a>
+        );
+      }
+      return part;
+    });
+  };
+
+  const renderPostBody = () => {
+    const shortText = post.body.slice(0, textLimit);
+    const fullText = post.body;
+
+    if (!isPostExpanded && post.body.length > textLimit) {
+      return createClickableLinks(shortText + '...');
+    } else if (isPostExpanded) {
+      return createClickableLinks(fullText);
+    } else {
+      return createClickableLinks(post.body);
+    }
+  };
 
   return (
     <div
@@ -200,6 +234,7 @@ const IndividualPost: React.FC<IPostProps> = ({
       <div className='mt-3'>
         {/* <p className='text-left text-lg text-wrap'>{post?.body}</p> */}
         <p className='text-left text-lg text-wrap'>
+          {renderPostBody()}
           {/* {post.body.length > 90 ? `${post.body.slice(0, 90)}...`} */}
           {!isPostExpanded &&
             post.body.length > textLimit &&
@@ -207,7 +242,7 @@ const IndividualPost: React.FC<IPostProps> = ({
 
           {isPostExpanded && post.body.length > textLimit && `${post.body}`}
 
-          {post.body.length < textLimit && `${post.body}`}
+          {/* {post.body.length < textLimit && `${post.body}`} */}
 
           {/* Show 'Read More' only if the text exceeds the limit and is not expanded */}
           {post.body.length > textLimit && !isPostExpanded && (

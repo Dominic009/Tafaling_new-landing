@@ -28,7 +28,7 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
           `http://99.237.86.169:7070/api/get/meta/tags?url=${url}`
         );
         setMetadata({
-          title: data.title || 'No Title',
+          title: data.title || data['twitter:title'] || 'No Title',
           description: data.description || 'No Description',
           image: data['twitter:image'] || 'https://via.placeholder.com/100', // Default image if none found
           url: data['twitter:url'] || url,
@@ -42,24 +42,24 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
   }, [url]);
 
   return (
-    <div className='flex border border-gray-300 rounded-lg overflow-hidden w-full my-2 relative'>
-      {!disableCloseButton && (
-        <button
-          onClick={() => closeLinkPreview('')}
-          className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-2 right-1 cursor-pointer z-[500]'
-        >
-          X
-        </button>
-      )}
-      {metadata.image && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={metadata.image}
-          alt={metadata.title}
-          className='w-44 h-36 object-cover'
-        />
-      )}
-      <Link href={metadata.url} target='_blank'>
+    <Link href={metadata.url} target='_blank' className='w-full'>
+      <div className='flex border border-gray-300 rounded-lg overflow-hidden w-full my-2 relative'>
+        {!disableCloseButton && (
+          <button
+            onClick={() => closeLinkPreview('')}
+            className='mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-2 right-1 cursor-pointer z-[500]'
+          >
+            X
+          </button>
+        )}
+        {metadata.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={metadata.image}
+            alt={metadata.title}
+            className='w-44 h-36 object-cover'
+          />
+        )}
         <div className='p-4 flex flex-col justify-between'>
           <h3 className='text-lg font-semibold text-gray-800'>
             {metadata.title}
@@ -68,8 +68,8 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
             {metadata.description.slice(0, 80) + '...'}
           </p>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 
