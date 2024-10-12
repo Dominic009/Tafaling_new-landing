@@ -7,8 +7,12 @@
   transition: 200ms ease-in-out;
 }
 
+.custom-slower-hover {
+  transition: 250ms ease-in-out;
+}
+
 .custom-hover-img {
-  transition: 500ms ease-in-out;
+  transition: 300ms ease-in-out;
 }
 
 .no-scroll {

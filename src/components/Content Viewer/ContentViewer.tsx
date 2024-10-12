@@ -4,6 +4,8 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import ContentLoader from "../Loader/ContentLoader";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
+import{ IoClose } from "react-icons/io5"; 
+
 
 interface ContentProps {
   onClose: () => void;
@@ -145,9 +147,9 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
           </div>
           <button
             onClick={onClose}
-            className={`fixed top-5 right-5 font-semibold text-red-600 bg-gray-200 px-3 py-1 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
+            className={`fixed top-5 right-5 font-semibold text-gray-500 bg-gray-100 px-2 py-2 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
           >
-            X
+            <IoClose/>
           </button>
         </div>
       </div>
