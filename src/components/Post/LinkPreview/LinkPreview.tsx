@@ -82,7 +82,7 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
                   {metadata.title}
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
-                  {metadata.description.slice(0, 80) + "..."}
+                  {metadata.description.slice(0, 180) + "..."}
                 </p>
               </div>
             </div>
