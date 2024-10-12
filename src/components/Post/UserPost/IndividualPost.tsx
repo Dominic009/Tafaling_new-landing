@@ -15,6 +15,7 @@ import DropDownMenu from '@/components/Drop down menu/DropDownMenu';
 import Modal from '@/components/Modal/Modal';
 import ChangePrivacy from '../ChangePrivacy/ChangePrivacy';
 import { FaEye } from 'react-icons/fa6';
+import LinkPreview from '../LinkPreview/LinkPreview';
 
 interface IPostProps {
   post: Post;
@@ -43,6 +44,35 @@ const IndividualPost: React.FC<IPostProps> = ({
     // console.log(object);
   };
 
+  const [text, setText] = useState('');
+  const [links, setLinks] = useState<string | ''>('');
+
+  useEffect(() => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const detectedLinks = text.match(urlRegex);
+
+    if (detectedLinks) {
+      setLinks(text);
+    } else {
+      setLinks('');
+    }
+  }, [text]);
+
+  useEffect(() => {
+    if (post.body.includes('http')) {
+      const indexOfHttpStart = post.body.indexOf('http');
+      const httpText = post.body.slice(indexOfHttpStart);
+
+      //handle white space after link
+      if (httpText.includes(' ')) {
+        const onlyHttpLink = httpText.split(' ')[0];
+        setText(onlyHttpLink);
+      } else {
+        setText(httpText);
+      }
+    }
+  }, [post]);
+
   useEffect(() => {
     if (viewImagePost) {
       document.body.classList.add('no-scroll');
@@ -58,6 +88,40 @@ const IndividualPost: React.FC<IPostProps> = ({
   const userPirvacyText = user?.userPrivacy?.find(
     item => item.privacy_setting_id === post.privacyId
   );
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  const createClickableLinks = (text: string) => {
+    const parts = text.split(urlRegex);
+    return parts.map((part: string, index: number) => {
+      if (part.match(urlRegex)) {
+        return (
+          <a
+            key={index}
+            href={part}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-500'
+          >
+            {part}
+          </a>
+        );
+      }
+      return part;
+    });
+  };
+
+  const renderPostBody = () => {
+    const shortText = post.body.slice(0, textLimit);
+    const fullText = post.body;
+
+    if (!isPostExpanded && post.body.length > textLimit) {
+      return createClickableLinks(shortText + '...');
+    } else if (isPostExpanded) {
+      return createClickableLinks(fullText);
+    } else {
+      return createClickableLinks(post.body);
+    }
+  };
 
   return (
     <div
@@ -136,6 +200,7 @@ const IndividualPost: React.FC<IPostProps> = ({
       {/* Content body */}
       <div className='mt-2 cursor-pointer flex items-center justify-center overflow-hidden hover:drop-shadow-xl'>
         {isLoading && <ContentLoader />}
+
         {post.attachments[0]?.mimeType.includes('image') && (
           <Image
             alt='Post content'
@@ -156,6 +221,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             className='rounded-md h-[500px]'
             onClick={() => handleContentView(post)}
             onCanPlay={() => setIsLoading(false)}
+            autoPlay={false}
             src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
           >
             <source src={post.postContent} type='video/mp4' />
@@ -168,6 +234,7 @@ const IndividualPost: React.FC<IPostProps> = ({
       <div className='mt-3'>
         {/* <p className='text-left text-lg text-wrap'>{post?.body}</p> */}
         <p className='text-left text-lg text-wrap'>
+          {renderPostBody()}
           {/* {post.body.length > 90 ? `${post.body.slice(0, 90)}...`} */}
           {!isPostExpanded &&
             post.body.length > textLimit &&
@@ -175,7 +242,7 @@ const IndividualPost: React.FC<IPostProps> = ({
 
           {isPostExpanded && post.body.length > textLimit && `${post.body}`}
 
-          {post.body.length < textLimit && `${post.body}`}
+          {/* {post.body.length < textLimit && `${post.body}`} */}
 
           {/* Show 'Read More' only if the text exceeds the limit and is not expanded */}
           {post.body.length > textLimit && !isPostExpanded && (
@@ -197,6 +264,13 @@ const IndividualPost: React.FC<IPostProps> = ({
         </p>
 
         <div className='flex mt-1 gap-3'>
+          {links && (
+            <LinkPreview
+              url={links}
+              closeLinkPreview={setLinks}
+              disableCloseButton={true}
+            />
+          )}
           {/* {post?.hashtags?.map((tag, idx) => (
             <ul key={idx} className='text-[#07a1bc] font-light lowercase'>
                 <li>{tag}</li>
