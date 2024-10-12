@@ -16,7 +16,7 @@ const PreviewModal: React.FC<PreviewProps> = ({ isOpen, onClose }) => {
   return (
     <div>
       <Modal
-        className='w-[50%] lg:w-[35%] xl:w-[25%]'
+        className='w-[80%] lg:w-[35%] xl:w-[25%]'
         isOpen={isOpen}
         onClose={onClose}
         bg="gradient-to-r from-[#004A99] to-[#012349]"
