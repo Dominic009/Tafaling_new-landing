@@ -16,6 +16,7 @@ import Modal from "@/components/Modal/Modal";
 import ChangePrivacy from "../ChangePrivacy/ChangePrivacy";
 import { FaEye } from "react-icons/fa6";
 import LinkPreview from "../LinkPreview/LinkPreview";
+import Interaction from "@/components/User interactions/Interaction";
 
 interface IPostProps {
   post: Post;
@@ -198,7 +199,7 @@ const IndividualPost: React.FC<IPostProps> = ({
       </div>
 
       {/* Content body */}
-      <div className="mt-2 cursor-pointer flex items-center justify-center overflow-hidden hover:drop-shadow-xl">
+      <div className="mt-2 cursor-pointer flex items-center justify-center overflow-hidden hover:drop-shadow-xl rounded-md custom-hover">
         {isLoading && <ContentLoader />}
 
         {post.attachments[0]?.mimeType.includes("image") && (
@@ -207,7 +208,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
             width={800}
             height={500}
-            className="rounded-md object-cover hover:scale-[103%] custom-hover-img h-[500px]"
+            className="rounded-md object-cover hover:scale-[102%] custom-hover-img h-[500px]"
             onClick={() => handleContentView(post)}
             onLoadingComplete={() => setIsLoading(false)}
             loading="lazy"
@@ -283,6 +284,10 @@ const IndividualPost: React.FC<IPostProps> = ({
           <ul className='text-[#07a1bc] font-light lowercase'>
             <li>#dummy</li>
           </ul> */}
+        </div>
+
+        <div className="mt-3">
+          <Interaction />
         </div>
 
         {/* post created time */}
