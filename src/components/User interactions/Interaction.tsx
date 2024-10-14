@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/AuthContext/AuthProvider";
 import React, { useState } from "react";
 import {
   FaRegHeart,
@@ -5,15 +6,27 @@ import {
   FaRegComment,
   FaRegShareSquare,
 } from "react-icons/fa";
+import PreviewModal from "../Modal/PreviewModal";
 
 interface InteractionProps {}
 
 const Interaction = () => {
   const [liked, setLiked] = useState(false);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const { user } = useAuth();
+
+  const handleLike = () => {
+    if (!user) {
+      setShowLoginPrompt(true);
+    } else {
+      setLiked(!liked);
+    }
+  };
+
   const actions = [
     {
       name: "Like",
-      onClick: () => setLiked(!liked),
+      onClick: handleLike,
       icon: <FaRegHeart />,
       activeIcon: <FaHeart />,
       isActive: liked,
@@ -48,11 +61,19 @@ const Interaction = () => {
           }`}
         >
           <span className="text-2xl text-gray-600">
-            {action.isActive ? <span className="text-blue-600">{action.activeIcon}</span> : action.icon}
+            {action.isActive ? (
+              <span className="text-blue-600">{action.activeIcon}</span>
+            ) : (
+              action.icon
+            )}
           </span>
           <span className="text-gray-500">{action.name}</span>
         </button>
       ))}
+      <PreviewModal
+        isOpen={showLoginPrompt}
+        onClose={() => setShowLoginPrompt(false)}
+      />
     </div>
   );
 };
