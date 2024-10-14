@@ -132,8 +132,8 @@ const Page = () => {
                 className='flex flex-col gap-5 w-[80%]'
               >
                 {/* Email */}
-                <div className='relative flex items-center'>
-                  <HiMail className='absolute left-3 text-gray-600 text-xl'/>
+                <div className='relative items-center'>
+                  <HiMail className='absolute top-3 left-3 text-gray-600 text-xl'/>
                   <input
                     {...register('email', {
                       required: 'Email is required',
@@ -153,8 +153,8 @@ const Page = () => {
                 </div>
 
                 {/* Password */}
-                <div className='relative flex items-center'>
-                  <BiSolidLock className='absolute left-3 text-gray-600 text-xl'/>
+                <div className='relative items-center'>
+                  <BiSolidLock className='absolute top-3 left-3 text-gray-600 text-xl'/>
                   <input
                     {...register('password', {
                       required: 'Password is required',
