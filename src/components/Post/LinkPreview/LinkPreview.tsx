@@ -47,7 +47,6 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
 
     fetchMetadata();
   }, [url]);
-  console.log(loading);
 
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden w-full my-2 relative p-2">
