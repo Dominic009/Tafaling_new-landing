@@ -287,7 +287,7 @@ const IndividualPost: React.FC<IPostProps> = ({
         </div>
 
         <div className='mt-3'>
-          <Interaction />
+          <Interaction post={post} />
         </div>
 
         {/* post created time */}
