@@ -43,3 +43,37 @@ export async function updatePostPrivacy(
     },
   });
 }
+
+export async function likePost(
+  postId: number,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post(
+    `posts/add_post_like`,
+    {
+      post_id: postId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+export async function unlikePost(
+  postId: number,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post(
+    `posts/remove_post_like`,
+    {
+      post_id: postId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
