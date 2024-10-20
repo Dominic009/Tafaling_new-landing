@@ -24,6 +24,7 @@ export interface Post {
   fileURL: string;
   postId: number;
   privacyId: number;
+  isLiked: number;
 }
 interface Creator {
   name: string;
@@ -100,7 +101,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
               return (
                 <IndividualPost
                   post={post}
-                  key={post.postId}
+                  key={idx}
                   setIsLoading={setIsLoading}
                   isLoading={isLoading}
                   setRefetchUserPost={setRefetchUserPost!}

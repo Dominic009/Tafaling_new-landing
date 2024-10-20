@@ -16,7 +16,7 @@ interface InteractionProps {
 }
 
 const Interaction: React.FC<InteractionProps> = ({ post }) => {
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(post.isLiked === 1 ? true : false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const { user } = useAuth();
 
@@ -45,7 +45,7 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
     }
   };
 
-  // console.log('interaction component', post);
+  // console.log('interaction component', post.isLiked);
 
   const actions = [
     {
