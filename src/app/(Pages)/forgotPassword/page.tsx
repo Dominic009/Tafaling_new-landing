@@ -169,7 +169,7 @@ const Page = () => {
   }
 
   return (
-    <main className='flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]'>
+    <main className='flex min-h-screen bg-gradient-to-b from-secondary to-[#00B4DB]'>
       <div
         className='grid grid-cols-1 lg:grid-cols-2 gap-24 w-full items-center justify-center'
         style={{

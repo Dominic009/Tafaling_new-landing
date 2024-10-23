@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 
 export default function Home() {
   // return (
-  //   <main className='min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB] p-5'>
+  //   <main className='min-h-screen bg-gradient-to-b from-secondary to-[#00B4DB] p-5'>
   //     <div className='flex justify-between animate__animated animate__fadeInLeft'>
   //       <Image
   //         src='/Tafaling logo.png'

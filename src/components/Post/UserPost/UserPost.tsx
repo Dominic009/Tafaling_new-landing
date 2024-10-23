@@ -25,6 +25,7 @@ export interface Post {
   postId: number;
   privacyId: number;
   isLiked: number;
+  likeCount: number;
 }
 interface Creator {
   name: string;

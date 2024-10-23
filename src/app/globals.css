@@ -314,3 +314,32 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/*------------------------------------- Themes -------------------------------------*/
+/* Default theme (Light theme) */
+:root {
+  --primary-color: #00a4cc; /* Primary color for Light */
+  --secondary-color: #003846; /* Secondary color for Light */
+  --background-color: #002b35; /* Background for Light */
+  --text-color: #000000; /* Text color for Light */
+}
+
+/* Dark theme */
+.dark {
+  --primary-color: #0d1b2a;
+  --secondary-color: #1b263b;
+  --background-color: #1f1f1f;
+  --text-color: #ffffff;
+}
+
+/* Additional custom themes (Optional) */
+.theme-red {
+  /* --primary-color: #8b0000;
+  --secondary-color: #cd5c5c; 
+  --background-color: #ffe4e1;
+  --text-color: #330000;  */
+  --primary-color: #003846; /* Primary color for Light */
+  --secondary-color: #4fbdba; /* Secondary color for Light */
+  --background-color: #ffffff; /* Background for Light */
+  --text-color: #000000; /* Text color for Light */
+}

@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext/AuthProvider";
 import Image from "next/legacy/image";
 import React, { useState, useEffect } from "react";
 import { MdEditSquare, MdOutlineEdit, MdSettings } from "react-icons/md";
+import { IoPersonAdd } from "react-icons/io5";
 import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
 import { updateCoverPhoto, updateProfilePicture } from "@/api/user/user";
 import useLocalStorage from "@/hooks/useLocalStorage";
@@ -240,15 +241,18 @@ const Page = () => {
             <div className="grid">
               <div></div>
               <div className="flex flex-col justify-between lg:pt-10">
-                <div>
-                  {/* user name */}
-                  <h1 className="text-[#00274A] font-semibold text-3xl">
-                    {user?.name}
-                  </h1>
-                  {/* user email */}
-                  <p className="text-[#00274A]/50 text-md -mt-2">
-                    {user?.email}
-                  </p>
+                <div className="flex items-center justify-between w-full lg:w-[40%]">
+                  <div>
+                    {/* user name */}
+                    <h1 className="text-[#00274A] font-semibold text-3xl">
+                      {user?.name}
+                    </h1>
+                    {/* user email */}
+                    <p className="text-[#00274A]/50 text-md -mt-2">
+                      {user?.email}
+                    </p>
+                  </div>
+                  <><ActionBtn text="Follow" icon={IoPersonAdd}/></>
                 </div>
                 {/* user bio */}
                 <p className="text-[#0E2943]/90 text-lg py-1 pr-16 flex items-center gap-2">

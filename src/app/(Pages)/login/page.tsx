@@ -91,7 +91,7 @@ const Page = () => {
     router.push('home');
   } else {
     return (
-      <main className='flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]'>
+      <main className='flex min-h-screen bg-gradient-to-b from-secondary to-[#00B4DB]'>
         <div className='opacity-20 absolute -left-52 scale-125'></div>
 
         <div

@@ -19,7 +19,7 @@ const PreviewModal: React.FC<PreviewProps> = ({ isOpen, onClose }) => {
         className='w-[80%] lg:w-[35%] xl:w-[25%]'
         isOpen={isOpen}
         onClose={onClose}
-        bg="gradient-to-r from-[#004A99] to-[#012349]"
+        bg="gradient-to-r from-secondary to-[#012349]"
       >
         <div className="py-8">
           <div className="w-[70%] mx-auto space-y-5 mb-12">
