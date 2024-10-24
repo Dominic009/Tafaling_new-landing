@@ -19,6 +19,7 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
   const [liked, setLiked] = useState(post.isLiked === 1);
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
   const handleLike = async () => {
@@ -32,6 +33,7 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
         const response = await unlikePost(post.postId, getAccessToken());
         console.log(response);
         setLiked(false);
+        setLoading(false)
         setLikeCount((prevCount) => prevCount - 1);
       } catch (error) {
         console.log(error);
@@ -41,6 +43,7 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
         const response = await likePost(post.postId, getAccessToken());
         console.log(response);
         setLiked(true); 
+        setLoading(true)
         setLikeCount((prevCount) => prevCount + 1);
       } catch (error) {
         console.log(error);
@@ -87,7 +90,7 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
         >
           <span className="text-2xl text-gray-600">
             {action.isActive ? (
-              <span className="text-blue-600">{action.activeIcon}</span>
+              <span className="text-rose-600 drop-shadow-lg">{action.activeIcon}</span>
             ) : (
               action.icon
             )}
