@@ -91,7 +91,7 @@ const Page = () => {
     router.push('home');
   } else {
     return (
-      <main className='flex min-h-screen bg-gradient-to-b from-[#004A99] to-[#00B4DB]'>
+      <main className='flex min-h-screen bg-gradient-to-b from-secondary to-[#00B4DB]'>
         <div className='opacity-20 absolute -left-52 scale-125'></div>
 
         <div
@@ -132,8 +132,8 @@ const Page = () => {
                 className='flex flex-col gap-5 w-[80%]'
               >
                 {/* Email */}
-                <div className='relative flex items-center'>
-                  <HiMail className='absolute left-3 text-gray-600 text-xl'/>
+                <div className='relative items-center'>
+                  <HiMail className='absolute top-3 left-3 text-gray-600 text-xl'/>
                   <input
                     {...register('email', {
                       required: 'Email is required',
@@ -153,8 +153,8 @@ const Page = () => {
                 </div>
 
                 {/* Password */}
-                <div className='relative flex items-center'>
-                  <BiSolidLock className='absolute left-3 text-gray-600 text-xl'/>
+                <div className='relative items-center'>
+                  <BiSolidLock className='absolute top-3 left-3 text-gray-600 text-xl'/>
                   <input
                     {...register('password', {
                       required: 'Password is required',

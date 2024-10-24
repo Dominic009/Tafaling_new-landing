@@ -5,7 +5,7 @@ import { IconType } from "react-icons";
 interface ActionBtnProps {
   text?: string;
   icon?: IconType; // Expecting an icon component from react-icons
-  add: string;
+  add?: string;
   secondaryText?: string;
 }
 
