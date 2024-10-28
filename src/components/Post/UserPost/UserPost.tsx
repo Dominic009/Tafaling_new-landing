@@ -43,6 +43,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
   // const [posts, setPosts] = React.useState<Post[]>([]);
   const [start, setStart] = useState(0);
   const { user } = useAuth();
+
   const { posts, loading, hasMore } = usePosts({
     start,
     pageSize: 5,

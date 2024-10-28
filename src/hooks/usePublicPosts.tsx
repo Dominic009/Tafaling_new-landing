@@ -37,14 +37,14 @@ const usePublicPosts = ({ start, pageSize }: UsePostsProps): UsePostsReturn => {
         setPosts(prevPosts => {
           const newPosts = res.data.data as Post[];
 
-          const uniquePosts = [...prevPosts, ...newPosts];
+          // const uniquePosts = [...prevPosts, ...newPosts];
 
-          //   const uniquePosts = [
-          //     ...prevPosts,
-          //     ...newPosts.filter(
-          //       newPost => !prevPosts.some(post => post.postId === newPost.postId)
-          //     ),
-          //   ];
+          const uniquePosts = [
+            ...newPosts.filter(
+              newPost => !prevPosts.some(post => post.postId === newPost.postId)
+            ),
+            ...prevPosts,
+          ];
 
           return uniquePosts;
         });
