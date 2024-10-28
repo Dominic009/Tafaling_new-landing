@@ -163,7 +163,7 @@ const IndividualPost: React.FC<IPostProps> = ({
           </div>
         </div>
         {user?.user_name && (
-          <div className='relative'>
+          <div className='relative z-40'>
             <HiDotsHorizontal
               onClick={() => setToggleEditPost(!toggleEditPost)}
               className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl'
@@ -208,7 +208,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
             width={800}
             height={500}
-            className='rounded-md object-cover hover:scale-[102%] custom-hover-img h-[500px]'
+            className={`rounded-md object-cover hover:scale-[102%] custom-hover-img h-[500px]`}
             onClick={() => handleContentView(post)}
             onLoadingComplete={() => setIsLoading && setIsLoading(false)}
             loading='lazy'
