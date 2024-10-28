@@ -1,55 +1,101 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Post } from '../UserPost/UserPost';
 import { getPublicPost } from '@/api/posts/posts';
 import UserPostSkeleton from '@/components/Loader/Skeleton/UserPostSkeleton';
 import IndividualPost from '../UserPost/IndividualPost';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import usePublicPosts from '@/hooks/usePublicPosts';
 
 const PublicPost = () => {
-  const [posts, setPosts] = React.useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const isPostsFetched = useRef(false);
+  const [start, setStart] = useState(0);
+  const { posts, loading, hasMore } = usePublicPosts({
+    start,
+    pageSize: 5,
+  });
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setIsLoading(true);
-        const response = await getPublicPost();
-        setPosts(response?.data?.data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const observer = useRef<IntersectionObserver | null>(null);
 
-    if (!isPostsFetched.current) {
-      fetchPosts();
-      isPostsFetched.current = true;
-    }
-  }, []);
+  const lastPostElementRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (loading) return;
+
+      // Disconnect the previous observer if it exists
+      if (observer.current) observer.current.disconnect();
+
+      // Create a new IntersectionObserver
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0]?.isIntersecting && hasMore) {
+          setStart(prevStart => prevStart + 5);
+        }
+      });
+
+      // If the node is provided, observe it
+      if (node) observer.current.observe(node);
+
+      console.log(node);
+    },
+    [loading, hasMore]
+  );
+  // const [posts, setPosts] = React.useState<Post[]>([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const isPostsFetched = useRef(false);
+
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       const response = await getPublicPost();
+  //       setPosts(response?.data?.data);
+  //     } catch (error) {
+  //       console.error('Error fetching posts:', error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   if (!isPostsFetched.current) {
+  //     fetchPosts();
+  //     isPostsFetched.current = true;
+  //   }
+  // }, []);
 
   return (
     <>
-      {isLoading ? (
-        <UserPostSkeleton cards={8} />
-      ) : (
-        <div>
-          {posts
-            .slice(0)
-            .reverse()
-            .map((post, idx) => {
+      <div>
+        {posts
+          .slice(0)
+          .reverse()
+          .map((post, idx) => {
+            if (posts.length === idx + 1) {
+              console.log('ref post', posts.length === idx + 1);
+
               return (
-                <IndividualPost
-                  post={post}
-                  key={post.postId}
-                  setIsLoading={setIsLoading}
-                  isLoading={isLoading}
-                  //   setRefetchUserPost={setRefetchUserPost!}
-                />
+                <div ref={lastPostElementRef} key={idx}>
+                  <IndividualPost
+                    post={post}
+                    key={idx}
+                    // setIsLoading={setIsLoading}
+                    isLoading={loading}
+                    // setRefetchUserPost={setRefetchUserPost!}
+                  />
+                </div>
               );
-            })}
-        </div>
-      )}
+            } else {
+              return (
+                <div key={idx}>
+                  <IndividualPost
+                    post={post}
+                    key={idx}
+                    // setIsLoading={setIsLoading}
+                    isLoading={loading}
+                    // setRefetchUserPost={setRefetchUserPost!}
+                  />
+                </div>
+              );
+            }
+          })}
+      </div>
+      {loading && <UserPostSkeleton cards={1} />}
     </>
   );
 };
