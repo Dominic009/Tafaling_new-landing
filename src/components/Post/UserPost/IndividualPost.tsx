@@ -22,7 +22,7 @@ interface IPostProps {
   post: Post;
   key: number;
   isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -210,7 +210,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             height={500}
             className='rounded-md object-cover hover:scale-[102%] custom-hover-img h-[500px]'
             onClick={() => handleContentView(post)}
-            onLoadingComplete={() => setIsLoading(false)}
+            onLoadingComplete={() => setIsLoading && setIsLoading(false)}
             loading='lazy'
           />
         )}
@@ -221,7 +221,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             controls
             className='rounded-md h-[353px]'
             onClick={() => handleContentView(post)}
-            onCanPlay={() => setIsLoading(false)}
+            onCanPlay={() => setIsLoading && setIsLoading(false)}
             autoPlay={false}
             src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
           >
