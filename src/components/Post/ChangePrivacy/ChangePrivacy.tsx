@@ -1,6 +1,7 @@
 import { updatePostPrivacy } from '@/api/posts/posts';
 import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 import PrimaryBtn from '@/components/PrimaryBtn';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import { PrivacySetting } from '@/types/Auth';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -17,6 +18,7 @@ interface PostProps extends IRefetchUserPostProp {
     privacyId: number | null;
   };
   setToggleEditPost: React.Dispatch<React.SetStateAction<boolean>>;
+  setPostPrivacy: React.Dispatch<React.SetStateAction<PrivacySetting>>;
 }
 
 interface ChangePrivacyType {
@@ -32,8 +34,10 @@ const ChangePrivacy: React.FC<PostProps> = ({
   userPrivacy,
   postData,
   setToggleEditPost,
+  setPostPrivacy,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -63,6 +67,14 @@ const ChangePrivacy: React.FC<PostProps> = ({
       setIsLoading(true);
       const response = await updatePostPrivacy(postBody, getAccessToken());
       toast.success(response.data.message);
+
+      // update post privacy text
+      const userPirvacyText = user?.userPrivacy?.find(
+        item => item.privacy_setting_id === parseInt(data.privacy, 10)
+      );
+
+      setPostPrivacy(userPirvacyText!);
+
       setModal(false);
       setToggleEditPost(false);
 
