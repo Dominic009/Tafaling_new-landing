@@ -43,15 +43,14 @@ const page = () => {
           <MainPost setRefetchUserPost={setRefetchUserPost}></MainPost>
         )}
 
-        {/* User Posts */}
-        {user?.user_name ? (
+        {user?.user_name && (
           <UserPost
             refetchUserPost={refetchUserPost}
             setRefetchUserPost={setRefetchUserPost}
           ></UserPost>
-        ) : (
-          <PublicPost />
         )}
+
+        {!user?.user_name && !isAuthLoading && <PublicPost />}
 
         {/* Virtual navigation for mobile devices */}
       </main>

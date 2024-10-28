@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { getUserPost } from '@/api/posts/posts';
@@ -7,6 +7,7 @@ import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import UserPostSkeleton from '@/components/Loader/Skeleton/UserPostSkeleton';
 import IndividualPost from './IndividualPost';
+import usePosts from '@/hooks/usePosts';
 
 export interface Post {
   profilePicture: string;
@@ -39,78 +40,123 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
   refetchUserPost,
   setRefetchUserPost,
 }) => {
-  const [posts, setPosts] = React.useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [posts, setPosts] = React.useState<Post[]>([]);
+  const [start, setStart] = useState(0);
   const { user } = useAuth();
-  const { item: accessToken } = useLocalStorage('auth-token');
+  const { posts, loading, hasMore } = usePosts({
+    start,
+    pageSize: 5,
+    userId: user?.userId as number,
+  });
+  // const [isLoading, setIsLoading] = useState(true);
   const isPostsFetched = useRef(false);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      if (user) {
-        try {
-          setIsLoading(true);
-          const response = await getUserPost(getAccessToken(), user?.userId);
-          setPosts(response?.data?.data);
-        } catch (error) {
-          console.error('Error fetching posts:', error);
-        } finally {
-          setIsLoading(false);
+  // Observer for infinite loading
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const lastPostElementRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (loading) return;
+
+      // Disconnect the previous observer if it exists
+      if (observer.current) observer.current.disconnect();
+
+      // Create a new IntersectionObserver
+      observer.current = new IntersectionObserver(entries => {
+        if (entries[0]?.isIntersecting && hasMore) {
+          setStart(prevStart => prevStart + 5);
         }
-      }
-    };
+      });
 
-    if (!isPostsFetched.current) {
-      fetchPosts();
-      isPostsFetched.current = true;
-    }
-  }, [user]);
+      // If the node is provided, observe it
+      if (node) observer.current.observe(node);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      if (user) {
-        try {
-          setIsLoading(true);
-          const response = await getUserPost(getAccessToken(), user?.userId);
-          setPosts(response?.data?.data);
-        } catch (error) {
-          console.error('Error fetching posts:', error);
-        } finally {
-          setIsLoading(false);
-          setRefetchUserPost && setRefetchUserPost(false);
-        }
-      }
-    };
+      console.log(node);
+    },
+    [loading, hasMore]
+  );
 
-    if (refetchUserPost) {
-      fetchPosts();
-    }
-  }, [accessToken, user, refetchUserPost, setRefetchUserPost]);
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     if (user) {
+  //       try {
+  //         setIsLoading(true);
+  //         const response = await getUserPost(getAccessToken(), user?.userId);
+  //         setPosts(response?.data?.data);
+  //       } catch (error) {
+  //         console.error('Error fetching posts:', error);
+  //       } finally {
+  //         setIsLoading(false);
+  //       }
+  //     }
+  //   };
+
+  //   if (!isPostsFetched.current) {
+  //     fetchPosts();
+  //     isPostsFetched.current = true;
+  //   }
+  // }, [user]);
+
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     if (user) {
+  //       try {
+  //         setIsLoading(true);
+  //         const response = await getUserPost(getAccessToken(), user?.userId);
+  //         setPosts(response?.data?.data);
+  //       } catch (error) {
+  //         console.error('Error fetching posts:', error);
+  //       } finally {
+  //         setIsLoading(false);
+  //         setRefetchUserPost && setRefetchUserPost(false);
+  //       }
+  //     }
+  //   };
+
+  //   if (refetchUserPost) {
+  //     fetchPosts();
+  //   }
+  // }, [accessToken, user, refetchUserPost, setRefetchUserPost]);
 
   const textLimit = 90;
 
   return (
     <>
-      {isLoading ? (
-        <UserPostSkeleton cards={8} />
-      ) : (
-        <div>
-          {posts
-            .slice(0)
-            .reverse()
-            .map((post, idx) => {
+      <div>
+        {posts
+          .slice(0)
+          .reverse()
+          .map((post, idx) => {
+            if (posts.length === idx + 1) {
+              console.log('ref post', posts.length === idx + 1);
+
               return (
-                <IndividualPost
-                  post={post}
-                  key={idx}
-                  setIsLoading={setIsLoading}
-                  isLoading={isLoading}
-                  setRefetchUserPost={setRefetchUserPost!}
-                />
+                <div ref={lastPostElementRef} key={idx}>
+                  <IndividualPost
+                    post={post}
+                    key={idx}
+                    // setIsLoading={setIsLoading}
+                    isLoading={loading}
+                    setRefetchUserPost={setRefetchUserPost!}
+                  />
+                </div>
               );
-            })}
-        </div>
-      )}
+            } else {
+              return (
+                <div key={idx}>
+                  <IndividualPost
+                    post={post}
+                    key={idx}
+                    // setIsLoading={setIsLoading}
+                    isLoading={loading}
+                    setRefetchUserPost={setRefetchUserPost!}
+                  />
+                </div>
+              );
+            }
+          })}
+      </div>
+      {loading && <UserPostSkeleton cards={1} />}
     </>
   );
 };
