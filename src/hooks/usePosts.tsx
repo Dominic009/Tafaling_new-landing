@@ -8,6 +8,7 @@ interface UsePostsProps {
   start: number;
   pageSize: number;
   userId: number;
+  refetchUserPost?: boolean;
 }
 
 interface UsePostsReturn {
@@ -21,6 +22,7 @@ const usePosts = ({
   start,
   pageSize,
   userId,
+  refetchUserPost,
 }: UsePostsProps): UsePostsReturn => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -69,7 +71,7 @@ const usePosts = ({
     };
 
     fetchData();
-  }, [start, pageSize, userId]);
+  }, [start, pageSize, userId, refetchUserPost]);
 
   return { loading, error, posts, hasMore };
 };

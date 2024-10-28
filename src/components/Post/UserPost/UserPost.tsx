@@ -48,6 +48,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     start,
     pageSize: 5,
     userId: user?.userId as number,
+    refetchUserPost,
   });
   // const [isLoading, setIsLoading] = useState(true);
   const isPostsFetched = useRef(false);
@@ -71,8 +72,6 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
 
       // If the node is provided, observe it
       if (node) observer.current.observe(node);
-
-      console.log(node);
     },
     [loading, hasMore]
   );
