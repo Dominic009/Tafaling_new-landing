@@ -128,8 +128,6 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
           .reverse()
           .map((post, idx) => {
             if (posts.length === idx + 1) {
-              console.log('ref post', posts.length === idx + 1);
-
               return (
                 <div ref={lastPostElementRef} key={idx}>
                   <IndividualPost

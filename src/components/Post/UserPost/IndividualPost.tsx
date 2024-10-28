@@ -17,6 +17,7 @@ import ChangePrivacy from '../ChangePrivacy/ChangePrivacy';
 import { FaEye } from 'react-icons/fa6';
 import LinkPreview from '../LinkPreview/LinkPreview';
 import Interaction from '@/components/User interactions/Interaction';
+import { PrivacySetting } from '@/types/Auth';
 
 interface IPostProps {
   post: Post;
@@ -34,6 +35,13 @@ const IndividualPost: React.FC<IPostProps> = ({
   setRefetchUserPost,
 }) => {
   const { user } = useAuth();
+  // Post selected privacy
+  const userPirvacyText = user?.userPrivacy?.find(
+    item => item.privacy_setting_id === post.privacyId
+  );
+  const [postPrivacy, setPostPrivacy] = useState<PrivacySetting>(
+    userPirvacyText!
+  );
   const [isPostExpanded, setIsPostExpanded] = useState<boolean>(false);
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
@@ -85,10 +93,6 @@ const IndividualPost: React.FC<IPostProps> = ({
     return () => document.body.classList.remove('no-scroll');
   }, [viewImagePost]);
 
-  // Post selected privacy
-  const userPirvacyText = user?.userPrivacy?.find(
-    item => item.privacy_setting_id === post.privacyId
-  );
   const urlRegex = /(https?:\/\/[^\s]+)/g;
 
   const createClickableLinks = (text: string) => {
@@ -157,7 +161,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             <h5 className='text-sm text-gray-400 flex gap items-center'>
               <p className='flex items-center gap-1'>
                 <FaEye className='inline-block' />{' '}
-                {userPirvacyText?.privacy_setting_name}
+                {postPrivacy?.privacy_setting_name}
               </p>
             </h5>
           </div>
@@ -321,6 +325,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             privacyId: post.privacyId,
           }}
           setToggleEditPost={setToggleEditPost}
+          setPostPrivacy={setPostPrivacy}
         />
       </Modal>
     </div>
