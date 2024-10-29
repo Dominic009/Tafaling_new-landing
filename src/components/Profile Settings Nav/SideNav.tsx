@@ -14,7 +14,7 @@ const SideNav = () => {
   const routes = [
     {
       name: "General",
-      path: "/user-profile/settings",
+      path: `/user-profile/${user?.userId}/settings`,
       icon: (
         <GrUserSettings
           title="Settings"
@@ -24,7 +24,7 @@ const SideNav = () => {
     },
     {
       name: "Privacy",
-      path: "/user-profile/settings/privacy",
+      path: `/user-profile/${user?.userId}/settings/privacy`,
 
       icon: (
         <MdOutlinePrivacyTip
@@ -35,7 +35,7 @@ const SideNav = () => {
     },
     {
       name: "Edit Info",
-      path: "/user-profile/settings/edit-info",
+      path: `/user-profile/${user?.userId}/settings/edit-info`,
       icon: (
         <MdOutlineEdit
           title="Requests"

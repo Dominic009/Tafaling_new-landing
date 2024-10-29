@@ -25,7 +25,7 @@ const VirtualNav = () => {
     },
     {
       name: "Profile",
-      path: "/user-profile",
+      path: "`/user-profile/${user?.userId}`",
       icon: (
         <FaUserCircle
           title="Profile"
