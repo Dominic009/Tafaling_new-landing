@@ -4,6 +4,7 @@ import { FileInput, Label } from 'flowbite-react';
 import Image from 'next/image'; // Import Next.js Image component
 import toast from 'react-hot-toast';
 import PrimaryBtn from '@/components/PrimaryBtn';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
 
 interface ISingleUploaderProps {
   handleUploadPicture: (
@@ -16,6 +17,7 @@ const SingleUploader: React.FC<ISingleUploaderProps> = ({
   handleUploadPicture,
   progress,
 }) => {
+  const { user } = useAuth();
   const [preview, setPreview] = useState<string | null>(null); // State to store a single file preview
   const fileInputRef = React.useRef<HTMLInputElement | null>(null); // Ref for the file input to reset it
 
@@ -40,7 +42,7 @@ const SingleUploader: React.FC<ISingleUploaderProps> = ({
   return (
     <div className='flex w-full flex-col items-center justify-center'>
       <form
-        action='/user-profile'
+        action={`/user-profile/${user?.userId}`}
         method='post'
         encType='multipart/form-data'
         className='flex w-full flex-col items-center justify-center'

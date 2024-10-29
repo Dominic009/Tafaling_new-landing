@@ -17,10 +17,10 @@ const ActionBtn: React.FC<ActionBtnProps> = ({
 }) => {
   return (
     <Link href={`${address}`}>
-      <div className="flex items-center justify-center gap-2 rounded-lg border border-[#00274A] hover:bg-[#00274A] hover:text-white custom-hover px-3">
+      <div className={`flex items-center justify-center ${text && 'gap-2'} rounded-lg border border-[#00274A] hover:bg-[#00274A] hover:text-white custom-hover px-3`}>
         {Icon && <Icon className="text-[#00B4DB] text-2xl" />}
 
-        <button className="py-1 lg:text-lg flex items-center gap-1">{text} <span className="hidden md:block"> {secondaryText}</span></button>
+        <button className="py-1 flex items-center gap-1">{text}<span className="hidden md:block"> {secondaryText}</span></button>
       </div>
     </Link>
   );

@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
     },
     {
       name: "Profile",
-      path: "/user-profile",
+      path: `/user-profile/${user?.userId}`,
       icon: (
         <FaUserCircle
           title="Profile"
@@ -98,8 +98,12 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Right Section */}
-      <div className={`${ user ? 'flex justify-end' : 'grid-cols-2' }`}>
-        <div className={`grid grid-cols-2 lg:grid-cols-3 ${ !user && 'flex' } items-center gap-5`}>
+      <div className={`${user ? "flex justify-end" : "grid-cols-2"}`}>
+        <div
+          className={`grid grid-cols-2 lg:grid-cols-3 ${
+            !user && "flex"
+          } items-center gap-5`}
+        >
           {/* Search field */}
           <div className="hidden md:block relative lg:col-span-2">
             <input

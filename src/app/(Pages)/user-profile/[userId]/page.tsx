@@ -20,7 +20,11 @@ import ProfileSkeleton from "@/components/Loader/Skeleton/ProfileSkeleton";
 import ComingSoon from "@/components/ComingSoon";
 import UserPost from "@/components/Post/UserPost/UserPost";
 
-const Page = () => {
+interface UserProfileProps {
+  params: any;
+}
+
+const Page: React.FC<UserProfileProps> = ({ params }) => {
   const { user, login } = useAuth();
   const [modalProfilePicture, setModalProfilePicture] =
     useState<boolean>(false);
@@ -153,6 +157,9 @@ const Page = () => {
     }, 500);
   }, []);
 
+  // converting params.userId in number
+  const paramId = Number(params?.userId);
+
   return (
     <div className="w-full lg:w-[80%] mx-auto">
       {isLoading ? (
@@ -238,27 +245,32 @@ const Page = () => {
                 onLoadingComplete={() => setIsLoading(false)}
               ></Image>
             </div>
-            <div className="grid">
+            <div className="grid w-[70%]">
               <div></div>
               <div className="flex flex-col justify-between lg:pt-10">
-                <div className="flex items-center justify-between w-full lg:w-[40%]">
-                  <div>
-                    {/* user name */}
-                    <h1 className="text-[#00274A] font-semibold text-3xl">
-                      {user?.name}
+                <div className="flex items-start flex-col w-full">
+                  {/* user name */}
+                  <div className=" w-[50%] relative">
+                    <h1 className="text-[#00274A] font-semibold text-3xl ">
+                      {user?.name}{" "}
                     </h1>
-                    {/* user email */}
-                    <p className="text-[#00274A]/50 text-md -mt-2">
-                      {user?.email}
-                    </p>
+                    <div className="absolute right-32 top-2.5">
+                      {user?.userId !== paramId && (
+                        <ActionBtn text="Follow" icon={IoPersonAdd} />
+                      )}
+                    </div>
                   </div>
-                  <><ActionBtn text="Follow" icon={IoPersonAdd}/></>
+                  {/* user email */}
+                  <small className="text-[#00274A]/50 text-md -mt-1">
+                    {user?.email}
+                  </small>
                 </div>
                 {/* user bio */}
-                <p className="text-[#0E2943]/90 text-lg py-1 pr-16 flex items-center gap-2">
+                <p className="text-[#0E2943]/90 text-lg py-1 inline-flex items-center">
                   To be a dreamer, you just need spread your wings and keep on
-                  dreaming until you turn your dream in reality.
-                  <MdEditSquare className="text-2xl text-[#00B4DB] hover:text-[#287f92] cursor-pointer custom-hover" />
+                  dreaming until you turn your dream in reality. So keep on
+                  pushing!
+                  {/* <MdEditSquare className="text-2xl text-[#00B4DB] hover:text-[#287f92] cursor-pointer custom-hover" /> */}
                 </p>
 
                 <div className="flex items-center gap-4">
@@ -271,19 +283,22 @@ const Page = () => {
                   </h5>
                 </div>
 
-                <div className="flex items-center gap-5 w-[50%]">
-                  <ActionBtn
-                    text="Edit"
-                    secondaryText="Info"
-                    icon={MdOutlineEdit}
-                    add={"/user-profile/settings/edit-info"}
-                  />
-                  <ActionBtn
-                    text="Settings"
-                    icon={MdSettings}
-                    add={"/user-profile/settings"}
-                  />
-                </div>
+                {/* Profile edit and settings button */}
+                {user?.userId === paramId && (
+                  <div className="flex items-center gap-5 w-[50%]">
+                    <ActionBtn
+                      text="Edit"
+                      secondaryText="Info"
+                      icon={MdOutlineEdit}
+                      add={`/user-profile/${user?.userId}/settings/edit-info`}
+                    />
+                    <ActionBtn
+                      text="Settings"
+                      icon={MdSettings}
+                      add={`/user-profile/${user?.userId}/settings`}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>

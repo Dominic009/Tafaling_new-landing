@@ -70,8 +70,6 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
 
       // If the node is provided, observe it
       if (node) observer.current.observe(node);
-
-      console.log(node);
     },
     [loading, hasMore]
   );
