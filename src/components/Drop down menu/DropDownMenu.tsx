@@ -35,7 +35,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
 
   return (
     <div
-      className={`absolute ${topPosition} ${rightPosition} ${bgColor} w-48 rounded-lg p-4 flex flex-col justify-between ${
+      className={`absolute ${topPosition} ${rightPosition} ${bgColor} w-48 rounded-lg p-4 flex flex-col justify-between drop-shadow-xl ${
         isClosing
           ? 'animate__animated animate__fadeOut animate__faster'
           : 'animate__animated animate__fadeIn animate__faster'
