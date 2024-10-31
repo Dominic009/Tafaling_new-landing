@@ -3,24 +3,19 @@ import Image from "next/legacy/image";
 import React from "react";
 import { TiHome } from "react-icons/ti";
 import { BsFillPeopleFill } from "react-icons/bs";
-import { HiOutlineLogout, HiOutlineSearch } from "react-icons/hi";
+import { HiOutlineSearch } from "react-icons/hi";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
-import { logoutUser } from "@/api/auth/auth";
-import useLocalStorage from "@/hooks/useLocalStorage";
 import "animate.css";
-import { getAccessToken } from "@/helpers/tokenStorage";
-import Notification from "../Notification panel/Notification";
-import DropDownMenu from "../Drop down menu/DropDownMenu";
 import { FaUserCircle } from "react-icons/fa";
-import { GrUserSettings } from "react-icons/gr";
 import AuthUserNavMenu from "./AuthUserNavMenu";
 import PrimaryBtn from "../PrimaryBtn";
 import { IoMdLogIn } from "react-icons/io";
+import SearchInput from "../Search Input/SearchInput";
 
 const Navbar: React.FC = () => {
-  const [dropdown, setDropdown] = React.useState<boolean>(false);
+  // const [dropdown, setDropdown] = React.useState<boolean>(false);
   const currentPath = usePathname();
   const { user } = useAuth();
 
@@ -100,18 +95,22 @@ const Navbar: React.FC = () => {
       {/* Right Section */}
       <div className={`${user ? "flex justify-end" : "grid-cols-2"}`}>
         <div
-          className={`grid grid-cols-2 lg:grid-cols-3 ${
+          className={`grid grid-cols-2 lg:grid-cols-4 ${
             !user && "flex"
           } items-center gap-5`}
         >
           {/* Search field */}
-          <div className="hidden md:block relative lg:col-span-2">
-            <input
+          <div className="hidden md:block relative lg:col-span-3">
+            {/* <input
+              onChange={handleSearch}
               type="text"
-              className="outline-none px-4 py-1 rounded-lg bg-[#062139] text-white w-full font-light"
+              className="outline-none pl-4 pr-10 py-2 rounded-full bg-[#062139] text-white w-full border border-blue-500/20 focus-within:border focus-within:border-blue-500 custom-hover"
               placeholder="Search"
             />
-            <HiOutlineSearch className="absolute top-[6px] right-3 text-gray-400 text-xl" />
+            <button>
+              <HiOutlineSearch className="absolute top-2 right-3 text-gray-400 text-[25px] hover:text-gray-100 hover:scale-105 custom-hover active:scale-95" />
+            </button> */}
+            <SearchInput/>
           </div>
           <HiOutlineSearch className="text-gray-100 text-3xl md:hidden cursor-pointer" />
 

@@ -47,6 +47,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
   const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const textLimit = post.attachments.length === 0 ? 800 : 90;
 
   const handleContentView = (object: any) => {
@@ -85,13 +86,16 @@ const IndividualPost: React.FC<IPostProps> = ({
 
   useEffect(() => {
     if (viewImagePost) {
+      setScrollPosition(window.scrollY);
       document.body.classList.add("no-scroll");
     } else {
       document.body.classList.remove("no-scroll");
+      window.scrollTo(0, scrollPosition);
     }
 
-    // Cleanup on component unmount
-    return () => document.body.classList.remove("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
   }, [viewImagePost]);
 
   const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -168,7 +172,7 @@ const IndividualPost: React.FC<IPostProps> = ({
           </div>
         </div>
         {user?.user_name && (
-          <div className="relative z-40">
+          <div className="relative z-30">
             <HiDotsHorizontal
               onClick={() => setToggleEditPost(!toggleEditPost)}
               className="text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl"
@@ -204,7 +208,8 @@ const IndividualPost: React.FC<IPostProps> = ({
                   onClick={() => setEditPrivacyModal(true)}
                 >
                   <span className="flex items-center gap-2 text-gray-800">
-                    <MdDeleteForever className="text-xl text-[#dc2626]" /> Delete Post
+                    <MdDeleteForever className="text-xl text-[#dc2626]" />{" "}
+                    Delete Post
                   </span>
                 </button>
               </DropDownMenu>

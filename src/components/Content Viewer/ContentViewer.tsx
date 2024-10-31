@@ -27,7 +27,6 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log(screenSize);
 
   const toggleText = () => {
     setIsExpanded(!isExpanded);
