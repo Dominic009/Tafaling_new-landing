@@ -1,10 +1,7 @@
 "use client";
 import Image from "next/legacy/image";
 import React from "react";
-import { TiHome } from "react-icons/ti";
-import { FaRegNewspaper } from "react-icons/fa6";
-import { BsFillPeopleFill } from "react-icons/bs";
-import { HiOutlineLogout, HiOutlineSearch } from "react-icons/hi";
+import { HiOutlineLogout } from "react-icons/hi";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
@@ -15,7 +12,6 @@ import { getAccessToken } from "@/helpers/tokenStorage";
 import Notification from "../Notification panel/Notification";
 import DropDownMenu from "../Drop down menu/DropDownMenu";
 import { FaUserCircle } from "react-icons/fa";
-import { GrUserSettings } from "react-icons/gr";
 import { MdOutlinePrivacyTip, MdSettings } from "react-icons/md";
 const AuthUserNavMenu = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -51,15 +47,6 @@ const AuthUserNavMenu = () => {
       logout();
     }
   };
-
-  // if (
-  //   currentPath === "/" ||
-  //   currentPath === "/login" ||
-  //   currentPath === "/register" ||
-  //   !user
-  // ) {
-  //   return null; // Do not render the Navbar on these paths
-  // }
 
   return (
     <div className="grid grid-cols-2">

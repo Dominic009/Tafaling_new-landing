@@ -1,0 +1,5 @@
+/* search.css */
+.transition-opacity ::placeholder {
+    transition: opacity 0.5s ease-in-out;
+  }
+  

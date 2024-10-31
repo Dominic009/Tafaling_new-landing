@@ -47,6 +47,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
   const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const textLimit = post.attachments.length === 0 ? 800 : 90;
 
   const handleContentView = (object: any) => {
@@ -85,9 +86,11 @@ const IndividualPost: React.FC<IPostProps> = ({
 
   useEffect(() => {
     if (viewImagePost) {
+      setScrollPosition(window.scrollY);
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');
+      window.scrollTo(0, scrollPosition);
     }
 
     // Cleanup on component unmount
