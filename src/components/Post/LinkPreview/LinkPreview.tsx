@@ -12,7 +12,7 @@ interface ILinkPreviewProps {
   closeLinkPreview: React.Dispatch<React.SetStateAction<string>>;
   disableCloseButton?: boolean;
   forPost: boolean;
-  post: Post;
+  post?: Post;
 }
 
 const LinkPreview: React.FC<ILinkPreviewProps> = ({
@@ -30,6 +30,16 @@ const LinkPreview: React.FC<ILinkPreviewProps> = ({
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [externalVideoPlayer, setExternalVideoPlayer] = useState(false);
+
+  useEffect(() => {
+    if (externalVideoPlayer) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    return () => document.body.classList.remove('no-scroll');
+  }, [externalVideoPlayer]);
 
   useEffect(() => {
     const fetchMetadata = async () => {

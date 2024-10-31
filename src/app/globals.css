@@ -16,10 +16,14 @@
 }
 
 .no-scroll {
+  overflow: hidden;
+}
+
+/* .no-scroll {
   overflow-y: scroll;
   position: fixed;
   width: 100%;
-}
+} */
 
 .progress-bar {
   appearance: none;

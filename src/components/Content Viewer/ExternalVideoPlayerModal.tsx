@@ -10,7 +10,7 @@ import { Post } from '../Post/UserPost/UserPost';
 interface ExternalVideoPlayerModal {
   onClose: () => void;
   videoUrl: string;
-  post: Post;
+  post?: Post;
 }
 
 const ExternalVideoPlayerModal: React.FC<ExternalVideoPlayerModal> = ({
@@ -34,7 +34,7 @@ const ExternalVideoPlayerModal: React.FC<ExternalVideoPlayerModal> = ({
   }, []);
 
   return (
-    <div className='bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster overflow-hidden p-4 lg:p-16'>
+    <div className='bg-black/90 fixed w-full h-full backdrop-blur-sm left-0 top-0 right-0 bottom-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster p-4 lg:p-16 custom-scrollbar overflow-y-scroll'>
       <div className='mx-auto w-full md:w-[90%] md:h-[80vh] lg:h-[85vh] flex flex-col lg:flex-row gap-1 border-2 border-white bg-black/80 rounded-md'>
         {!videoUrl ? (
           <div className='flex justify-center items-center relative scale-90 flex-1'>
