@@ -6,7 +6,11 @@ import IndividualPost from '../IndividualPost/IndividualPost';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import usePublicPosts from '@/hooks/usePublicPosts';
 
-const PublicPost = () => {
+interface IPublicPostProps {
+  askUserLoginModal: boolean;
+}
+
+const PublicPost: React.FC<IPublicPostProps> = ({ askUserLoginModal }) => {
   const [start, setStart] = useState(0);
   const { posts, loading, hasMore } = usePublicPosts({
     start,
@@ -36,6 +40,15 @@ const PublicPost = () => {
     },
     [loading, hasMore]
   );
+
+  useEffect(() => {
+    if (askUserLoginModal) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+  }, [askUserLoginModal]);
+
   // const [posts, setPosts] = React.useState<Post[]>([]);
   // const [isLoading, setIsLoading] = useState(true);
   // const isPostsFetched = useRef(false);

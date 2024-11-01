@@ -86,16 +86,16 @@ const IndividualPost: React.FC<IPostProps> = ({
     }
   }, [post]);
 
-  useEffect(() => {
-    if (viewImagePost) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
+  // useEffect(() => {
+  //   if (viewImagePost) {
+  //     document.body.classList.add('no-scroll');
+  //   } else {
+  //     document.body.classList.remove('no-scroll');
+  //   }
 
-    // Cleanup on component unmount
-    return () => document.body.classList.remove('no-scroll');
-  }, [viewImagePost]);
+  //   // Cleanup on component unmount
+  //   return () => document.body.classList.remove('no-scroll');
+  // }, [viewImagePost]);
 
   const urlRegex = /(https?:\/\/[^\s]+)/g;
 
