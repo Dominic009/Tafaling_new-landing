@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Post } from '../UserPost/UserPost';
 import { getPublicPost } from '@/api/posts/posts';
 import UserPostSkeleton from '@/components/Loader/Skeleton/UserPostSkeleton';
-import IndividualPost from '../UserPost/IndividualPost';
+import IndividualPost from '../IndividualPost/IndividualPost';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import usePublicPosts from '@/hooks/usePublicPosts';
 
@@ -32,7 +32,7 @@ const PublicPost = () => {
       // If the node is provided, observe it
       if (node) observer.current.observe(node);
 
-      console.log(node);
+      // console.log(node);
     },
     [loading, hasMore]
   );
@@ -67,7 +67,7 @@ const PublicPost = () => {
           .reverse()
           .map((post, idx) => {
             if (posts.length === idx + 1) {
-              console.log('ref post', posts.length === idx + 1);
+              // console.log('ref post', posts.length === idx + 1);
 
               return (
                 <div ref={lastPostElementRef} key={idx}>

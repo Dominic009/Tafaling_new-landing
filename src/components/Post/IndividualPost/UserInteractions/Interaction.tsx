@@ -1,15 +1,15 @@
-import { useAuth } from "@/context/AuthContext/AuthProvider";
-import React, { useState } from "react";
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import React, { useState } from 'react';
 import {
   FaRegHeart,
   FaHeart,
   FaRegComment,
   FaRegShareSquare,
-} from "react-icons/fa";
-import PreviewModal from "../Modal/PreviewModal";
-import { Post } from "../Post/UserPost/UserPost";
-import { likePost, unlikePost } from "@/api/posts/posts";
-import { getAccessToken } from "@/helpers/tokenStorage";
+} from 'react-icons/fa';
+import { likePost, unlikePost } from '@/api/posts/posts';
+import { getAccessToken } from '@/helpers/tokenStorage';
+import { Post } from '../../UserPost/UserPost';
+import PreviewModal from '@/components/Modal/PreviewModal';
 
 interface InteractionProps {
   post: Post;
@@ -31,20 +31,20 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
     if (liked) {
       try {
         const response = await unlikePost(post.postId, getAccessToken());
-        console.log(response);
+        // console.log(response);
         setLiked(false);
-        setLoading(false)
-        setLikeCount((prevCount) => prevCount - 1);
+        setLoading(false);
+        setLikeCount(prevCount => prevCount - 1);
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
         const response = await likePost(post.postId, getAccessToken());
-        console.log(response);
-        setLiked(true); 
-        setLoading(true)
-        setLikeCount((prevCount) => prevCount + 1);
+        // console.log(response);
+        setLiked(true);
+        setLoading(true);
+        setLikeCount(prevCount => prevCount + 1);
       } catch (error) {
         console.log(error);
       }
@@ -53,50 +53,52 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
 
   const actions = [
     {
-      name: "Like",
+      name: 'Like',
       onClick: handleLike,
       icon: <FaRegHeart />,
       activeIcon: <FaHeart />,
       isActive: liked,
     },
     {
-      name: "Comment",
-      onClick: () => console.log("Comment"),
+      name: 'Comment',
+      onClick: () => console.log('Comment'),
       icon: <FaRegComment />,
-      activeIcon: "",
+      activeIcon: '',
       disabled: true,
     },
     {
-      name: "Share",
-      onClick: () => console.log("Share"),
+      name: 'Share',
+      onClick: () => console.log('Share'),
       icon: <FaRegShareSquare />,
-      activeIcon: "",
+      activeIcon: '',
       disabled: true,
     },
   ];
 
   return (
-    <div className="grid grid-cols-3">
+    <div className='grid grid-cols-3'>
       {actions.map((action, idx) => (
         <button
           key={idx}
           onClick={action.onClick ? action.onClick : undefined}
           disabled={action?.disabled}
           className={`flex items-center gap-1 justify-center ${
-            !action.disabled && "cursor-pointer"
+            !action.disabled && 'cursor-pointer'
           } hover:bg-gray-100 py-1 custom-hover rounded-md ${
-            action?.disabled && "cursor-not-allowed"
+            action?.disabled && 'cursor-not-allowed'
           }`}
         >
-          <span className="text-2xl text-gray-600">
+          <span className='text-2xl text-gray-600'>
             {action.isActive ? (
-              <span className="text-rose-600 drop-shadow-lg">{action.activeIcon}</span>
+              <span className='text-rose-600 drop-shadow-lg'>
+                {action.activeIcon}
+              </span>
             ) : (
               action.icon
             )}
           </span>
-          <span className="text-gray-500">
-            {action.name === "Like" && likeCount ? likeCount : action.name}
+          <span className='text-gray-500'>
+            {action.name === 'Like' && likeCount ? likeCount : action.name}
           </span>
         </button>
       ))}

@@ -15,8 +15,8 @@ import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import 'animate.css';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import Loader from '@/app/loading';
-import { HiMail } from "react-icons/hi";
-import { BiSolidLock } from "react-icons/bi";
+import { HiMail } from 'react-icons/hi';
+import { BiSolidLock } from 'react-icons/bi';
 
 // for using reacts "useState" changed the function name from 'page' to "Page"
 const Page = () => {
@@ -45,7 +45,7 @@ const Page = () => {
     setIsLoginLoading(true);
     try {
       const { data, status } = await loginUser(userData);
-      console.log('login response: ', data);
+      // console.log('login response: ', data);
       if (status == 200) {
         login({
           user_name: data.data.user.user_name,
@@ -133,7 +133,7 @@ const Page = () => {
               >
                 {/* Email */}
                 <div className='relative items-center'>
-                  <HiMail className='absolute top-3 left-3 text-gray-600 text-xl'/>
+                  <HiMail className='absolute top-3 left-3 text-gray-600 text-xl' />
                   <input
                     {...register('email', {
                       required: 'Email is required',
@@ -154,7 +154,7 @@ const Page = () => {
 
                 {/* Password */}
                 <div className='relative items-center'>
-                  <BiSolidLock className='absolute top-3 left-3 text-gray-600 text-xl'/>
+                  <BiSolidLock className='absolute top-3 left-3 text-gray-600 text-xl' />
                   <input
                     {...register('password', {
                       required: 'Password is required',

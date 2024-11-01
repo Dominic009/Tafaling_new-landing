@@ -6,7 +6,7 @@ import { getUserPost } from '@/api/posts/posts';
 import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import UserPostSkeleton from '@/components/Loader/Skeleton/UserPostSkeleton';
-import IndividualPost from './IndividualPost';
+import IndividualPost from '../IndividualPost/IndividualPost';
 import usePosts from '@/hooks/usePosts';
 
 export interface Post {
@@ -44,7 +44,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
   const [start, setStart] = useState(0);
   const { user } = useAuth();
 
-  const { posts, loading, hasMore } = usePosts({
+  const { posts, loading, hasMore, setRemoveId } = usePosts({
     start,
     pageSize: 5,
     userId: user?.userId as number,
@@ -136,6 +136,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                     // setIsLoading={setIsLoading}
                     isLoading={loading}
                     setRefetchUserPost={setRefetchUserPost!}
+                    setRemoveId={setRemoveId}
                   />
                 </div>
               );
@@ -148,6 +149,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                     // setIsLoading={setIsLoading}
                     isLoading={loading}
                     setRefetchUserPost={setRefetchUserPost!}
+                    setRemoveId={setRemoveId}
                   />
                 </div>
               );
