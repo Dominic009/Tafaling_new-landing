@@ -27,6 +27,17 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    if (object) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    // Cleanup on component unmount
+    return () => document.body.classList.remove('no-scroll');
+  }, [object]);
+
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };

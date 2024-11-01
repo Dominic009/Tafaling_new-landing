@@ -50,7 +50,9 @@ const page = () => {
           ></UserPost>
         )}
 
-        {!user?.user_name && !isAuthLoading && <PublicPost />}
+        {!user?.user_name && !isAuthLoading && (
+          <PublicPost askUserLoginModal={message} />
+        )}
 
         {/* Virtual navigation for mobile devices */}
       </main>
