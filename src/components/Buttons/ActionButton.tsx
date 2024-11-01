@@ -27,6 +27,7 @@ const ActionButton: React.FC<IActionButtonProps> = ({
   if (outline) {
     return (
       <button
+        onClick={onClickFn}
         disabled={isLoading}
         className={`flex items-center justify-center ${
           text && 'gap-2'
