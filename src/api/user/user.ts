@@ -24,3 +24,37 @@ export async function updateCoverPhoto(
     },
   });
 }
+
+export async function followUser(
+  userId: number,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post(
+    `user/add/follower`,
+    {
+      following_user_id: userId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+export async function unfollowUser(
+  userId: number,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post(
+    `user/unfollow/user`,
+    {
+      following_user_id: userId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
