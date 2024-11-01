@@ -77,3 +77,20 @@ export async function unlikePost(
     }
   );
 }
+
+export async function removePost(
+  postId: number,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post(
+    `/posts/remove`,
+    {
+      post_id: postId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}

@@ -2,7 +2,7 @@ import axiosClient from '@/api/config';
 import { Post } from '@/components/Post/UserPost/UserPost';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import axios, { Canceler } from 'axios';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface UsePostsProps {
   start: number;
@@ -16,6 +16,7 @@ interface UsePostsReturn {
   error: boolean;
   posts: Post[];
   hasMore: boolean;
+  setRemoveId: Dispatch<SetStateAction<number | null>>;
 }
 
 const usePosts = ({
@@ -28,6 +29,15 @@ const usePosts = ({
   const [error, setError] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState(false);
+  const [removeId, setRemoveId] = useState<null | number>(null);
+
+  useEffect(() => {
+    if (removeId) {
+      const remainingPost = posts.filter(item => item.postId !== removeId);
+      setPosts([...remainingPost]);
+      setRemoveId(null);
+    }
+  }, [posts, removeId, setRemoveId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,7 +83,7 @@ const usePosts = ({
     fetchData();
   }, [start, pageSize, userId, refetchUserPost]);
 
-  return { loading, error, posts, hasMore };
+  return { loading, error, posts, hasMore, setRemoveId };
 };
 
 export default usePosts;
