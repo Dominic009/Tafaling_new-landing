@@ -208,8 +208,6 @@ const IndividualPost: React.FC<IPostProps> = ({
 
         {/* Content body */}
         <div className='mt-2 cursor-pointer flex items-center justify-center overflow-hidden hover:drop-shadow-xl rounded-md custom-hover'>
-          {isLoading && <ContentLoader />}
-
           {post.attachments[0]?.mimeType.includes('image') && (
             <Image
               alt='Post content'
