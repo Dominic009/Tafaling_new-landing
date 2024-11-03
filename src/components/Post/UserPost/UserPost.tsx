@@ -76,6 +76,8 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     [loading, hasMore]
   );
 
+  console.log(posts)
+
   // useEffect(() => {
   //   const fetchPosts = async () => {
   //     if (user) {

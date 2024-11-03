@@ -38,6 +38,14 @@ const PostSettings: React.FC<PostSettingsProps> = ({
   const [postPrivacy, setPostPrivacy] = useState<PrivacySetting>(
     userPirvacyText!
   );
+
+  const handleDeletePost = () => {
+    if (setRemoveId) {
+      setRemoveId(post.postId);
+    }
+    setDeletePostModal(false);
+  };
+
   if (!isToggled) return null;
 
   console.log(post);
@@ -97,7 +105,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
           modal={deletePostModal}
           setModal={setDeletePostModal}
           post={post}
-          setRemoveId={setRemoveId}
+          setRemoveId={handleDeletePost}
           setToggleEditPost={setToggleEditPost}
         />
       </Modal>

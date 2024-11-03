@@ -30,6 +30,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   isLoading,
   setIsLoading,
   postKey,
+  setRemoveId,
 }) => {
   const { user } = useAuth();
   // Post selected privacy
@@ -43,6 +44,12 @@ const IndividualPost: React.FC<IPostProps> = ({
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
   const textLimit = post.attachments.length === 0 ? 800 : 90;
+
+  useEffect(() => {
+    if (post && setRemoveId) {
+      setRemoveId(post.postId); // Ensure this updates the state to remove the post
+    }
+  }, [post, setRemoveId]);
 
   const handleContentView = (object: any) => {
     setViewImagePost(object);
@@ -173,6 +180,7 @@ const IndividualPost: React.FC<IPostProps> = ({
                 post={post}
                 postKey={post.postId}
                 isToggled={toggleEditPost}
+                setRemoveId={setRemoveId}
               />
             </div>
           )}
