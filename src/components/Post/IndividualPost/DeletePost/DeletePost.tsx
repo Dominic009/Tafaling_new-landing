@@ -1,12 +1,12 @@
-import { removePost } from '@/api/posts/posts';
-import ActionButton from '@/components/Buttons/ActionButton';
-import PrimaryBtn from '@/components/PrimaryBtn';
-import { getAccessToken } from '@/helpers/tokenStorage';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
-import { FaXmark } from 'react-icons/fa6';
-import { Post } from '../../UserPost/UserPost';
-import toast from 'react-hot-toast';
+import { removePost } from "@/api/posts/posts";
+import ActionButton from "@/components/Buttons/ActionButton";
+import PrimaryBtn from "@/components/PrimaryBtn";
+import { getAccessToken } from "@/helpers/tokenStorage";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { MdDeleteForever } from 'react-icons/md';
+import { FaXmark } from "react-icons/fa6";
+import { Post } from "../../UserPost/UserPost";
+import toast from "react-hot-toast";
 
 interface IDeletePost {
   modal?: React.ReactNode;
@@ -27,11 +27,11 @@ const DeletePost: React.FC<IDeletePost> = ({
 
   useEffect(() => {
     if (modal) {
-      document.body.classList.add('no-scroll');
+      document.body.classList.add("no-scroll");
     } else {
-      document.body.classList.remove('no-scroll');
+      document.body.classList.remove("no-scroll");
     }
-    return () => document.body.classList.remove('no-scroll');
+    return () => document.body.classList.remove("no-scroll");
   }, [modal]);
 
   const deletePostHandler = async () => {
@@ -53,27 +53,28 @@ const DeletePost: React.FC<IDeletePost> = ({
 
   return (
     <div>
-      <div className='flex justify-center pt-2 pb-4 '>
-        <p className='text-xl font-medium'>
-          Are you sure you want to delete this post?
+      <div className="flex flex-col justify-center pt-2 pb-4 ">
+        <h1 className="text-xl font-medium">Delete?</h1>
+        <p className="text-gray-500">
+          Are you sure you want to delete this post permanently?
         </p>
       </div>
-      <hr />
-      <div className='px-14 py-3'>
-        <div className='flex justify-around mt-2'>
+      <div className="px-14 py-3">
+        <div className="flex justify-around mt-2">
           <ActionButton
             onClickFn={deletePostHandler}
-            text={'Yes'}
-            icon={FaCheck}
-            btnColor='bg-[#e62d2d]'
-            btnHoverColor='bg-[#c92626]'
+            text={"Yes"}
+            icon={MdDeleteForever}
+            btnColor="bg-[#e62d2d]"
+            iconTextColor="text-red-600"
             isLoading={isLoading}
           />
           <ActionButton
             onClickFn={() => setModal(!modal)}
-            text={'No'}
+            text={"No"}
             icon={FaXmark}
-            btnColor='bg-[#217021]'
+            btnColor="bg-[#217021]"
+            iconTextColor="text-green-500"
             isLoading={isLoading}
           />
         </div>
