@@ -132,7 +132,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                 <div ref={lastPostElementRef} key={idx}>
                   <IndividualPost
                     post={post}
-                    key={idx}
+                    postKey={idx}
                     // setIsLoading={setIsLoading}
                     isLoading={loading}
                     setRefetchUserPost={setRefetchUserPost!}
@@ -145,7 +145,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                 <div key={idx}>
                   <IndividualPost
                     post={post}
-                    key={idx}
+                    postKey={idx}
                     // setIsLoading={setIsLoading}
                     isLoading={loading}
                     setRefetchUserPost={setRefetchUserPost!}

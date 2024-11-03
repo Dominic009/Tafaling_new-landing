@@ -10,21 +10,15 @@ import { Post } from "../UserPost/UserPost";
 import ContentLoader from "@/components/Loader/ContentLoader";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ContentViewer from "@/components/Content Viewer/ContentViewer";
-import { FaUserCircle } from "react-icons/fa";
-import DropDownMenu from "@/components/Drop down menu/DropDownMenu";
-import Modal from "@/components/Modal/Modal";
-import ChangePrivacy from "./ChangePrivacy/ChangePrivacy";
 import { FaEye } from "react-icons/fa6";
 import LinkPreview from "../LinkPreview/LinkPreview";
 import { PrivacySetting } from "@/types/Auth";
-import { MdDeleteForever } from "react-icons/md";
 import Interaction from "./UserInteractions/Interaction";
-import DeletePost from "./DeletePost/DeletePost";
 import PostSettings from "../Post settings/PostSettings";
 
 interface IPostProps {
   post: Post;
-  key: number;
+  postKey: number;
   isLoading: boolean;
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,9 +29,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   post,
   isLoading,
   setIsLoading,
-  key,
-  setRefetchUserPost,
-  setRemoveId,
+  postKey,
 }) => {
   const { user } = useAuth();
   // Post selected privacy
@@ -50,8 +42,6 @@ const IndividualPost: React.FC<IPostProps> = ({
   const [isPostExpanded, setIsPostExpanded] = useState<boolean>(false);
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
-  const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
-  const [deletePostModal, setDeletePostModal] = useState<boolean>(false);
   const textLimit = post.attachments.length === 0 ? 800 : 90;
 
   const handleContentView = (object: any) => {
@@ -136,12 +126,12 @@ const IndividualPost: React.FC<IPostProps> = ({
   return (
     <>
       <div
-        key={key}
+        key={postKey}
         className="mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow"
       >
         {/* Header */}
         <div className="flex items-center mb-3">
-          <div className="w-16 h-16 rounded-full flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full flex items-center justify-center ">
             <Link href={`/user-profile/${user?.userId}`}>
               <Image
                 alt="User DP"
@@ -173,19 +163,18 @@ const IndividualPost: React.FC<IPostProps> = ({
             </div>
           </div>
           {user?.user_name && (
-            <div className="relative z-50">
+            <div className="relative z-40">
               <HiDotsHorizontal
                 onClick={() => setToggleEditPost(!toggleEditPost)}
                 className="text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl"
               />
 
               <PostSettings
+                post={post}
+                postKey={post.postId}
                 isToggled={toggleEditPost}
-                onEditPrivacy={() => setEditPrivacyModal(true)}
-                onDeletePost={() => setDeletePostModal(true)}
               />
             </div>
-
           )}
         </div>
 
@@ -285,43 +274,6 @@ const IndividualPost: React.FC<IPostProps> = ({
           </div>
         </div>
       </div>
-
-      {/* MODAL FOR POST */}
-      {/* EDIT PRIVACY MODAL */}
-      <Modal
-        isOpen={editPrivacyModal}
-        onClose={() => setEditPrivacyModal(!editPrivacyModal)}
-        width={"40%"}
-      >
-        <h1>Edit Privacy</h1>
-        <ChangePrivacy
-          modal={editPrivacyModal}
-          setModal={setEditPrivacyModal}
-          setRefetchUserPost={setRefetchUserPost}
-          userPrivacy={user?.userPrivacy && user?.userPrivacy}
-          postData={{
-            postId: post.postId,
-            privacyId: post.privacyId,
-          }}
-          setToggleEditPost={setToggleEditPost}
-          setPostPrivacy={setPostPrivacy}
-        />
-      </Modal>
-
-      {/* DELETE POST MODAL */}
-      <Modal
-        isOpen={deletePostModal}
-        onClose={() => setDeletePostModal(!deletePostModal)}
-        width={"30%"}
-      >
-        <DeletePost
-          modal={deletePostModal}
-          setModal={setDeletePostModal}
-          post={post}
-          setRemoveId={setRemoveId}
-          setToggleEditPost={setToggleEditPost}
-        />
-      </Modal>
 
       {/* CONTENT VIEW MODAL */}
       {viewImagePost && (
