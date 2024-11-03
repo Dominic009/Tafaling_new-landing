@@ -286,6 +286,7 @@ const IndividualPost: React.FC<IPostProps> = ({
       {/* CONTENT VIEW MODAL */}
       {viewImagePost && (
         <ContentViewer
+        post={post}
           object={viewImagePost}
           postContentType="image"
           onClose={() => setViewImagePost(null)}

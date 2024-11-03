@@ -1,22 +1,32 @@
 import Image from "next/legacy/image";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import ContentLoader from "../Loader/ContentLoader";
 import { useAuth } from "@/context/AuthContext/AuthProvider";
 import { IoClose } from "react-icons/io5";
+import PostSettings from "../Post/Post settings/PostSettings";
+import { Post } from "../Post/UserPost/UserPost";
 
 interface ContentProps {
+  post: Post;
   onClose: () => void;
   postContentType: string;
   object: any;
+  setRemoveId?: Dispatch<SetStateAction<number | null>>;
 }
-const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
+const ContentViewer: React.FC<ContentProps> = ({
+  onClose,
+  object,
+  post,
+  setRemoveId,
+}) => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [screenSize, setIsScreenSize] = useState(false);
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
+  const [viewImagePost, setViewImagePost] = useState<string | null>(null);
 
   //to hide the icon for small screens
   useEffect(() => {
@@ -38,6 +48,16 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
     // Cleanup on component unmount
     return () => document.body.classList.remove("no-scroll");
   }, [object]);
+
+  useEffect(() => {
+    if (post && setRemoveId) {
+      setRemoveId(post.postId); 
+    }
+  }, [post, setRemoveId]);
+
+  const handleContentView = (object: any) => {
+    setViewImagePost(object);
+  };
 
   const toggleText = () => {
     setIsExpanded(!isExpanded);
@@ -123,6 +143,12 @@ const ContentViewer: React.FC<ContentProps> = ({ onClose, object }) => {
                 <HiDotsHorizontal
                   onClick={() => setToggleEditPost(!toggleEditPost)}
                   className="text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl"
+                />
+                <PostSettings
+                  post={post}
+                  postKey={post.postId}
+                  isToggled={toggleEditPost}
+                  setRemoveId={setRemoveId}
                 />
               </div>
             </div>
