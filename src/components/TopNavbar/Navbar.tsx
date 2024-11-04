@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/legacy/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { TiHome } from 'react-icons/ti';
 import { BsFillPeopleFill } from 'react-icons/bs';
 import { HiOutlineSearch } from 'react-icons/hi';
@@ -13,9 +13,36 @@ import AuthUserNavMenu from './AuthUserNavMenu';
 import PrimaryBtn from '../PrimaryBtn';
 import { IoMdLogIn } from 'react-icons/io';
 import SearchInput from '../Search Input/SearchInput';
+import { searchUser } from '@/api/user/user';
+import { getAccessToken } from '@/helpers/tokenStorage';
+import IndividualSearchUser from './UserSearch/IndividualSearchUser';
+
+export interface ISearchUser {
+  userId: number;
+  userName: string;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  dateOfBirth: string | null;
+  profilePicture: string;
+  coverPhoto: string;
+  gender: string | null;
+  registrationDate: string | null;
+  countryId: number | null;
+  PrivacySettingId: number | null;
+  name: string;
+  following: number;
+  followers: number;
+  isFollowing: boolean;
+}
 
 const Navbar: React.FC = () => {
   // const [dropdown, setDropdown] = React.useState<boolean>(false);
+  const [searchedUsers, setSearchedUsers] = useState<ISearchUser[]>([]);
+
+  //filters for user search
+  const [inputValue, setInputValue] = useState('');
+
   const currentPath = usePathname();
   const { user, isAuthLoading } = useAuth();
 
@@ -56,6 +83,16 @@ const Navbar: React.FC = () => {
     return null; // Do not render the Navbar on these paths
   }
 
+  const searchUserHandler = async () => {
+    if (inputValue.length < 3) return;
+    try {
+      const res = await searchUser(inputValue, 0, 5, getAccessToken());
+      setSearchedUsers(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <nav className='h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-secondary to-[#012349] items-center px-5 w-full custom-hover'>
       {/* Left Section */}
@@ -93,7 +130,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Right Section */}
-      <div className={`${user ? 'flex justify-end' : 'grid-cols-2'}`}>
+      <div className={`relative ${user ? 'flex justify-end' : 'grid-cols-2'}`}>
         <div
           className={`grid grid-cols-2 lg:grid-cols-4 ${
             !user && 'flex'
@@ -101,16 +138,33 @@ const Navbar: React.FC = () => {
         >
           {/* Search field */}
           <div className='hidden md:block relative lg:col-span-3'>
-            {/* <input
-              onChange={handleSearch}
-              type="text"
-              className="outline-none pl-4 pr-10 py-2 rounded-full bg-[#062139] text-white w-full border border-blue-500/20 focus-within:border focus-within:border-blue-500 custom-hover"
-              placeholder="Search"
+            <SearchInput
+              setInputValue={setInputValue}
+              inputValue={inputValue}
+              searchUserHandler={searchUserHandler}
+              user={searchedUsers}
+              setSearchedUsers={setSearchedUsers}
             />
-            <button>
-              <HiOutlineSearch className="absolute top-2 right-3 text-gray-400 text-[25px] hover:text-gray-100 hover:scale-105 custom-hover active:scale-95" />
-            </button> */}
-            <SearchInput />
+          </div>
+
+          <div className='absolute top-[70px] left-[160px] flex flex-col'>
+            {searchedUsers.length !== 0 && (
+              <div className='bg-slate-500'>
+                {searchedUsers.map((item, i) => (
+                  <IndividualSearchUser key={i} user={item} />
+                ))}
+
+                <Link
+                  onClick={() => {
+                    setSearchedUsers([]);
+                    setInputValue('');
+                  }}
+                  href={`/search-more-users`}
+                >
+                  See more
+                </Link>
+              </div>
+            )}
           </div>
           <HiOutlineSearch className='text-gray-100 text-3xl md:hidden cursor-pointer' />
 

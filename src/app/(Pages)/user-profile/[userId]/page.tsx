@@ -1,24 +1,25 @@
-"use client";
-import ActionBtn from "@/components/Buttons/User Profile buttons/ActionBtn";
-import SingleUploader from "@/components/Input File/Single File Uploader/SingleUploader";
-import Modal from "@/components/Modal/Modal";
-import { useAuth } from "@/context/AuthContext/AuthProvider";
-import Image from "next/legacy/image";
-import React, { useState, useEffect } from "react";
-import { MdEditSquare, MdOutlineEdit, MdSettings } from "react-icons/md";
-import { IoPersonAdd } from "react-icons/io5";
-import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
-import { updateCoverPhoto, updateProfilePicture } from "@/api/user/user";
-import useLocalStorage from "@/hooks/useLocalStorage";
-import toast from "react-hot-toast";
-import { getAuthUser } from "@/api/auth/auth";
-import { AxiosError, AxiosProgressEvent, AxiosResponse } from "axios";
-import ContentLoader from "@/components/Loader/ContentLoader";
-import axiosClient from "@/api/config";
-import { getAccessToken } from "@/helpers/tokenStorage";
-import ProfileSkeleton from "@/components/Loader/Skeleton/ProfileSkeleton";
-import ComingSoon from "@/components/ComingSoon";
-import UserPost from "@/components/Post/UserPost/UserPost";
+'use client';
+import ActionBtn from '@/components/Buttons/User Profile buttons/ActionBtn';
+import SingleUploader from '@/components/Input File/Single File Uploader/SingleUploader';
+import Modal from '@/components/Modal/Modal';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import Image from 'next/legacy/image';
+import React, { useState, useEffect } from 'react';
+import { MdEditSquare, MdOutlineEdit, MdSettings } from 'react-icons/md';
+import { IoPersonAdd } from 'react-icons/io5';
+import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
+import { updateCoverPhoto, updateProfilePicture } from '@/api/user/user';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import toast from 'react-hot-toast';
+import { getAuthUser } from '@/api/auth/auth';
+import { AxiosError, AxiosProgressEvent, AxiosResponse } from 'axios';
+import ContentLoader from '@/components/Loader/ContentLoader';
+import axiosClient from '@/api/config';
+import { getAccessToken } from '@/helpers/tokenStorage';
+import ProfileSkeleton from '@/components/Loader/Skeleton/ProfileSkeleton';
+import ComingSoon from '@/components/ComingSoon';
+import UserPost from '@/components/Post/UserPost/UserPost';
+import ActionButton from '@/components/Buttons/ActionButton';
 
 interface UserProfileProps {
   params: any;
@@ -30,17 +31,17 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
     useState<boolean>(false);
   const [modalCoverPhoto, setModalCoverPhoto] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { item: accessToken } = useLocalStorage("auth-token");
+  const { item: accessToken } = useLocalStorage('auth-token');
   const [progress, setProgress] = useState(0);
   const [refetchUserPost, setRefetchUserPost] = useState<boolean>(false);
 
   useEffect(() => {
     if (modalProfilePicture || modalCoverPhoto) {
-      document.body.classList.add("no-scroll");
+      document.body.classList.add('no-scroll');
     } else {
-      document.body.classList.remove("no-scroll");
+      document.body.classList.remove('no-scroll');
     }
-    return () => document.body.classList.remove("no-scroll");
+    return () => document.body.classList.remove('no-scroll');
   }, [modalProfilePicture, modalCoverPhoto]);
 
   const closeModalProfilePicture = () => {
@@ -63,17 +64,17 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
       fileInputRef.current.files &&
       fileInputRef.current.files[0]
     ) {
-      formData.append("profilePhoto", fileInputRef.current.files[0]);
+      formData.append('profilePhoto', fileInputRef.current.files[0]);
     }
 
     try {
       const { data, status } = await axiosClient.post<any>(
-        "user/profile/picture/update",
+        'user/profile/picture/update',
         formData,
         {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
-            "content-type": "multipart/form-data",
+            'content-type': 'multipart/form-data',
           },
           onUploadProgress: (progressEvent: AxiosProgressEvent) => {
             const percentCompleted = Math.round(
@@ -112,17 +113,17 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
       fileInputRef.current.files &&
       fileInputRef.current.files[0]
     ) {
-      formData.append("coverPhoto", fileInputRef.current.files[0]);
+      formData.append('coverPhoto', fileInputRef.current.files[0]);
     }
 
     try {
       const { data, status } = await axiosClient.post<any>(
-        "user/cover/picture/update",
+        'user/cover/picture/update',
         formData,
         {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
-            "content-type": "multipart/form-data",
+            'content-type': 'multipart/form-data',
           },
           onUploadProgress: (progressEvent: AxiosProgressEvent) => {
             const percentCompleted = Math.round(
@@ -159,32 +160,33 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
 
   // converting params.userId in number
   const paramId = Number(params?.userId);
+  // const paramId = Number('100');
 
   return (
-    <div className="w-full lg:w-[80%] mx-auto">
+    <div className='w-full lg:w-[80%] mx-auto'>
       {isLoading ? (
         <ProfileSkeleton />
       ) : (
-        <div className="relative border-b pb-7">
+        <div className='relative border-b pb-7'>
           {/* Timeline IMG */}
-          <div className="relative h-[240px] md:h-[300px] lg:h-[450px] group transition ease-in-out duration-500">
+          <div className='relative h-[240px] md:h-[300px] lg:h-[450px] group transition ease-in-out duration-500'>
             {/* overlay div */}
-            <div className="w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-b-lg"></div>
+            <div className='w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-b-lg'></div>
             {/* Change timeline image button */}
-            <div className="absolute bottom-6 right-6 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible">
+            <div className='absolute bottom-6 right-6 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible'>
               <button
                 onClick={() => setModalCoverPhoto(!modalCoverPhoto)}
-                className="bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]"
+                className='bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]'
               >
                 Change Picture
               </button>
             </div>
             <Image
-              src={user?.cover_photo || "/Profile banner/banner.png"}
-              alt="Banner Image"
-              layout="fill"
-              objectFit="cover"
-              className=" rounded-b-lg"
+              src={user?.cover_photo || '/Profile banner/banner.png'}
+              alt='Banner Image'
+              layout='fill'
+              objectFit='cover'
+              className=' rounded-b-lg'
               onLoadingComplete={() => setIsLoading(false)}
             />
           </div>
@@ -192,10 +194,10 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
           <Modal
             isOpen={modalProfilePicture}
             onClose={closeModalProfilePicture}
-            width={"30%"}
+            width={'30%'}
           >
-            <div className="py-7 px-2 rounded-lg flex flex-col justify-center items-center">
-              <h1 className="text-xl text-gray-500 font-semibold text-center underline mb-4">
+            <div className='py-7 px-2 rounded-lg flex flex-col justify-center items-center'>
+              <h1 className='text-xl text-gray-500 font-semibold text-center underline mb-4'>
                 Select Profile Picture from device
               </h1>
               <SingleUploader
@@ -209,10 +211,10 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
           <Modal
             isOpen={modalCoverPhoto}
             onClose={closeModalCoverPhoto}
-            width={"30%"}
+            width={'30%'}
           >
-            <div className="py-7 px-2 rounded-lg flex flex-col justify-center items-center">
-              <h1 className="text-xl text-gray-500 font-semibold text-center underline mb-4">
+            <div className='py-7 px-2 rounded-lg flex flex-col justify-center items-center'>
+              <h1 className='text-xl text-gray-500 font-semibold text-center underline mb-4'>
                 Select Cover Photo from device
               </h1>
               <SingleUploader
@@ -223,77 +225,85 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
           </Modal>
 
           {/* User DP */}
-          <div className="flex flex-col lg:flex-row gap-5 w-[90%] mx-auto -mt-16">
+          <div className='flex flex-col lg:flex-row gap-5 w-[90%] mx-auto -mt-16'>
             {/* overlay div */}
-            <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[280px] group relative">
-              <div className="w-full h-full bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg overflow-hidden"></div>
+            <div className='w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[280px] group relative'>
+              <div className='w-full h-full bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg overflow-hidden'></div>
               {/* Change timeline image button */}
-              <div className="absolute bottom-6 right-6 z-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible">
+              <div className='absolute bottom-6 right-6 z-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible'>
                 <button
                   onClick={() => setModalProfilePicture(!modalProfilePicture)}
-                  className="bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]"
+                  className='bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]'
                 >
                   Change Picture
                 </button>
               </div>
               <Image
-                src={user?.profile_picture || "/ProfileDP/Dummy.png"}
-                layout="fill"
-                alt="User DP"
-                objectFit="cover"
-                className="bottom-0 rounded-lg drop-shadow-md z-30 group"
+                src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                layout='fill'
+                alt='User DP'
+                objectFit='cover'
+                className='bottom-0 rounded-lg drop-shadow-md z-30 group'
                 onLoadingComplete={() => setIsLoading(false)}
               ></Image>
             </div>
-            <div className="grid w-[70%]">
+            <div className='grid w-[70%]'>
               <div></div>
-              <div className="flex flex-col justify-between lg:pt-10">
-                <div className="flex items-start flex-col w-full">
+              <div className='flex flex-col justify-between lg:pt-10'>
+                <div className='flex items-center w-full'>
                   {/* user name */}
-                  <div className=" w-[50%] relative">
-                    <h1 className="text-[#00274A] font-semibold text-3xl ">
-                      {user?.name}{" "}
+                  <div>
+                    <h1 className='text-[#00274A] font-semibold text-3xl '>
+                      {user?.name}{' '}
                     </h1>
-                    <div className="absolute right-32 top-2.5">
-                      {user?.userId !== paramId && (
-                        <ActionBtn text="Follow" icon={IoPersonAdd} />
-                      )}
-                    </div>
+                    <small className='text-[#00274A]/50 text-md -mt-1'>
+                      {user?.email}
+                    </small>
+                  </div>
+                  <div className='pl-5'>
+                    {user?.userId !== paramId && (
+                      <ActionButton
+                        onClickFn={() => {
+                          console.log('follow user');
+                        }}
+                        outline={true}
+                        text='Follow'
+                        icon={IoPersonAdd}
+                      />
+                    )}
                   </div>
                   {/* user email */}
-                  <small className="text-[#00274A]/50 text-md -mt-1">
-                    {user?.email}
-                  </small>
                 </div>
+
                 {/* user bio */}
-                <p className="text-[#0E2943]/90 text-lg py-1 inline-flex items-center">
+                <p className='text-[#0E2943]/90 text-lg py-1 inline-flex items-center'>
                   To be a dreamer, you just need spread your wings and keep on
                   dreaming until you turn your dream in reality. So keep on
                   pushing!
                   {/* <MdEditSquare className="text-2xl text-[#00B4DB] hover:text-[#287f92] cursor-pointer custom-hover" /> */}
                 </p>
 
-                <div className="flex items-center gap-4">
-                  <h5 className="text-[#00274A]">
-                    <span className="text-xl font-semibold">0</span> Followers
+                <div className='flex items-center gap-4'>
+                  <h5 className='text-[#00274A]'>
+                    <span className='text-xl font-semibold'>0</span> Followers
                   </h5>
-                  <span className="w-2 h-2 rounded-full bg-[#00274A]"></span>
-                  <h5 className="text-[#00274A]">
-                    <span className="text-xl font-semibold">0</span> Following
+                  <span className='w-2 h-2 rounded-full bg-[#00274A]'></span>
+                  <h5 className='text-[#00274A]'>
+                    <span className='text-xl font-semibold'>0</span> Following
                   </h5>
                 </div>
 
                 {/* Profile edit and settings button */}
                 {user?.userId === paramId && (
-                  <div className="flex items-center gap-5 w-[50%]">
+                  <div className='flex items-center gap-5 w-[50%]'>
                     <ActionBtn
-                      text="Edit"
-                      secondaryText="Info"
+                      text='Edit'
+                      secondaryText='Info'
                       icon={MdOutlineEdit}
                       add={`/user-profile/${user?.userId}/settings/edit-info`}
                     />
                     <ActionBtn
-                      text="Settings"
+                      text='Settings'
                       icon={MdSettings}
                       add={`/user-profile/${user?.userId}/settings`}
                     />
@@ -306,11 +316,11 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
       )}
 
       {/* User Content section */}
-      <section className="mt-9 flex justify-center w-[80%] gap-5 mx-auto">
-        <div className="h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center">
+      <section className='mt-9 flex justify-center w-[80%] gap-5 mx-auto'>
+        <div className='h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center'>
           <ComingSoon />
         </div>
-        <div className="lg:w-[60%]">
+        <div className='lg:w-[60%]'>
           <UserPost
             refetchUserPost={refetchUserPost}
             setRefetchUserPost={setRefetchUserPost}
