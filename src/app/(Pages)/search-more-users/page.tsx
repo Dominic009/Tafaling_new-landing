@@ -1,25 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-"use client";
-import { searchUser } from "@/api/user/user";
-import ActionButton from "@/components/Buttons/ActionButton";
-import ActionBtn from "@/components/Buttons/User Profile buttons/ActionBtn";
-import ComingSoon from "@/components/ComingSoon";
-import PrivateRoute from "@/components/PrivateRoute/PrivateRoute";
-import SearchInput from "@/components/Search Input/SearchInput";
-import { ISearchUser } from "@/components/TopNavbar/Navbar";
-import { getAccessToken } from "@/helpers/tokenStorage";
-import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { BsPersonFillAdd } from "react-icons/bs";
-import { HiOutlineSearch } from "react-icons/hi";
-import { ImCross } from "react-icons/im";
+'use client';
+import { searchUser } from '@/api/user/user';
+import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
+import SearchInput from '@/components/Search Input/SearchInput';
+import { ISearchUser } from '@/components/TopNavbar/Navbar';
+import IndividualSearchUser from '@/components/TopNavbar/UserSearch/IndividualSearchUser';
+import { getAccessToken } from '@/helpers/tokenStorage';
+import { useSearchParams, useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 const page: React.FC = () => {
   const searchParams = useSearchParams();
-  const userSearch = searchParams.get("userSearch");
+  const userSearch = searchParams.get('userSearch');
   //filters for user search
-  const [inputValue, setInputValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>('');
   const [searchedUsers, setSearchedUsers] = useState<ISearchUser[]>([]);
   const [isSearchUserLoading, setIsSearchUserLoading] =
     useState<boolean>(false);
@@ -70,9 +64,8 @@ const page: React.FC = () => {
     userSearch && userSearch?.length > 0 && fetchSearchUsers();
   }, [userSearch]);
 
-console.log(userSearch)
   return (
-    <div className="h-[80vh] w-1/2 mx-auto py-6">
+    <div className='h-[80vh] w-1/2 mx-auto py-6'>
       {/* search box */}
       <SearchInput
         setInputValue={setInputValue}
@@ -82,57 +75,35 @@ console.log(userSearch)
         setSearchedUsers={setSearchedUsers}
         clearSearchParams={clearSearchParams}
       />
-      <h1 className="text-lg">
-        Showing search results for <span className="text-xl font-semibold">&quot;{userSearch}&quot;</span>
+      <h1 className='text-lg'>
+        Showing search results for{' '}
+        <span className='text-xl font-semibold'>&quot;{userSearch}&quot;</span>
       </h1>
       {/* searched users */}
 
-      <div className="py-6">
+      <div className='py-6'>
         {searchedUsers.map((item, i) => (
-          <div
-            key={i}
-            className="grid grid-cols-3 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 drop-shadow scale-90 border border-red-600"
-          >
-            <div className="w-16 h-16 rounded-full flex items-center justify-center">
-              <Image
-                alt="User DP"
-                src={item?.profilePicture || "/ProfileDP/Dummy.png"}
-                width={50}
-                height={50}
-                objectFit="cover"
-                className="rounded-full"
-              ></Image>
-            </div>
-            <div className=" text-left -ml-3">
-              <h1 className="font-semibold text-lg">{item?.name}</h1>
-              <small className="text-gray-400 font-semibold">
-                {item?.followers} followers
-              </small>
-            </div>
-            <div className="w-[70%]  ">
-            <ActionBtn text="Follow" icon={BsPersonFillAdd} />
-          </div>
-          </div>
+          <IndividualSearchUser user={item} key={i} />
         ))}
 
         {isSearchUserLoading && (
-          <div className="grid grid-cols-4 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 drop-shadow scale-90 animate-pulse">
-            <div className="w-16 h-16 rounded-full bg-gray-200"></div>
+          <div className='grid grid-cols-4 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 drop-shadow scale-90 animate-pulse'>
+            <div className='w-16 h-16 rounded-full bg-gray-200'></div>
 
-            <div className="col-span-2 text-left -ml-3 space-y-1">
-              <div className="h-5 bg-gray-200 rounded w-3/4"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+            <div className='col-span-2 text-left -ml-3 space-y-1'>
+              <div className='h-5 bg-gray-200 rounded w-3/4'></div>
+              <div className='h-4 bg-gray-200 rounded w-1/2'></div>
             </div>
 
             <div>
-              <div className="h-8 w-16 bg-gray-200 rounded"></div>
+              <div className='h-8 w-16 bg-gray-200 rounded'></div>
             </div>
           </div>
         )}
 
-        {!isSearchUserLoading && searchedUsers.length === 0 && (
+        {/* {!isSearchUserLoading && searchedUsers.length === 0 && (
           <div>Search users... </div>
-        )}
+        )} */}
 
         {/* {!isSearchUserLoading && <ActionButton text='see more' />} */}
       </div>
