@@ -87,7 +87,13 @@ const Navbar: React.FC = () => {
     if (inputValue.length < 3) return;
     try {
       setSearchedUsers([]);
-      const res = await searchUser(inputValue, 0, 5, getAccessToken());
+      const res = await searchUser(
+        inputValue,
+        0,
+        5,
+        getAccessToken(),
+        user?.userId as number
+      );
       setSearchedUsers(res.data.data);
     } catch (error) {
       console.log(error);

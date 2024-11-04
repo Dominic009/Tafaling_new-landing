@@ -5,11 +5,13 @@ import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import SearchInput from '@/components/Search Input/SearchInput';
 import { ISearchUser } from '@/components/TopNavbar/Navbar';
 import IndividualSearchUser from '@/components/TopNavbar/UserSearch/IndividualSearchUser';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const page: React.FC = () => {
+  const { user } = useAuth();
   const searchParams = useSearchParams();
   const userSearch = searchParams.get('userSearch');
   //filters for user search
@@ -30,7 +32,13 @@ const page: React.FC = () => {
     try {
       setSearchedUsers([]);
       setIsSearchUserLoading(true);
-      const res = await searchUser(inputValue!, 0, 5, getAccessToken());
+      const res = await searchUser(
+        inputValue!,
+        0,
+        5,
+        getAccessToken(),
+        user?.userId as number
+      );
       setSearchedUsers(res.data.data);
     } catch (error) {
       console.log(error);
@@ -51,7 +59,8 @@ const page: React.FC = () => {
           userSearch as string,
           0,
           5,
-          getAccessToken()
+          getAccessToken(),
+          user?.userId as number
         );
         setSearchedUsers(res.data.data);
       } catch (error) {
@@ -62,7 +71,7 @@ const page: React.FC = () => {
     };
 
     userSearch && userSearch?.length > 0 && fetchSearchUsers();
-  }, [userSearch]);
+  }, [userSearch, user]);
 
   return (
     <div className='h-[80vh] w-1/2 mx-auto py-6'>
