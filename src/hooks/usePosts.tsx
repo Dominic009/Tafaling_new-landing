@@ -17,6 +17,7 @@ interface UsePostsReturn {
   posts: Post[];
   hasMore: boolean;
   setRemoveId: Dispatch<SetStateAction<number | null>>;
+  updatePost: (postId: number, updatedProperties: Partial<Post>) => void;
 }
 
 const usePosts = ({
@@ -38,6 +39,33 @@ const usePosts = ({
       setRemoveId(null);
     }
   }, [posts, removeId, setRemoveId]);
+
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
+
+  // Function to update a post by its ID with new properties
+  const updatePost = (postId: number, updatedProperties: Partial<Post>) => {
+    console.log('Data to update for postId:', postId, updatedProperties);
+
+    setPosts(prevPosts => {
+      const postIndex = prevPosts.findIndex(post => post.postId === postId);
+
+      // If post with postId is found, update it
+      if (postIndex !== -1) {
+        // Copy the posts array to avoid direct mutation
+        const updatedPosts = [...prevPosts];
+        updatedPosts[postIndex] = {
+          ...prevPosts[postIndex],
+          ...updatedProperties,
+        };
+        return updatedPosts;
+      }
+
+      // If no post with the given postId is found, return the original posts array
+      return prevPosts;
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,7 +111,7 @@ const usePosts = ({
     fetchData();
   }, [start, pageSize, userId, refetchUserPost]);
 
-  return { loading, error, posts, hasMore, setRemoveId };
+  return { loading, error, posts, hasMore, setRemoveId, updatePost };
 };
 
 export default usePosts;

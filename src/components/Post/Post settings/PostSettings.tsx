@@ -1,13 +1,13 @@
-import DropDownMenu from "@/components/Drop down menu/DropDownMenu";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
-import { Post } from "../UserPost/UserPost";
-import Modal from "@/components/Modal/Modal";
-import ChangePrivacy from "../IndividualPost/ChangePrivacy/ChangePrivacy";
-import { useAuth } from "@/context/AuthContext/AuthProvider";
-import { PrivacySetting } from "@/types/Auth";
-import DeletePost from "../IndividualPost/DeletePost/DeletePost";
+import DropDownMenu from '@/components/Drop down menu/DropDownMenu';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { FaUserCircle } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
+import { Post } from '../UserPost/UserPost';
+import Modal from '@/components/Modal/Modal';
+import ChangePrivacy from '../IndividualPost/ChangePrivacy/ChangePrivacy';
+import { useAuth } from '@/context/AuthContext/AuthProvider';
+import { PrivacySetting } from '@/types/Auth';
+import DeletePost from '../IndividualPost/DeletePost/DeletePost';
 
 interface PostSettingsProps {
   post: Post;
@@ -18,6 +18,9 @@ interface PostSettingsProps {
   right?: string;
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
   setRemoveId?: Dispatch<SetStateAction<number | null>>;
+  setPostPrivacy: Dispatch<SetStateAction<PrivacySetting>>;
+  postPrivacy?: string;
+  updatePostProperty: (postId: number, updatedProperties: Partial<Post>) => void;
 }
 
 const PostSettings: React.FC<PostSettingsProps> = ({
@@ -26,6 +29,9 @@ const PostSettings: React.FC<PostSettingsProps> = ({
   postKey,
   setRefetchUserPost,
   setRemoveId,
+  setPostPrivacy,
+  postPrivacy,
+  updatePostProperty
 }) => {
   const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
@@ -33,10 +39,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
   const { user } = useAuth();
   // Post selected privacy
   const userPirvacyText = user?.userPrivacy?.find(
-    (item) => item.privacy_setting_id === post.privacyId
-  );
-  const [postPrivacy, setPostPrivacy] = useState<PrivacySetting>(
-    userPirvacyText!
+    item => item.privacy_setting_id === post.privacyId
   );
 
   const handleDeletePost = () => {
@@ -48,28 +51,26 @@ const PostSettings: React.FC<PostSettingsProps> = ({
 
   if (!isToggled) return null;
 
-  console.log(post);
-
   return (
     <div key={postKey}>
-      <DropDownMenu bg="[#f4f7f8]" top="6" right="3">
+      <DropDownMenu bg='[#f4f7f8]' top='6' right='3'>
         {/* Edit Privacy Button */}
         <button
-          className="hover:bg-[#dfdfdf] p-1 rounded-md cursor-pointer transition-colors ease-linear"
+          className='hover:bg-[#dfdfdf] p-1 rounded-md cursor-pointer transition-colors ease-linear'
           onClick={() => setEditPrivacyModal(true)}
         >
-          <span className="flex items-center gap-2 text-gray-800">
-            <FaUserCircle className="text-xl text-[#00B4DB]" /> Edit Privacy
+          <span className='flex items-center gap-2 text-gray-800'>
+            <FaUserCircle className='text-xl text-[#00B4DB]' /> Edit Privacy
           </span>
         </button>
 
         {/* Delete Post Button */}
         <button
-          className="hover:bg-[#dfdfdf] p-1 rounded-md cursor-pointer transition-colors ease-linear"
+          className='hover:bg-[#dfdfdf] p-1 rounded-md cursor-pointer transition-colors ease-linear'
           onClick={() => setDeletePostModal(true)}
         >
-          <span className="flex items-center gap-2 text-gray-800">
-            <MdDeleteForever className="text-xl text-[#dc2626]" /> Delete Post
+          <span className='flex items-center gap-2 text-gray-800'>
+            <MdDeleteForever className='text-xl text-[#dc2626]' /> Delete Post
           </span>
         </button>
       </DropDownMenu>
@@ -78,7 +79,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
       <Modal
         isOpen={editPrivacyModal}
         onClose={() => setEditPrivacyModal(!editPrivacyModal)}
-        width={"40%"}
+        width={'40%'}
       >
         <h1>Edit Privacy</h1>
         <ChangePrivacy
@@ -92,6 +93,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
           }}
           setToggleEditPost={setToggleEditPost}
           setPostPrivacy={setPostPrivacy}
+          updatePostProperty={updatePostProperty}
         />
       </Modal>
 
@@ -99,7 +101,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
       <Modal
         isOpen={deletePostModal}
         onClose={() => setDeletePostModal(!deletePostModal)}
-        width={"30%"}
+        width={'30%'}
       >
         <DeletePost
           modal={deletePostModal}

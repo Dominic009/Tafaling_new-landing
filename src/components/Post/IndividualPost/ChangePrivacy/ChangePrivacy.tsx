@@ -8,6 +8,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FaGlobe, FaUserLock, FaUsers } from 'react-icons/fa6';
+import { Post } from '../../UserPost/UserPost';
 
 interface PostProps extends IRefetchUserPostProp {
   modal?: React.ReactNode;
@@ -19,6 +20,10 @@ interface PostProps extends IRefetchUserPostProp {
   };
   setToggleEditPost: React.Dispatch<React.SetStateAction<boolean>>;
   setPostPrivacy: React.Dispatch<React.SetStateAction<PrivacySetting>>;
+  updatePostProperty: (
+    postId: number,
+    updatedProperties: Partial<Post>
+  ) => void;
 }
 
 interface ChangePrivacyType {
@@ -35,6 +40,7 @@ const ChangePrivacy: React.FC<PostProps> = ({
   postData,
   setToggleEditPost,
   setPostPrivacy,
+  updatePostProperty,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
@@ -44,7 +50,7 @@ const ChangePrivacy: React.FC<PostProps> = ({
     formState: { dirtyFields },
   } = useForm<ChangePrivacyType>({
     defaultValues: {
-      privacy: postData?.privacyId?.toString() || '1',
+      privacy: postData?.privacyId?.toString(),
     },
   });
 
@@ -74,6 +80,9 @@ const ChangePrivacy: React.FC<PostProps> = ({
       );
 
       setPostPrivacy(userPirvacyText!);
+      updatePostProperty(postData.postId as number, {
+        privacyId: parseInt(data.privacy),
+      });
 
       setModal(false);
       setToggleEditPost(false);

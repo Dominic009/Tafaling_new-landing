@@ -44,7 +44,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
   const [start, setStart] = useState(0);
   const { user } = useAuth();
 
-  const { posts, loading, hasMore, setRemoveId } = usePosts({
+  const { posts, loading, hasMore, setRemoveId, updatePost } = usePosts({
     start,
     pageSize: 5,
     userId: user?.userId as number,
@@ -139,6 +139,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                     isLoading={loading}
                     setRefetchUserPost={setRefetchUserPost!}
                     setRemoveId={setRemoveId}
+                    updatePostProperty={updatePost}
                   />
                 </div>
               );
@@ -152,6 +153,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                     isLoading={loading}
                     setRefetchUserPost={setRefetchUserPost!}
                     setRemoveId={setRemoveId}
+                    updatePostProperty={updatePost}
                   />
                 </div>
               );
