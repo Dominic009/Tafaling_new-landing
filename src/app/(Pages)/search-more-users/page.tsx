@@ -1,20 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 import { searchUser } from '@/api/user/user';
-import ActionButton from '@/components/Buttons/ActionButton';
-import ActionBtn from '@/components/Buttons/User Profile buttons/ActionBtn';
-import ComingSoon from '@/components/ComingSoon';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import SearchInput from '@/components/Search Input/SearchInput';
 import { ISearchUser } from '@/components/TopNavbar/Navbar';
 import IndividualSearchUser from '@/components/TopNavbar/UserSearch/IndividualSearchUser';
 import { getAccessToken } from '@/helpers/tokenStorage';
-import Image from 'next/image';
 import { useSearchParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { BsPersonFillAdd } from 'react-icons/bs';
-import { HiOutlineSearch } from 'react-icons/hi';
-import { ImCross } from 'react-icons/im';
 
 const page: React.FC = () => {
   const searchParams = useSearchParams();
@@ -71,7 +64,6 @@ const page: React.FC = () => {
     userSearch && userSearch?.length > 0 && fetchSearchUsers();
   }, [userSearch]);
 
-  console.log(userSearch);
   return (
     <div className='h-[80vh] w-1/2 mx-auto py-6'>
       {/* search box */}
@@ -109,9 +101,9 @@ const page: React.FC = () => {
           </div>
         )}
 
-        {!isSearchUserLoading && searchedUsers.length === 0 && (
+        {/* {!isSearchUserLoading && searchedUsers.length === 0 && (
           <div>Search users... </div>
-        )}
+        )} */}
 
         {/* {!isSearchUserLoading && <ActionButton text='see more' />} */}
       </div>
