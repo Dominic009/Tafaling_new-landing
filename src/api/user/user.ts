@@ -58,3 +58,19 @@ export async function unfollowUser(
     }
   );
 }
+
+export async function searchUser(
+  searchText: string,
+  startRec: number,
+  pageSize: number,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.post(
+    `user/search/user/1?search_text=${searchText}&start_record=${startRec}&page_size=${pageSize}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
