@@ -1,4 +1,10 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  KeyboardEventHandler,
+} from 'react';
 import './search.css';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { ISearchUser } from '../TopNavbar/Navbar';
@@ -29,6 +35,12 @@ const SearchInput: React.FC<ISearchInput> = ({
     setInputValue(event.target.value);
   };
 
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      searchUserHandler();
+    }
+  };
+
   useEffect(() => {
     if (!isFocused && inputValue === '') {
       const intervalId = setInterval(() => {
@@ -54,6 +66,7 @@ const SearchInput: React.FC<ISearchInput> = ({
         className='outline-none pl-4 pr-10 py-2 rounded-xl bg-[#062139] text-white w-full border border-blue-500/20 focus-within:border focus-within:border-blue-500 custom-hover'
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        onKeyUp={handleKeyUp}
       />
       {!isFocused && !inputValue && (
         <span
