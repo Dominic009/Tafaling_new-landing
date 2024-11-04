@@ -76,6 +76,8 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     [loading, hasMore]
   );
 
+  console.log(posts)
+
   // useEffect(() => {
   //   const fetchPosts = async () => {
   //     if (user) {
@@ -132,7 +134,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                 <div ref={lastPostElementRef} key={idx}>
                   <IndividualPost
                     post={post}
-                    key={idx}
+                    postKey={idx}
                     // setIsLoading={setIsLoading}
                     isLoading={loading}
                     setRefetchUserPost={setRefetchUserPost!}
@@ -145,7 +147,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
                 <div key={idx}>
                   <IndividualPost
                     post={post}
-                    key={idx}
+                    postKey={idx}
                     // setIsLoading={setIsLoading}
                     isLoading={loading}
                     setRefetchUserPost={setRefetchUserPost!}

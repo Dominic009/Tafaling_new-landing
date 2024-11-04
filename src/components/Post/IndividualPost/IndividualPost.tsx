@@ -24,7 +24,7 @@ import PostSettings from '../Post settings/PostSettings';
 
 interface IPostProps {
   post: Post;
-  key: number;
+  postKey: number;
   isLoading: boolean;
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,8 +35,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   post,
   isLoading,
   setIsLoading,
-  key,
-  setRefetchUserPost,
+  postKey,
   setRemoveId,
 }) => {
   const { user } = useAuth();
@@ -50,9 +49,13 @@ const IndividualPost: React.FC<IPostProps> = ({
   const [isPostExpanded, setIsPostExpanded] = useState<boolean>(false);
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
-  const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
-  const [deletePostModal, setDeletePostModal] = useState<boolean>(false);
   const textLimit = post.attachments.length === 0 ? 800 : 90;
+
+  useEffect(() => {
+    if (post && setRemoveId) {
+      setRemoveId(post.postId); // Ensure this updates the state to remove the post
+    }
+  }, [post, setRemoveId]);
 
   const handleContentView = (object: any) => {
     setViewImagePost(object);
@@ -136,7 +139,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   return (
     <>
       <div
-        key={key}
+        key={postKey}
         className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow'
       >
         {/* Header */}
@@ -180,9 +183,10 @@ const IndividualPost: React.FC<IPostProps> = ({
               />
 
               <PostSettings
+                post={post}
+                postKey={post.postId}
                 isToggled={toggleEditPost}
-                onEditPrivacy={() => setEditPrivacyModal(true)}
-                onDeletePost={() => setDeletePostModal(true)}
+                setRemoveId={setRemoveId}
               />
             </div>
           )}
@@ -283,46 +287,10 @@ const IndividualPost: React.FC<IPostProps> = ({
         </div>
       </div>
 
-      {/* MODAL FOR POST */}
-      {/* EDIT PRIVACY MODAL */}
-      <Modal
-        isOpen={editPrivacyModal}
-        onClose={() => setEditPrivacyModal(!editPrivacyModal)}
-        width={'40%'}
-      >
-        <h1>Edit Privacy</h1>
-        <ChangePrivacy
-          modal={editPrivacyModal}
-          setModal={setEditPrivacyModal}
-          setRefetchUserPost={setRefetchUserPost}
-          userPrivacy={user?.userPrivacy && user?.userPrivacy}
-          postData={{
-            postId: post.postId,
-            privacyId: post.privacyId,
-          }}
-          setToggleEditPost={setToggleEditPost}
-          setPostPrivacy={setPostPrivacy}
-        />
-      </Modal>
-
-      {/* DELETE POST MODAL */}
-      <Modal
-        isOpen={deletePostModal}
-        onClose={() => setDeletePostModal(!deletePostModal)}
-        width={'30%'}
-      >
-        <DeletePost
-          modal={deletePostModal}
-          setModal={setDeletePostModal}
-          post={post}
-          setRemoveId={setRemoveId}
-          setToggleEditPost={setToggleEditPost}
-        />
-      </Modal>
-
       {/* CONTENT VIEW MODAL */}
       {viewImagePost && (
         <ContentViewer
+          post={post}
           object={viewImagePost}
           postContentType='image'
           onClose={() => setViewImagePost(null)}
