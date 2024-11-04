@@ -11,9 +11,13 @@ import ActionButton from '@/components/Buttons/ActionButton';
 
 interface IIndividualSearchUser {
   user: ISearchUser;
+  forNavBar?: boolean;
 }
 
-const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({ user }) => {
+const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
+  user,
+  forNavBar,
+}) => {
   const { user: loggedInuser } = useAuth();
   const [searchedUser, setSearchedUser] = useState<ISearchUser>(user);
 
@@ -49,6 +53,58 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({ user }) => {
     }
   };
 
+  // for navabar
+  if (forNavBar) {
+    return (
+      <div className='z-50 flex'>
+        <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[98%] mx-auto scale-90'>
+          <div className='w-16 h-16 rounded-full flex items-center justify-center'>
+            <Image
+              alt='User DP'
+              src={searchedUser?.profilePicture || '/ProfileDP/Dummy.png'}
+              width={50}
+              height={50}
+              objectFit='cover'
+              className='rounded-full'
+            ></Image>
+          </div>
+          <div className='col-span-3 text-left'>
+            <h1 className='font-semibold text-lg leading-5'>
+              {searchedUser?.name}
+            </h1>
+            <small className='text-gray-400 font-semibold'>
+              {searchedUser?.followers} followers
+            </small>
+          </div>
+          <div className='col-span-2 flex justify-end'>
+            <div className='w-[70%]  '>
+              {searchedUser?.userId !== loggedInuser?.userId &&
+                !searchedUser.isFollowing && (
+                  <ActionButton
+                    onClickFn={followUserHandler}
+                    text='Follow'
+                    icon={BsPersonFillAdd}
+                    outline={true}
+                  />
+                )}
+
+              {loggedInuser?.userId !== searchedUser.userId &&
+                searchedUser.isFollowing && (
+                  <ActionButton
+                    onClickFn={unfollowUserHandler}
+                    text='Unfollow'
+                    icon={BsPersonFillAdd}
+                    outline={true}
+                  />
+                )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // for search page and other pages
   return (
     <div className='z-50 flex'>
       <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[98%] mx-auto scale-90'>
