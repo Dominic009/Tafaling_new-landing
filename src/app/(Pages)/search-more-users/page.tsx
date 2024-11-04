@@ -74,7 +74,7 @@ const page: React.FC = () => {
   }, [userSearch, user]);
 
   return (
-    <div className='h-[80vh] w-1/2 mx-auto py-6'>
+    <div className='h-[80vh] w-[95%] md:w-[80%] lg:w-1/2 mx-auto py-6'>
       {/* search box */}
       <SearchInput
         setInputValue={setInputValue}
@@ -84,10 +84,10 @@ const page: React.FC = () => {
         setSearchedUsers={setSearchedUsers}
         clearSearchParams={clearSearchParams}
       />
-      <h1 className='text-lg'>
+      <small>
         Showing search results for{' '}
-        <span className='text-xl font-semibold'>&quot;{userSearch}&quot;</span>
-      </h1>
+        <span className='font-semibold'>&quot;{inputValue}&quot;</span>
+      </small>
       {/* searched users */}
 
       <div className='py-6'>
@@ -96,8 +96,8 @@ const page: React.FC = () => {
         ))}
 
         {isSearchUserLoading && (
-          <div className='grid grid-cols-4 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 drop-shadow scale-90 animate-pulse'>
-            <div className='w-16 h-16 rounded-full bg-gray-200'></div>
+          <div className='grid grid-cols-4 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 py-2 drop-shadow scale-90 lg:w-[70%] mx-auto animate-pulse'>
+            <div className='w-20 h-20 rounded-full bg-gray-200'></div>
 
             <div className='col-span-2 text-left -ml-3 space-y-1'>
               <div className='h-5 bg-gray-200 rounded w-3/4'></div>

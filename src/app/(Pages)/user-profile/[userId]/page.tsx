@@ -161,7 +161,7 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
   // converting params.userId in number
   const paramId = Number(params?.userId);
   // const paramId = Number('100');
-
+console.log(user)
   return (
     <div className='w-full lg:w-[80%] mx-auto'>
       {isLoading ? (
