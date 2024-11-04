@@ -18,7 +18,7 @@ const page: React.FC = () => {
   const searchParams = useSearchParams();
   const userSearch = searchParams.get('userSearch');
   //filters for user search
-  const [inputValue, setInputValue] = useState<string>(userSearch!);
+  const [inputValue, setInputValue] = useState<string>('');
   const [searchedUsers, setSearchedUsers] = useState<ISearchUser[]>([]);
   const [isSearchUserLoading, setIsSearchUserLoading] =
     useState<boolean>(false);
@@ -33,6 +33,7 @@ const page: React.FC = () => {
   const searchUserHandler = async () => {
     if (inputValue!.length < 3) return;
     try {
+      setSearchedUsers([]);
       setIsSearchUserLoading(true);
       const res = await searchUser(inputValue!, 0, 5, getAccessToken());
       setSearchedUsers(res.data.data);
@@ -45,8 +46,11 @@ const page: React.FC = () => {
   };
 
   useEffect(() => {
+    userSearch && setInputValue(userSearch);
+
     const fetchSearchUsers = async () => {
       try {
+        setSearchedUsers([]);
         setIsSearchUserLoading(true);
         const res = await searchUser(
           userSearch as string,
@@ -62,7 +66,7 @@ const page: React.FC = () => {
       setIsSearchUserLoading(false);
     };
 
-    fetchSearchUsers();
+    userSearch && userSearch?.length > 0 && fetchSearchUsers();
   }, [userSearch]);
 
   return (
