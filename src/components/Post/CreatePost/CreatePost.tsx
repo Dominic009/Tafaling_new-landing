@@ -48,7 +48,7 @@ const CreatePost: React.FC<PostProps> = ({
     return () => document.body.classList.remove('no-scroll');
   }, [modal]);
 
-  console.log(previews);
+  // console.log(previews);
 
   //   Handle file input change for multiple files
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
