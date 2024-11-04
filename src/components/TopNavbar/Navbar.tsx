@@ -1,21 +1,21 @@
-'use client';
-import Image from 'next/legacy/image';
-import React, { useState } from 'react';
-import { TiHome } from 'react-icons/ti';
-import { BsFillPeopleFill } from 'react-icons/bs';
-import { HiOutlineSearch } from 'react-icons/hi';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext/AuthProvider';
-import 'animate.css';
-import { FaUserCircle } from 'react-icons/fa';
-import AuthUserNavMenu from './AuthUserNavMenu';
-import PrimaryBtn from '../PrimaryBtn';
-import { IoMdLogIn } from 'react-icons/io';
-import SearchInput from '../Search Input/SearchInput';
-import { searchUser } from '@/api/user/user';
-import { getAccessToken } from '@/helpers/tokenStorage';
-import IndividualSearchUser from './UserSearch/IndividualSearchUser';
+"use client";
+import Image from "next/legacy/image";
+import React, { useState } from "react";
+import { TiHome } from "react-icons/ti";
+import { BsFillPeopleFill } from "react-icons/bs";
+import { HiOutlineSearch } from "react-icons/hi";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
+import "animate.css";
+import { FaUserCircle } from "react-icons/fa";
+import AuthUserNavMenu from "./AuthUserNavMenu";
+import PrimaryBtn from "../PrimaryBtn";
+import { IoMdLogIn } from "react-icons/io";
+import SearchInput from "../Search Input/SearchInput";
+import { searchUser } from "@/api/user/user";
+import { getAccessToken } from "@/helpers/tokenStorage";
+import IndividualSearchUser from "./UserSearch/IndividualSearchUser";
 
 export interface ISearchUser {
   userId: number;
@@ -41,45 +41,45 @@ const Navbar: React.FC = () => {
   const [searchedUsers, setSearchedUsers] = useState<ISearchUser[]>([]);
 
   //filters for user search
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const currentPath = usePathname();
   const { user, isAuthLoading } = useAuth();
 
   const routes = [
     {
-      name: 'Home',
-      path: '/home',
+      name: "Home",
+      path: "/home",
       icon: (
         <TiHome
-          title='Home'
-          className='text-3xl  hover:text-white custom-hover'
+          title="Home"
+          className="text-3xl  hover:text-white custom-hover"
         />
       ),
     },
     {
-      name: 'Profile',
+      name: "Profile",
       path: `/user-profile/${user?.userId}`,
       icon: (
         <FaUserCircle
-          title='Profile'
-          className='text-2xl mb-1 hover:text-white custom-hover'
+          title="Profile"
+          className="text-2xl mb-1 hover:text-white custom-hover"
         />
       ),
     },
     {
-      name: 'Requests',
-      path: '/requests',
+      name: "Requests",
+      path: "/requests",
       icon: (
         <BsFillPeopleFill
-          title='Requests'
-          className='text-2xl  hover:text-white custom-hover'
+          title="Requests"
+          className="text-2xl  hover:text-white custom-hover"
         />
       ),
     },
   ];
 
-  if (currentPath === '/login' || currentPath === '/register') {
+  if (currentPath === "/login" || currentPath === "/register") {
     return null; // Do not render the Navbar on these paths
   }
 
@@ -94,23 +94,23 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className='h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-secondary to-[#012349] items-center px-5 w-full custom-hover'>
+    <nav className="h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-secondary to-[#012349] items-center px-5 w-full custom-hover">
       {/* Left Section */}
       <div>
-        <Link href={'/home'}>
+        <Link href={"/home"}>
           <Image
-            src={'/Tafaling logo.png'}
+            src={"/Tafaling logo.png"}
             width={130}
             height={55}
-            alt='Brand logo'
+            alt="Brand logo"
           ></Image>
         </Link>
       </div>
 
       {/* Middle Section Navlinks*/}
-      <div className='hidden md:block'>
-        <div className='flex gap-9 items-center justify-center'>
-          {routes.map(path => {
+      <div className="hidden md:block">
+        <div className="flex gap-9 items-center justify-center">
+          {routes.map((path) => {
             const isActive = path.path === currentPath;
             return (
               <Link
@@ -118,8 +118,8 @@ const Navbar: React.FC = () => {
                 key={path.name}
                 className={`${
                   isActive
-                    ? 'text-white border-b-2 border-[#42C6DE]'
-                    : 'text-white/50'
+                    ? "text-white border-b-2 border-[#42C6DE]"
+                    : "text-white/50"
                 }`}
               >
                 <span>{path.icon}</span>
@@ -130,26 +130,28 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Right Section */}
-      <div className={`relative ${user ? 'flex justify-end' : 'grid-cols-2'}`}>
+      <div className={`relative ${user ? "flex justify-end" : "grid-cols-2"}`}>
         <div
           className={`grid grid-cols-2 lg:grid-cols-4 ${
-            !user && 'flex'
+            !user && "flex"
           } items-center gap-5`}
         >
           {/* Search field */}
-          <div className='hidden md:block relative lg:col-span-3'>
-            <SearchInput
-              setInputValue={setInputValue}
-              inputValue={inputValue}
-              searchUserHandler={searchUserHandler}
-              user={searchedUsers}
-              setSearchedUsers={setSearchedUsers}
-            />
+          <div className="hidden md:block relative lg:col-span-3">
+            {user && (
+              <SearchInput
+                setInputValue={setInputValue}
+                inputValue={inputValue}
+                searchUserHandler={searchUserHandler}
+                user={searchedUsers}
+                setSearchedUsers={setSearchedUsers}
+              />
+            )}
           </div>
 
-          <div className='absolute top-[70px] left-[160px] flex flex-col'>
+          <div className="absolute top-[50px] left-[120px] flex flex-col">
             {searchedUsers.length !== 0 && (
-              <div className='bg-slate-500'>
+              <div className="bg-[#ecedee] rounded-lg py-3 text-center">
                 {searchedUsers.map((item, i) => (
                   <IndividualSearchUser key={i} user={item} />
                 ))}
@@ -157,27 +159,27 @@ const Navbar: React.FC = () => {
                 <Link
                   onClick={() => {
                     setSearchedUsers([]);
-                    setInputValue('');
+                    setInputValue("");
                   }}
                   href={{
                     pathname: `/search-more-users`,
                     query: { userSearch: inputValue },
                   }}
                 >
-                  See more
+                  <span className="text-gray-400 hover:text-gray-700 custom-hover font-semibold">More results</span>
                 </Link>
               </div>
             )}
           </div>
-          <HiOutlineSearch className='text-gray-100 text-3xl md:hidden cursor-pointer' />
+          <HiOutlineSearch className="text-gray-100 text-3xl md:hidden cursor-pointer" />
 
           <div>
             {user?.user_name && <AuthUserNavMenu />}
             {!user?.user_name && !isAuthLoading && (
-              <Link href={`login`} className='w-full'>
+              <Link href={`login`} className="w-full">
                 <PrimaryBtn
-                  text='Login'
-                  width='100%'
+                  text="Login"
+                  width="100%"
                   disabled={false}
                   icon={IoMdLogIn}
                 />
