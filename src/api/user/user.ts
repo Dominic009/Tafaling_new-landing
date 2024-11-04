@@ -65,7 +65,7 @@ export async function searchUser(
   pageSize: number,
   token: string
 ): Promise<AxiosResponse<any, ResponseType>> {
-  return await axiosClient.post(
+  return await axiosClient.get(
     `user/search/user/1?search_text=${searchText}&start_record=${startRec}&page_size=${pageSize}`,
     {
       headers: {
