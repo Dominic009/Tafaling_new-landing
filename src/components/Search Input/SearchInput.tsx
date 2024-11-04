@@ -8,7 +8,7 @@ import React, {
 import "./search.css";
 import { HiOutlineSearch } from "react-icons/hi";
 import { ISearchUser } from "../TopNavbar/Navbar";
-import { ImCross } from "react-icons/im";
+import { RxCross2 } from "react-icons/rx";
 
 interface ISearchInput {
   inputValue: string;
@@ -31,7 +31,6 @@ const SearchInput: React.FC<ISearchInput> = ({
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isFocused, setIsFocused] = useState(false);
   const [fadeIn, setFadeIn] = useState(true);
-
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -60,6 +59,20 @@ const SearchInput: React.FC<ISearchInput> = ({
     }
   }, [isFocused, inputValue, placeholderTexts.length]);
 
+  if (isFocused === false) {
+    // setSearchedUsers([]);
+    // setInputValue("");
+    clearSearchParams && clearSearchParams();
+  }
+
+  useEffect(() => {
+    if (inputValue.length === 0) {
+      setSearchedUsers([]);
+      setInputValue("");
+      clearSearchParams && clearSearchParams();
+    }
+  }, [inputValue.length]);
+
   return (
     <div className="hidden md:block relative lg:col-span-2">
       <input
@@ -86,10 +99,10 @@ const SearchInput: React.FC<ISearchInput> = ({
         </button>
       ) : (
         <button>
-          <ImCross
+          <RxCross2
             onClick={() => {
               setSearchedUsers([]);
-              setInputValue('');
+              setInputValue("");
               clearSearchParams && clearSearchParams();
             }}
             className="absolute top-2 right-3 text-gray-400 text-[25px] hover:text-gray-100 hover:scale-105 custom-hover active:scale-95 cursor-pointer"

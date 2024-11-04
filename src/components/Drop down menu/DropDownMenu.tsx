@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 interface DropDownMenuProps {
   children: React.ReactNode;
@@ -6,6 +6,7 @@ interface DropDownMenuProps {
   right?: string;
   bg?: string;
   duration?: number;
+  width?: string;
 }
 
 const DropDownMenu: React.FC<DropDownMenuProps> = ({
@@ -14,6 +15,7 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
   right,
   bg,
   duration = 50000, // default to 3 seconds
+  width = 'w-48'
 }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
@@ -35,13 +37,13 @@ const DropDownMenu: React.FC<DropDownMenuProps> = ({
 
   return (
     <div
-      className={`absolute ${topPosition} ${rightPosition} ${bgColor} w-48 rounded-lg p-4 flex flex-col justify-between drop-shadow-xl ${
+      className={`absolute ${topPosition} ${rightPosition} ${bgColor} ${width} rounded-lg p-4 flex flex-col justify-between drop-shadow-xl ${
         isClosing
-          ? 'animate__animated animate__fadeOut animate__faster'
-          : 'animate__animated animate__fadeIn animate__faster'
+          ? "animate__animated animate__fadeOut animate__faster"
+          : "animate__animated animate__fadeIn animate__faster"
       }`}
     >
-      <ul className='font-semibold flex flex-col gap-2 text-gray-200'>
+      <ul className="font-semibold flex flex-col gap-2 text-gray-200">
         {children}
       </ul>
     </div>
