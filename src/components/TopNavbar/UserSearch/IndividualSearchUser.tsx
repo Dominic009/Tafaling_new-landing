@@ -2,7 +2,8 @@
 import React from "react";
 import { ISearchUser } from "../Navbar";
 import Image from "next/legacy/image";
-import ActionButton from "@/components/Buttons/ActionButton";
+import ActionBtn from "@/components/Buttons/User Profile buttons/ActionBtn";
+import { BsPersonFillAdd } from "react-icons/bs";
 
 interface IIndividualSearchUser {
   user: ISearchUser;
@@ -10,10 +11,8 @@ interface IIndividualSearchUser {
 
 const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({ user }) => {
   return (
-    <div className=" w-[320px] z-50 flex">
-      {/* <img src={user.profilePicture} alt='user' className='w-24' />
-      <h1>{user.name}</h1> */}
-      <div className="grid grid-cols-4 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 drop-shadow scale-90">
+    <div className=" max-w-[400px] z-50 flex">
+      <div className="grid grid-cols-6 gap-3 items-center justify-center mb-2 px-1 bg-gray-50 rounded-lg drop-shadow scale-90">
         <div className="w-16 h-16 rounded-full flex items-center justify-center">
           <Image
             alt="User DP"
@@ -24,14 +23,16 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({ user }) => {
             className="rounded-full"
           ></Image>
         </div>
-        <div className="col-span-2 text-left -ml-3">
-          <h1 className="font-semibold text-lg">{user?.name}</h1>
-          {/* <small className="text-gray-400 font-semibold">
-            {user?.totalFollowers} followers
-          </small> */}
+        <div className="col-span-3 text-left">
+          <h1 className="font-semibold text-lg leading-5">{user?.name}</h1>
+          <small className="text-gray-400 font-semibold">
+            {user?.followers} followers
+          </small>
         </div>
-        <div>
-          <ActionButton text="Follow" outline/>
+        <div className="col-span-2 flex justify-end">
+          <div className="w-[70%]  ">
+            <ActionBtn text="Follow" icon={BsPersonFillAdd} />
+          </div>
         </div>
       </div>
     </div>
