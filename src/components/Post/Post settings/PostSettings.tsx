@@ -17,10 +17,14 @@ interface PostSettingsProps {
   top?: string;
   right?: string;
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
+  setToggleEditPost?: React.Dispatch<React.SetStateAction<boolean>>;
   setRemoveId?: Dispatch<SetStateAction<number | null>>;
   setPostPrivacy: Dispatch<SetStateAction<PrivacySetting>>;
   postPrivacy?: string;
-  updatePostProperty: (postId: number, updatedProperties: Partial<Post>) => void;
+  updatePostProperty: (
+    postId: number,
+    updatedProperties: Partial<Post>
+  ) => void;
 }
 
 const PostSettings: React.FC<PostSettingsProps> = ({
@@ -31,10 +35,10 @@ const PostSettings: React.FC<PostSettingsProps> = ({
   setRemoveId,
   setPostPrivacy,
   postPrivacy,
-  updatePostProperty
+  updatePostProperty,
+  setToggleEditPost,
 }) => {
   const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
-  const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [deletePostModal, setDeletePostModal] = useState<boolean>(false);
   const { user } = useAuth();
   // Post selected privacy
@@ -91,7 +95,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
             postId: post.postId,
             privacyId: post.privacyId,
           }}
-          setToggleEditPost={setToggleEditPost}
+          setToggleEditPost={setToggleEditPost!}
           setPostPrivacy={setPostPrivacy}
           updatePostProperty={updatePostProperty}
         />
@@ -108,7 +112,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
           setModal={setDeletePostModal}
           post={post}
           setRemoveId={handleDeletePost}
-          setToggleEditPost={setToggleEditPost}
+          setToggleEditPost={setToggleEditPost!}
         />
       </Modal>
     </div>

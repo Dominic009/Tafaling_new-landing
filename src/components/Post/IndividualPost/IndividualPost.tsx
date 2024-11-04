@@ -186,6 +186,7 @@ const IndividualPost: React.FC<IPostProps> = ({
                 post={post}
                 postKey={post.postId}
                 isToggled={toggleEditPost}
+                setToggleEditPost={setToggleEditPost}
                 setRemoveId={setRemoveId}
                 updatePostProperty={updatePostProperty}
               />
