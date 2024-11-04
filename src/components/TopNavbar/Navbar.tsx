@@ -149,9 +149,9 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          <div className="absolute top-[50px] left-[120px] flex flex-col">
+          <div className="absolute top-[55px] left-[100px] flex flex-col">
             {searchedUsers.length !== 0 && (
-              <div className="bg-[#ecedee] rounded-lg py-3 text-center">
+              <div className="bg-gray-200/90 backdrop-blur-lg rounded-lg py-3 text-center">
                 {searchedUsers.map((item, i) => (
                   <IndividualSearchUser key={i} user={item} />
                 ))}

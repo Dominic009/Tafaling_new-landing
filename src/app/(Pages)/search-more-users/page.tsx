@@ -11,6 +11,7 @@ import { getAccessToken } from "@/helpers/tokenStorage";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { BsPersonFillAdd } from "react-icons/bs";
 import { HiOutlineSearch } from "react-icons/hi";
 import { ImCross } from "react-icons/im";
 
@@ -69,19 +70,18 @@ const page: React.FC = () => {
     userSearch && userSearch?.length > 0 && fetchSearchUsers();
   }, [userSearch]);
 
-  console.log(userSearch);
-
+console.log(userSearch)
   return (
     <div className="h-[80vh] w-1/2 mx-auto py-6">
       {/* search box */}
-      {/* <SearchInput
+      <SearchInput
         setInputValue={setInputValue}
         inputValue={inputValue!}
         searchUserHandler={searchUserHandler}
         user={searchedUsers}
         setSearchedUsers={setSearchedUsers}
         clearSearchParams={clearSearchParams}
-      /> */}
+      />
       <h1 className="text-lg">
         Showing search results for <span className="text-xl font-semibold">&quot;{userSearch}&quot;</span>
       </h1>
@@ -91,7 +91,7 @@ const page: React.FC = () => {
         {searchedUsers.map((item, i) => (
           <div
             key={i}
-            className="grid grid-cols-4 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 drop-shadow scale-90"
+            className="grid grid-cols-3 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 drop-shadow scale-90 border border-red-600"
           >
             <div className="w-16 h-16 rounded-full flex items-center justify-center">
               <Image
@@ -103,15 +103,15 @@ const page: React.FC = () => {
                 className="rounded-full"
               ></Image>
             </div>
-            <div className="col-span-2 text-left -ml-3">
-              <h1 className="font-semibold text-lg">{item.userName}</h1>
+            <div className=" text-left -ml-3">
+              <h1 className="font-semibold text-lg">{item?.name}</h1>
               <small className="text-gray-400 font-semibold">
                 {item?.followers} followers
               </small>
             </div>
-            <div>
-              <ActionBtn text="Follow" />
-            </div>
+            <div className="w-[70%]  ">
+            <ActionBtn text="Follow" icon={BsPersonFillAdd} />
+          </div>
           </div>
         ))}
 
