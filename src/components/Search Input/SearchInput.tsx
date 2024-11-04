@@ -16,6 +16,7 @@ interface ISearchInput {
   setSearchedUsers: Dispatch<SetStateAction<ISearchUser[]>>;
   searchUserHandler: () => {};
   user: ISearchUser[];
+  clearSearchParams?: () => void;
 }
 
 const SearchInput: React.FC<ISearchInput> = ({
@@ -24,6 +25,7 @@ const SearchInput: React.FC<ISearchInput> = ({
   searchUserHandler,
   user,
   setSearchedUsers,
+  clearSearchParams,
 }) => {
   const placeholderTexts = ['Search', 'ex - John Doe'];
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -87,6 +89,7 @@ const SearchInput: React.FC<ISearchInput> = ({
             onClick={() => {
               setSearchedUsers([]);
               setInputValue('');
+              clearSearchParams && clearSearchParams();
             }}
             className='absolute top-2 right-3 text-gray-400 text-[25px] hover:text-gray-100 hover:scale-105 custom-hover active:scale-95 cursor-pointer'
           />

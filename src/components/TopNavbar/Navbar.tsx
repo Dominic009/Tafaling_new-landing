@@ -159,7 +159,10 @@ const Navbar: React.FC = () => {
                     setSearchedUsers([]);
                     setInputValue('');
                   }}
-                  href={`/search-more-users`}
+                  href={{
+                    pathname: `/search-more-users`,
+                    query: { userSearch: inputValue },
+                  }}
                 >
                   See more
                 </Link>
