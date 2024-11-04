@@ -33,7 +33,7 @@ const ActionButton: React.FC<IActionButtonProps> = ({
         onClick={onClickFn}
         disabled={isLoading}
         className={`flex items-center justify-center ${
-          text && "gap-2"
+          text && !Icon ? " " : 'gap-2'
         } rounded-lg border border-[#00274A] hover:bg-[#00274A] hover:text-white custom-hover px-3`}
       >
         {Icon && <Icon className="text-[#00B4DB] text-2xl" />}
