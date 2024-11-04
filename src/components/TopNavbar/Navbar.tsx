@@ -154,7 +154,15 @@ const Navbar: React.FC = () => {
                   <IndividualSearchUser key={i} user={item} />
                 ))}
 
-                <Link href={`/search-more-users`}>See more</Link>
+                <Link
+                  onClick={() => {
+                    setSearchedUsers([]);
+                    setInputValue('');
+                  }}
+                  href={`/search-more-users`}
+                >
+                  See more
+                </Link>
               </div>
             )}
           </div>
