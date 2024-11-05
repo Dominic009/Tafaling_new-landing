@@ -9,6 +9,7 @@ interface UsePostsProps {
   pageSize: number;
   userId: number;
   refetchUserPost?: boolean;
+  url: string;
 }
 
 interface UsePostsReturn {
@@ -25,6 +26,7 @@ const usePosts = ({
   pageSize,
   userId,
   refetchUserPost,
+  url,
 }: UsePostsProps): UsePostsReturn => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -74,7 +76,7 @@ const usePosts = ({
       let cancel: Canceler;
 
       try {
-        const res = await axiosClient.get(`posts/user/${userId}`, {
+        const res = await axiosClient.get(`${url}/${userId}`, {
           params: { start_record: start, page_size: pageSize },
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
@@ -109,7 +111,7 @@ const usePosts = ({
     };
 
     fetchData();
-  }, [start, pageSize, userId, refetchUserPost]);
+  }, [start, pageSize, userId, refetchUserPost, url]);
 
   return { loading, error, posts, hasMore, setRemoveId, updatePost };
 };

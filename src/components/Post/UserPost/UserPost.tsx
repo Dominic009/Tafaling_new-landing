@@ -49,6 +49,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     pageSize: 5,
     userId: user?.userId as number,
     refetchUserPost,
+    url: `posts/user`,
   });
   // const [isLoading, setIsLoading] = useState(true);
   const isPostsFetched = useRef(false);

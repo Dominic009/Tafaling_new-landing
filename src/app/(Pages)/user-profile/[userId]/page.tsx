@@ -21,6 +21,7 @@ import ComingSoon from '@/components/ComingSoon';
 import UserPost from '@/components/Post/UserPost/UserPost';
 import ActionButton from '@/components/Buttons/ActionButton';
 import LoggedInUserProfile from '@/components/UserProfile/LoggedInUserProfile';
+import OtherUserProfile from '@/components/UserProfile/OtherUserProfile';
 
 interface UserProfileProps {
   params: any;
@@ -35,7 +36,7 @@ const Page: React.FC<UserProfileProps> = ({ params }) => {
   if (user?.userId === paramId) {
     return <LoggedInUserProfile />;
   } else {
-    return <h1>other user profile</h1>;
+    return <OtherUserProfile userId={paramId} />;
   }
 };
 
