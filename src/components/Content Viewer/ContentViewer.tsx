@@ -51,7 +51,7 @@ const ContentViewer: React.FC<ContentProps> = ({
 
   useEffect(() => {
     if (post && setRemoveId) {
-      setRemoveId(post.postId); 
+      setRemoveId(post.postId);
     }
   }, [post, setRemoveId]);
 
