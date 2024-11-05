@@ -30,6 +30,8 @@ export interface Post {
 }
 interface Creator {
   name: string;
+  profile_picture: string;
+  user_id: number;
 }
 interface Attachments {
   fileName: string;
@@ -49,6 +51,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     pageSize: 5,
     userId: user?.userId as number,
     refetchUserPost,
+    url: `posts/user`,
   });
   // const [isLoading, setIsLoading] = useState(true);
   const isPostsFetched = useRef(false);

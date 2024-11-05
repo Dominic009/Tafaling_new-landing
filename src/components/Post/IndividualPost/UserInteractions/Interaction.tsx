@@ -29,23 +29,27 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
     }
 
     if (liked) {
+      setLikeCount(prevCount => prevCount - 1);
+      setLiked(false);
       try {
         const response = await unlikePost(post.postId, getAccessToken());
-        // console.log(response);
-        setLiked(false);
         setLoading(false);
-        setLikeCount(prevCount => prevCount - 1);
       } catch (error) {
+        setLoading(false);
+        setLikeCount(prevCount => prevCount + 1);
+        setLiked(true);
         console.log(error);
       }
     } else {
+      setLikeCount(prevCount => prevCount + 1);
+      setLiked(true);
       try {
         const response = await likePost(post.postId, getAccessToken());
-        // console.log(response);
-        setLiked(true);
         setLoading(true);
-        setLikeCount(prevCount => prevCount + 1);
       } catch (error) {
+        setLoading(false);
+        setLikeCount(prevCount => prevCount - 1);
+        setLiked(false);
         console.log(error);
       }
     }

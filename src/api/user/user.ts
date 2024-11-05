@@ -75,3 +75,19 @@ export async function searchUser(
     }
   );
 }
+
+export async function searchUserProfile(
+  loggedInUserId: number,
+  startRec: number,
+  pageSize: number,
+  token: string
+): Promise<AxiosResponse<any, ResponseType>> {
+  return await axiosClient.get(
+    `/user/search/profile/${loggedInUserId}?start_record=${startRec}&page_size=${pageSize}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}

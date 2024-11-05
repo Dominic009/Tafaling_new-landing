@@ -71,7 +71,7 @@ const page: React.FC = () => {
     };
 
     userSearch && userSearch?.length > 0 && fetchSearchUsers();
-    console.log(userSearch)
+    // console.log(userSearch)
   }, [userSearch, user]);
 
   return (
@@ -95,6 +95,10 @@ const page: React.FC = () => {
         {searchedUsers.map((item, i) => (
           <IndividualSearchUser user={item} key={i} />
         ))}
+
+        {!isSearchUserLoading && searchedUsers.length === 0 && (
+          <h1>No results found!</h1>
+        )}
 
         {isSearchUserLoading && (
           <div className='grid grid-cols-4 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 py-2 drop-shadow scale-90 lg:w-[70%] mx-auto animate-pulse'>

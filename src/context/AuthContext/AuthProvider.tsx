@@ -1,8 +1,8 @@
 'use client';
-import { getAuthUser } from '@/api/auth/auth';
+import { getAuthUser, getUserPrivacy } from '@/api/auth/auth';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { AuthUser } from '@/types/Auth';
+import { AuthUser, PrivacySetting } from '@/types/Auth';
 import { JwtPayload } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
 import React, { ReactNode, useContext, useEffect, useRef } from 'react';
@@ -12,6 +12,8 @@ interface IAuthContext {
   login: (authData: AuthUser) => void;
   logout: () => void;
   isAuthLoading: boolean;
+  userPrivacy: PrivacySetting[];
+  setAllUserPrivacy: (privacyData: PrivacySetting[]) => void;
 }
 
 export interface AuthJwtPayload extends JwtPayload {
@@ -25,9 +27,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const router = useRouter();
   const [user, setUser] = React.useState<AuthUser | null>(null);
+  const [userPrivacy, setUserPrivacy] = React.useState<PrivacySetting[] | []>(
+    []
+  );
   const [isAuthLoading, setIsAuthLoading] = React.useState<boolean>(true);
   const { item, removeItem } = useLocalStorage('auth-token');
   const didFetchUser = useRef(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data, status } = await getUserPrivacy();
+
+        setAllUserPrivacy(data.data);
+      } catch (error) {}
+    }
+
+    userPrivacy.length === 0 && fetchData();
+  }, [userPrivacy]);
 
   useEffect(() => {
     const refetchUserData = async () => {
@@ -62,6 +79,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUser(authData);
   };
 
+  const setAllUserPrivacy = (privacyData: PrivacySetting[]) => {
+    setUserPrivacy(privacyData);
+  };
+
   const logout = () => {
     setUser(null);
     removeItem();
@@ -69,7 +90,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthLoading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        isAuthLoading,
+        userPrivacy,
+        setAllUserPrivacy,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

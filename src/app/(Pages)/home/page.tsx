@@ -9,6 +9,7 @@ import UserPost from '@/components/Post/UserPost/UserPost';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import PublicPost from '@/components/Post/PublicPost/PublicPost';
 import PreviewModal from '@/components/Modal/PreviewModal';
+import { getUserPrivacy } from '@/api/auth/auth';
 
 export interface IRefetchUserPostProp {
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;

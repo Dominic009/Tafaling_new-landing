@@ -11,6 +11,9 @@ export type AuthUser = {
   otp?: string;
   userId?: number;
   userPrivacy?: PrivacySetting[];
+  is_following?: boolean;
+  followers?: number;
+  following?: number;
 };
 
 export type PrivacySetting = {
