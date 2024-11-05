@@ -68,7 +68,7 @@ const SearchInput: React.FC<ISearchInput> = ({
   }, [inputValue.length, clearSearchParams, setInputValue, setSearchedUsers]);
 
   return (
-    <div className="hidden md:block relative lg:col-span-2">
+    <div className="hidden md:block relative lg:col-span-2 drop-shadow-md">
       <input
         onChange={handleSearch}
         value={inputValue}

@@ -76,7 +76,7 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
   ];
 
   return (
-    <div className='grid grid-cols-3'>
+    <div className='grid grid-cols-3 w-full'>
       {actions.map((action, idx) => (
         <button
           key={idx}
@@ -88,7 +88,7 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
             action?.disabled && 'cursor-not-allowed'
           }`}
         >
-          <span className='text-2xl text-gray-600'>
+          <span className='text-xl text-gray-600'>
             {action.isActive ? (
               <span className='text-rose-600 drop-shadow-lg'>
                 {action.activeIcon}
