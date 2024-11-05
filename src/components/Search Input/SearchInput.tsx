@@ -71,7 +71,7 @@ const SearchInput: React.FC<ISearchInput> = ({
       setInputValue("");
       clearSearchParams && clearSearchParams();
     }
-  }, [inputValue.length]);
+  }, [inputValue.length, clearSearchParams, setInputValue, setSearchedUsers]);
 
   return (
     <div className="hidden md:block relative lg:col-span-2">

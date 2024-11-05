@@ -29,7 +29,7 @@ interface IPostProps {
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
   setRemoveId?: Dispatch<SetStateAction<number | null>>;
-  updatePostProperty: (
+  updatePostProperty?: (
     postId: number,
     updatedProperties: Partial<Post>
   ) => void;
@@ -165,13 +165,17 @@ const IndividualPost: React.FC<IPostProps> = ({
                 {/* {post.location} */}
                 Location
               </h5>
-              <span className='w-1 h-1 rounded-full bg-[#d4d4d4]'></span>
-              <h5 className='text-sm text-gray-400 flex gap items-center'>
-                <p className='flex items-center gap-1'>
-                  <FaEye className='inline-block' />{' '}
-                  {postPrivacy?.privacy_setting_name}
-                </p>
-              </h5>
+              {user?.user_name && (
+                <>
+                  <span className='w-1 h-1 rounded-full bg-[#d4d4d4]'></span>
+                  <h5 className='text-sm text-gray-400 flex gap items-center'>
+                    <p className='flex items-center gap-1'>
+                      <FaEye className='inline-block' />{' '}
+                      {postPrivacy?.privacy_setting_name}
+                    </p>
+                  </h5>
+                </>
+              )}
             </div>
           </div>
           {user?.user_name && (
@@ -188,7 +192,7 @@ const IndividualPost: React.FC<IPostProps> = ({
                 isToggled={toggleEditPost}
                 setToggleEditPost={setToggleEditPost}
                 setRemoveId={setRemoveId}
-                updatePostProperty={updatePostProperty}
+                updatePostProperty={updatePostProperty!}
               />
             </div>
           )}
@@ -296,6 +300,9 @@ const IndividualPost: React.FC<IPostProps> = ({
           object={viewImagePost}
           postContentType='image'
           onClose={() => setViewImagePost(null)}
+          updatePostProperty={updatePostProperty!}
+          setPostPrivacy={setPostPrivacy}
+          postPrivacy={postPrivacy}
         />
       )}
     </>

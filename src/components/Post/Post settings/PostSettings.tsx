@@ -11,7 +11,7 @@ import DeletePost from '../IndividualPost/DeletePost/DeletePost';
 
 interface PostSettingsProps {
   post: Post;
-  postKey: number;
+  postKey?: number;
   isToggled: boolean;
   bg?: string;
   top?: string;

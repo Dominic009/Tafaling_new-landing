@@ -87,6 +87,7 @@ const PublicPost: React.FC<IPublicPostProps> = ({ askUserLoginModal }) => {
                   <IndividualPost
                     post={post}
                     key={idx}
+                    postKey={idx}
                     // setIsLoading={setIsLoading}
                     isLoading={loading}
                     // setRefetchUserPost={setRefetchUserPost!}
@@ -98,6 +99,7 @@ const PublicPost: React.FC<IPublicPostProps> = ({ askUserLoginModal }) => {
                 <div key={idx}>
                   <IndividualPost
                     post={post}
+                    postKey={idx}
                     key={idx}
                     // setIsLoading={setIsLoading}
                     isLoading={loading}
