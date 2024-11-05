@@ -137,7 +137,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             <Link href={`/user-profile/${user?.userId}`}>
               <Image
                 alt='User DP'
-                src={post.creator?.profile_pricture || '/ProfileDP/Dummy.png'}
+                src={post.creator?.profile_picture || '/ProfileDP/Dummy.png'}
                 width={50}
                 height={50}
                 objectFit='cover'

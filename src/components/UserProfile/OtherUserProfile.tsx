@@ -1,4 +1,4 @@
-import { searchUserProfile } from '@/api/user/user';
+import { followUser, searchUserProfile, unfollowUser } from '@/api/user/user';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import { AuthUser } from '@/types/Auth';
 import Image from 'next/image';
@@ -9,6 +9,8 @@ import UserPost from '../Post/UserPost/UserPost';
 import usePosts from '@/hooks/usePosts';
 import IndividualPost from '../Post/IndividualPost/IndividualPost';
 import UserPostSkeleton from '../Loader/Skeleton/UserPostSkeleton';
+import { IoPersonAdd } from 'react-icons/io5';
+import ActionButton from '../Buttons/ActionButton';
 
 interface IOtherUserProfile {
   userId: number;
@@ -61,12 +63,53 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
 
       console.log(res.data.data[0].creator);
       setUserProfileInfo(null);
-      setUserProfileInfo(res.data.data[0].creator);
+      setUserProfileInfo({
+        ...res.data.data[0].creator,
+        userId: res.data.data[0].creator.user_id,
+      });
       setIsLoading(false);
     };
 
     getUserData();
   }, [userId]);
+
+  // follow & unfollow handler
+  const followUserHandler = async () => {
+    try {
+      const res = await followUser(
+        userProfileInfo?.userId as number,
+        getAccessToken()
+      );
+
+      if (res.status === 201) {
+        console.log(res);
+        setUserProfileInfo(prevState => {
+          return { ...prevState, is_following: true };
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // follow user handler
+  const unfollowUserHandler = async () => {
+    try {
+      const res = await unfollowUser(
+        userProfileInfo?.userId as number,
+        getAccessToken()
+      );
+
+      if (res.status === 201) {
+        console.log(res);
+        setUserProfileInfo(prevState => {
+          return { ...prevState, is_following: false };
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className='w-full lg:w-[80%] mx-auto'>
@@ -166,18 +209,22 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
                       {userProfileInfo?.email}
                     </small>
                   </div>
-                  {/* <div className='pl-5'>
-                {user?.userId !== paramId && (
-                  <ActionButton
-                    onClickFn={() => {
-                      console.log('follow user');
-                    }}
-                    outline={true}
-                    text='Follow'
-                    icon={IoPersonAdd}
-                  />
-                )}
-              </div> */}
+                  <div className='pl-5'>
+                    {!userProfileInfo?.is_following ? (
+                      <ActionButton
+                        onClickFn={followUserHandler}
+                        outline={true}
+                        text='Follow'
+                        icon={IoPersonAdd}
+                      />
+                    ) : (
+                      <ActionButton
+                        onClickFn={unfollowUserHandler}
+                        outline={true}
+                        text='Unfollow'
+                      />
+                    )}
+                  </div>
                   {/* user email */}
                 </div>
 
@@ -191,11 +238,17 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
 
                 <div className='flex items-center gap-4'>
                   <h5 className='text-[#00274A]'>
-                    <span className='text-xl font-semibold'>0</span> Followers
+                    <span className='text-xl font-semibold'>
+                      {userProfileInfo?.follower || 0}
+                    </span>{' '}
+                    Followers
                   </h5>
                   <span className='w-2 h-2 rounded-full bg-[#00274A]'></span>
                   <h5 className='text-[#00274A]'>
-                    <span className='text-xl font-semibold'>0</span> Following
+                    <span className='text-xl font-semibold'>
+                      {userProfileInfo?.following || 0}
+                    </span>{' '}
+                    Following
                   </h5>
                 </div>
               </div>
