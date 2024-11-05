@@ -35,7 +35,7 @@ const CreatePost: React.FC<PostProps> = ({
   const [previews, setPreviews] = useState<{ url: string; type: string }[]>([]);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const [progress, setProgress] = useState(0);
-  const { user } = useAuth();
+  const { user, userPrivacy: allPrivacy } = useAuth();
   const { register, handleSubmit, getValues, formState, control, reset } =
     useForm<CreatePostType>();
 
@@ -381,7 +381,7 @@ const CreatePost: React.FC<PostProps> = ({
                 <FaEye className='inline-block' />
               </label>
               <select {...register('privacy')} className='cursor-pointer'>
-                {userPrivacy.map(item => {
+                {allPrivacy.map(item => {
                   return (
                     <option
                       key={item.privacy_setting_id}
