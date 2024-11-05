@@ -89,7 +89,11 @@ const Navbar: React.FC = () => {
     },
   ];
 
-  if (currentPath === '/login' || currentPath === '/register') {
+  if (
+    currentPath === '/login' ||
+    currentPath === '/register' ||
+    currentPath === '/verifyEmail'
+  ) {
     return null; // Do not render the Navbar on these paths
   }
 
@@ -172,79 +176,79 @@ const Navbar: React.FC = () => {
                 setIsShowingSearchResults={setIsShowingSearchResults}
               />
             )}
-          </div>
 
-          <div className='absolute top-[55px] left-[100px] flex flex-col'>
-            {isShowingSearchResults && (
-              <div className='bg-gray-200/90 backdrop-blur-lg rounded-lg py-3 text-center'>
-                {searchedUsers.map((item, i) => (
-                  <IndividualSearchUser
-                    key={i}
-                    user={item}
-                    forNavBar={true}
-                    setIsShowingSearchResults={setIsShowingSearchResults}
-                  />
-                ))}
+            <div className='absolute top-[55px] left-[100px] flex flex-col'>
+              {isShowingSearchResults && (
+                <div className='bg-gray-200/90 backdrop-blur-lg rounded-lg py-3 text-center'>
+                  {searchedUsers.map((item, i) => (
+                    <IndividualSearchUser
+                      key={i}
+                      user={item}
+                      forNavBar={true}
+                      setIsShowingSearchResults={setIsShowingSearchResults}
+                    />
+                  ))}
 
-                {isSearchLoading && (
-                  <div className='z-50 flex'>
-                    <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[98%] mx-auto scale-90 animate-pulse'>
-                      <div className='w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center'></div>
+                  {isSearchLoading && (
+                    <div className='z-50 flex'>
+                      <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[98%] mx-auto scale-90 animate-pulse'>
+                        <div className='w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center'></div>
 
-                      <div className='col-span-3 text-left'>
-                        <div className='h-5 bg-gray-300 rounded w-3/4 mb-1'></div>
-                        <div className='h-4 bg-gray-200 rounded w-1/2'></div>
-                      </div>
+                        <div className='col-span-3 text-left'>
+                          <div className='h-5 bg-gray-300 rounded w-3/4 mb-1'></div>
+                          <div className='h-4 bg-gray-200 rounded w-1/2'></div>
+                        </div>
 
-                      <div className='col-span-2 flex justify-end'>
-                        <div className='h-8 bg-gray-300 rounded w-24'></div>
+                        <div className='col-span-2 flex justify-end'>
+                          <div className='h-8 bg-gray-300 rounded w-24'></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-
-                {isShowingSearchResults &&
-                  !isSearchLoading &&
-                  searchedUsers.length === 0 && (
-                    <>
-                      <h1 className='col-span-6 text-center text-gray-500 font-semibold'>
-                        No results found!
-                      </h1>
-                      <Link
-                        onClick={() => {
-                          setSearchedUsers([]);
-                          setInputValue('');
-                        }}
-                        href={{
-                          pathname: `/search-more-users`,
-                          query: { userSearch: inputValue },
-                        }}
-                      >
-                        <span className='text-gray-400 hover:text-gray-700 custom-hover font-semibold'>
-                          More results
-                        </span>
-                      </Link>
-                    </>
                   )}
 
-                {searchedUsers.length !== 0 && (
-                  <Link
-                    onClick={() => {
-                      setSearchedUsers([]);
-                      setInputValue('');
-                    }}
-                    href={{
-                      pathname: `/search-more-users`,
-                      query: { userSearch: inputValue },
-                    }}
-                  >
-                    <span className='text-gray-400 hover:text-gray-700 custom-hover font-semibold'>
-                      More results
-                    </span>
-                  </Link>
-                )}
-              </div>
-            )}
+                  {isShowingSearchResults &&
+                    !isSearchLoading &&
+                    searchedUsers.length === 0 && (
+                      <>
+                        <h1 className='col-span-6 text-center text-gray-500 font-semibold'>
+                          No results found!
+                        </h1>
+                        <Link
+                          onClick={() => {
+                            setSearchedUsers([]);
+                            setInputValue('');
+                          }}
+                          href={{
+                            pathname: `/search-more-users`,
+                            query: { userSearch: inputValue },
+                          }}
+                        >
+                          <span className='text-gray-400 hover:text-gray-700 custom-hover font-semibold'>
+                            More results
+                          </span>
+                        </Link>
+                      </>
+                    )}
+
+                  {searchedUsers.length !== 0 && (
+                    <Link
+                      onClick={() => {
+                        setSearchedUsers([]);
+                        setInputValue('');
+                      }}
+                      href={{
+                        pathname: `/search-more-users`,
+                        query: { userSearch: inputValue },
+                      }}
+                    >
+                      <span className='text-gray-400 hover:text-gray-700 custom-hover font-semibold'>
+                        More results
+                      </span>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
           <HiOutlineSearch className='text-gray-100 text-3xl md:hidden cursor-pointer' />
 

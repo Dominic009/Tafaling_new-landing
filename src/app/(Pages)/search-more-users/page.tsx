@@ -74,6 +74,8 @@ const page: React.FC = () => {
     // console.log(userSearch)
   }, [userSearch, user]);
 
+  console.log(searchedUsers.length);
+
   return (
     <div className='h-[80vh] w-[95%] md:w-[80%] lg:w-1/2 mx-auto py-6'>
       {/* search box */}
@@ -85,9 +87,11 @@ const page: React.FC = () => {
         setSearchedUsers={setSearchedUsers}
         clearSearchParams={clearSearchParams}
       />
-      <small className='ml-4 text-gray-500'>
-        Showing search results for{' '}
-        <span className='font-semibold'>&quot;{}&quot;</span>
+      <small className='ml-4 text-gray-500 flex items-center gap-1'>
+        <span className='font-semibold'>
+          &quot;{searchedUsers?.length > 0 ? searchedUsers.length : ''}&quot;{' '}
+        </span>
+        <span> Results found</span>
       </small>
       {/* searched users */}
 

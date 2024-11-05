@@ -63,7 +63,7 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
   if (forNavBar) {
     return (
       <div className='z-50 flex'>
-        <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[98%] mx-auto scale-90'>
+        <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[100%] mx-auto scale-90'>
           <div className='w-16 h-16 rounded-full flex items-center justify-center'>
             <Image
               onClick={() => {

@@ -155,13 +155,22 @@ const IndividualPost: React.FC<IPostProps> = ({
                 {/* {post.location} */}
                 Location
               </h5>
-              <span className='w-1 h-1 rounded-full bg-[#d4d4d4]'></span>
-              <h5 className='text-sm text-gray-400 flex gap items-center'>
-                <p className='flex items-center gap-1'>
-                  <FaEye className='inline-block' />{' '}
-                  {postPrivacy?.privacy_setting_name}
-                </p>
-              </h5>
+              {user?.user_name && (
+                <>
+                  <span className='w-1 h-1 rounded-full bg-[#d4d4d4]'></span>
+                  <h5 className='text-sm text-gray-400 flex gap items-center'>
+                    <p className='flex items-center gap-1'>
+                      <FaEye className='inline-block' />{' '}
+                      {postPrivacy?.privacy_setting_name
+                        ? postPrivacy.privacy_setting_name
+                            .charAt(0)
+                            .toUpperCase() +
+                          postPrivacy.privacy_setting_name.slice(1)
+                        : ''}
+                    </p>
+                  </h5>
+                </>
+              )}
             </div>
           </div>
           {user?.user_name && user.userId === post.creator.user_id && (
@@ -230,7 +239,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             {post.body.length > textLimit && !isPostExpanded && (
               <small
                 onClick={() => setIsPostExpanded(!isPostExpanded)}
-                className='text-gray-400 cursor-pointer'
+                className='text-[#07a1bc] cursor-pointer'
               >
                 See more
               </small>
@@ -238,7 +247,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             {isPostExpanded && (
               <small
                 onClick={() => setIsPostExpanded(!isPostExpanded)}
-                className='text-gray-400 cursor-pointer'
+                className='text-[#07a1bc] cursor-pointer'
               >
                 ..Hide
               </small>
