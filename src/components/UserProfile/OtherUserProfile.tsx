@@ -61,7 +61,7 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
     const getUserData = async () => {
       const res = await searchUserProfile(userId, 0, 1, getAccessToken());
 
-      console.log(res.data.data[0].creator);
+      // console.log(res.data.data[0].creator);
       setUserProfileInfo(null);
       setUserProfileInfo({
         ...res.data.data[0].creator,

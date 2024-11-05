@@ -1,5 +1,5 @@
 'use client';
-import { getAuthUser } from '@/api/auth/auth';
+import { getAuthUser, getUserPrivacy } from '@/api/auth/auth';
 import { getAccessToken } from '@/helpers/tokenStorage';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { AuthUser, PrivacySetting } from '@/types/Auth';
@@ -33,6 +33,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [isAuthLoading, setIsAuthLoading] = React.useState<boolean>(true);
   const { item, removeItem } = useLocalStorage('auth-token');
   const didFetchUser = useRef(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data, status } = await getUserPrivacy();
+
+        setAllUserPrivacy(data.data);
+      } catch (error) {}
+    }
+
+    userPrivacy.length === 0 && fetchData();
+  }, [userPrivacy]);
 
   useEffect(() => {
     const refetchUserData = async () => {

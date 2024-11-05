@@ -19,18 +19,7 @@ export interface IRefetchUserPostProp {
 const page = () => {
   const [refetchUserPost, setRefetchUserPost] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
-  const { user, isAuthLoading, userPrivacy, setAllUserPrivacy } = useAuth();
-
-  useEffect(() => {
-    async function fetchData() {
-      const { data, status } = await getUserPrivacy();
-
-      setAllUserPrivacy(data.data);
-    }
-
-    userPrivacy.length === 0 && fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { user, isAuthLoading } = useAuth();
 
   useEffect(() => {
     const message = setTimeout(() => {
