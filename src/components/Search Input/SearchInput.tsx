@@ -59,12 +59,6 @@ const SearchInput: React.FC<ISearchInput> = ({
     }
   }, [isFocused, inputValue, placeholderTexts.length]);
 
-  if (isFocused === false) {
-    // setSearchedUsers([]);
-    // setInputValue("");
-    clearSearchParams && clearSearchParams();
-  }
-
   useEffect(() => {
     if (inputValue.length === 0) {
       setSearchedUsers([]);

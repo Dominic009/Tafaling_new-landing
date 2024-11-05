@@ -71,6 +71,7 @@ const page: React.FC = () => {
     };
 
     userSearch && userSearch?.length > 0 && fetchSearchUsers();
+    console.log(userSearch)
   }, [userSearch, user]);
 
   return (
@@ -84,9 +85,9 @@ const page: React.FC = () => {
         setSearchedUsers={setSearchedUsers}
         clearSearchParams={clearSearchParams}
       />
-      <small>
+      <small className='ml-4 text-gray-500'>
         Showing search results for{' '}
-        <span className='font-semibold'>&quot;{inputValue}&quot;</span>
+        <span className='font-semibold'>&quot;{}&quot;</span>
       </small>
       {/* searched users */}
 
