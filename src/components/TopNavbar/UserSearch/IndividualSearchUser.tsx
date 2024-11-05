@@ -63,8 +63,8 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
   if (forNavBar) {
     return (
       <div className='z-50 flex'>
-        <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[100%] mx-auto scale-90'>
-          <div className='w-16 h-16 rounded-full flex items-center justify-center'>
+        <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 py-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[100%] mx-auto scale-90'>
+          <div className='w-16 h-16 flex items-center justify-center hover:drop-shadow-xl hover:scale-105 custom-hover rounded-full'>
             <Image
               onClick={() => {
                 router.push(`/user-profile/${searchedUser.userId}`);
@@ -79,7 +79,7 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
           </div>
           <div className='col-span-3 text-left'>
             <h1
-              className='font-semibold text-lg leading-5 hover:cursor-pointer hover:underline'
+              className='font-semibold text-lg leading-5 hover:cursor-pointer hover:text-[#07a1bc] custom-hover'
               onClick={() => {
                 router.push(`/user-profile/${searchedUser.userId}`);
               }}
@@ -121,7 +121,7 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
   return (
     <div className='z-50 flex'>
       <div className='grid grid-cols-6 lg:grid-cols-6 lg:gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-full lg:min-w-[70%] lg:max-w-[70%] mx-auto'>
-        <div className='w-14 md:w-16 lg:w-24 h-14 md:h-16 lg:h-24 flex items-center justify-center '>
+        <div className='w-14 md:w-16 lg:w-24 h-14 md:h-16 lg:h-24 flex items-center justify-center hover:drop-shadow-xl hover:scale-105 custom-hover rounded-full'>
           <Image
             onClick={() => {
               setIsShowingSearchResults && setIsShowingSearchResults(false);
@@ -132,12 +132,12 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
             width={80}
             height={80}
             objectFit='cover'
-            className='rounded-full border border-orange-400 hover:cursor-pointer'
+            className='rounded-full hover:cursor-pointer'
           ></Image>
         </div>
         <div className='col-span-4 lg:col-span-3 text-left'>
           <h1
-            className='font-semibold text-sm md:text-lg lg:text-xl hover:cursor-pointer hover:underline'
+            className='font-semibold text-sm md:text-lg lg:text-xl hover:cursor-pointer hover:text-[#07a1bc] custom-hover'
             onClick={() => {
               setIsShowingSearchResults && setIsShowingSearchResults(false);
               router.push(`/user-profile/${searchedUser.userId}`);
