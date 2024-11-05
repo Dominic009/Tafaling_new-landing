@@ -12,7 +12,7 @@ export type AuthUser = {
   userId?: number;
   userPrivacy?: PrivacySetting[];
   is_following?: boolean;
-  follower?: number;
+  followers?: number;
   following?: number;
 };
 

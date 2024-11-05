@@ -239,7 +239,7 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
                 <div className='flex items-center gap-4'>
                   <h5 className='text-[#00274A]'>
                     <span className='text-xl font-semibold'>
-                      {userProfileInfo?.follower || 0}
+                      {userProfileInfo?.followers || 0}
                     </span>{' '}
                     Followers
                   </h5>

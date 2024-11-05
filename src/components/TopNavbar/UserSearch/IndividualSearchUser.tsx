@@ -63,7 +63,6 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
       <div className='z-50 flex'>
         <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[98%] mx-auto scale-90'>
           <div className='w-16 h-16 rounded-full flex items-center justify-center'>
-            {/* <Link href={`user-profile/${searchedUser.userId}`}> */}
             <Image
               onClick={() => {
                 router.push(`/user-profile/${searchedUser.userId}`);
@@ -73,12 +72,16 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
               width={50}
               height={50}
               objectFit='cover'
-              className='rounded-full'
+              className='rounded-full hover:cursor-pointer'
             ></Image>
-            {/* </Link> */}
           </div>
           <div className='col-span-3 text-left'>
-            <h1 className='font-semibold text-lg leading-5'>
+            <h1
+              className='font-semibold text-lg leading-5 hover:cursor-pointer hover:underline'
+              onClick={() => {
+                router.push(`/user-profile/${searchedUser.userId}`);
+              }}
+            >
               {searchedUser?.name}
             </h1>
             <small className='text-gray-400 font-semibold'>
@@ -118,16 +121,24 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
       <div className='grid grid-cols-6 lg:grid-cols-6 lg:gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-full lg:min-w-[70%] lg:max-w-[70%] mx-auto'>
         <div className='w-14 md:w-16 lg:w-24 h-14 md:h-16 lg:h-24 flex items-center justify-center '>
           <Image
+            onClick={() => {
+              router.push(`/user-profile/${searchedUser.userId}`);
+            }}
             alt='User DP'
             src={searchedUser?.profilePicture || '/ProfileDP/Dummy.png'}
             width={80}
             height={80}
             objectFit='cover'
-            className='rounded-full border border-orange-400'
+            className='rounded-full border border-orange-400 hover:cursor-pointer'
           ></Image>
         </div>
         <div className='col-span-4 lg:col-span-3 text-left'>
-          <h1 className='font-semibold text-sm md:text-lg lg:text-xl'>
+          <h1
+            className='font-semibold text-sm md:text-lg lg:text-xl hover:cursor-pointer hover:underline'
+            onClick={() => {
+              router.push(`/user-profile/${searchedUser.userId}`);
+            }}
+          >
             {searchedUser?.name}
           </h1>
           <div className='flex flex-col text-gray-400'>

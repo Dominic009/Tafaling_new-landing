@@ -270,11 +270,18 @@ const LoggedInUserProfile = () => {
 
                 <div className='flex items-center gap-4'>
                   <h5 className='text-[#00274A]'>
-                    <span className='text-xl font-semibold'>0</span> Followers
+                    <span className='text-xl font-semibold'>
+                      {user?.followers}
+                    </span>{' '}
+                    Followers
                   </h5>
                   <span className='w-2 h-2 rounded-full bg-[#00274A]'></span>
                   <h5 className='text-[#00274A]'>
-                    <span className='text-xl font-semibold'>0</span> Following
+                    <span className='text-xl font-semibold'>
+                      {' '}
+                      {user?.following}
+                    </span>{' '}
+                    Following
                   </h5>
                 </div>
 
