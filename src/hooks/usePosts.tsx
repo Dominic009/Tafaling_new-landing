@@ -98,8 +98,13 @@ const usePosts = ({
 
           return uniquePosts;
         });
-        setHasMore(res.data.data.length > 0);
-        setLoading(false);
+        if (res.data.data[0].postId === 0) {
+          setHasMore(false);
+          setLoading(false);
+        } else {
+          setHasMore(res.data.data.length > 0);
+          setLoading(false);
+        }
       } catch (e) {
         if (axios.isCancel(e)) return;
         setError(true);
