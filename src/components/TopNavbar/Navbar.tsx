@@ -208,7 +208,7 @@ const Navbar: React.FC = () => {
                   searchedUsers.length === 0 && (
                     <>
                       <h1 className='col-span-6 text-center text-gray-500 font-semibold'>
-                        No user found!
+                        No results found!
                       </h1>
                       <Link
                         onClick={() => {

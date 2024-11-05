@@ -96,6 +96,10 @@ const page: React.FC = () => {
           <IndividualSearchUser user={item} key={i} />
         ))}
 
+        {!isSearchUserLoading && searchedUsers.length === 0 && (
+          <h1>No results found!</h1>
+        )}
+
         {isSearchUserLoading && (
           <div className='grid grid-cols-4 items-center justify-center mb-2 bg-gray-50 rounded-lg px-2 py-2 drop-shadow scale-90 lg:w-[70%] mx-auto animate-pulse'>
             <div className='w-20 h-20 rounded-full bg-gray-200'></div>
