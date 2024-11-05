@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { ISearchUser } from '../Navbar';
 import Image from 'next/legacy/image';
 import ActionBtn from '@/components/Buttons/User Profile buttons/ActionBtn';
@@ -14,11 +14,13 @@ import { redirect, usePathname, useRouter } from 'next/navigation';
 interface IIndividualSearchUser {
   user: ISearchUser;
   forNavBar?: boolean;
+  setIsShowingSearchResults?: Dispatch<SetStateAction<boolean>>;
 }
 
 const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
   user,
   forNavBar,
+  setIsShowingSearchResults,
 }) => {
   const router = useRouter();
   const { user: loggedInuser } = useAuth();
@@ -47,7 +49,7 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
       const res = await unfollowUser(searchedUser.userId, getAccessToken());
 
       if (res.status === 201) {
-        console.log(res);
+        // console.log(res);
         setSearchedUser(prevState => {
           return { ...prevState, isFollowing: false };
         });
@@ -122,6 +124,7 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
         <div className='w-14 md:w-16 lg:w-24 h-14 md:h-16 lg:h-24 flex items-center justify-center '>
           <Image
             onClick={() => {
+              setIsShowingSearchResults && setIsShowingSearchResults(false);
               router.push(`/user-profile/${searchedUser.userId}`);
             }}
             alt='User DP'
@@ -136,6 +139,7 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
           <h1
             className='font-semibold text-sm md:text-lg lg:text-xl hover:cursor-pointer hover:underline'
             onClick={() => {
+              setIsShowingSearchResults && setIsShowingSearchResults(false);
               router.push(`/user-profile/${searchedUser.userId}`);
             }}
           >

@@ -71,7 +71,7 @@ const page: React.FC = () => {
     };
 
     userSearch && userSearch?.length > 0 && fetchSearchUsers();
-    console.log(userSearch)
+    // console.log(userSearch)
   }, [userSearch, user]);
 
   return (
