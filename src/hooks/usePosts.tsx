@@ -42,9 +42,9 @@ const usePosts = ({
     }
   }, [posts, removeId, setRemoveId]);
 
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
+  // useEffect(() => {
+  //   console.log(posts);
+  // }, [posts]);
 
   // Function to update a post by its ID with new properties
   const updatePost = (postId: number, updatedProperties: Partial<Post>) => {

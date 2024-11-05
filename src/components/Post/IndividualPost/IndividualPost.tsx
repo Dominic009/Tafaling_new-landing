@@ -43,14 +43,15 @@ const IndividualPost: React.FC<IPostProps> = ({
   setRemoveId,
   updatePostProperty,
 }) => {
-  const { user } = useAuth();
+  const { user, userPrivacy } = useAuth();
   // Post selected privacy
-  const userPirvacyText = user?.userPrivacy?.find(
+  const userPirvacyText = userPrivacy?.find(
     item => item.privacy_setting_id === post.privacyId
   );
   const [postPrivacy, setPostPrivacy] = useState<PrivacySetting>(
     userPirvacyText!
   );
+
   const [isPostExpanded, setIsPostExpanded] = useState<boolean>(false);
   const [toggleEditPost, setToggleEditPost] = useState<boolean>(false);
   const [viewImagePost, setViewImagePost] = useState<string | null>(null);
@@ -88,17 +89,6 @@ const IndividualPost: React.FC<IPostProps> = ({
       }
     }
   }, [post]);
-
-  // useEffect(() => {
-  //   if (viewImagePost) {
-  //     document.body.classList.add('no-scroll');
-  //   } else {
-  //     document.body.classList.remove('no-scroll');
-  //   }
-
-  //   // Cleanup on component unmount
-  //   return () => document.body.classList.remove('no-scroll');
-  // }, [viewImagePost]);
 
   const urlRegex = /(https?:\/\/[^\s]+)/g;
 
@@ -165,20 +155,16 @@ const IndividualPost: React.FC<IPostProps> = ({
                 {/* {post.location} */}
                 Location
               </h5>
-              {user?.user_name && (
-                <>
-                  <span className='w-1 h-1 rounded-full bg-[#d4d4d4]'></span>
-                  <h5 className='text-sm text-gray-400 flex gap items-center'>
-                    <p className='flex items-center gap-1'>
-                      <FaEye className='inline-block' />{' '}
-                      {postPrivacy?.privacy_setting_name}
-                    </p>
-                  </h5>
-                </>
-              )}
+              <span className='w-1 h-1 rounded-full bg-[#d4d4d4]'></span>
+              <h5 className='text-sm text-gray-400 flex gap items-center'>
+                <p className='flex items-center gap-1'>
+                  <FaEye className='inline-block' />{' '}
+                  {postPrivacy?.privacy_setting_name}
+                </p>
+              </h5>
             </div>
           </div>
-          {user?.user_name && (
+          {user?.user_name && user.userId === post.creator.user_id && (
             <div className='relative z-50'>
               <HiDotsHorizontal
                 onClick={() => setToggleEditPost(!toggleEditPost)}

@@ -9,6 +9,7 @@ import UserPost from '@/components/Post/UserPost/UserPost';
 import { useAuth } from '@/context/AuthContext/AuthProvider';
 import PublicPost from '@/components/Post/PublicPost/PublicPost';
 import PreviewModal from '@/components/Modal/PreviewModal';
+import { getUserPrivacy } from '@/api/auth/auth';
 
 export interface IRefetchUserPostProp {
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +19,18 @@ export interface IRefetchUserPostProp {
 const page = () => {
   const [refetchUserPost, setRefetchUserPost] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
-  const { user, isAuthLoading } = useAuth();
+  const { user, isAuthLoading, userPrivacy, setAllUserPrivacy } = useAuth();
+
+  useEffect(() => {
+    async function fetchData() {
+      const { data, status } = await getUserPrivacy();
+
+      setAllUserPrivacy(data.data);
+    }
+
+    userPrivacy.length === 0 && fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const message = setTimeout(() => {

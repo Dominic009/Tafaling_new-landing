@@ -163,7 +163,7 @@ const ContentViewer: React.FC<ContentProps> = ({
                   )}
                 </div>
               </div>
-              {user?.userId && (
+              {user?.userId && user.userId === post.creator.user_id && (
                 <div>
                   <HiDotsHorizontal
                     onClick={() => setToggleEditPost(!toggleEditPost)}

@@ -31,6 +31,7 @@ export interface Post {
 interface Creator {
   name: string;
   profile_pricture: string;
+  user_id: number;
 }
 interface Attachments {
   fileName: string;

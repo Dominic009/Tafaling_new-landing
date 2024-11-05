@@ -15,20 +15,6 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
   // const [userPrivacy, setUserPrivacy] = useState<PrivacySetting[] | []>([]);
   const isUserPrivacyFetched = useRef(false);
 
-  useEffect(() => {
-    async function fetchData() {
-      const { data, status } = await getUserPrivacy();
-      // console.log(data.data);
-      // setUserPrivacy(data.data);
-      login({ ...user, userPrivacy: data.data });
-    }
-
-    if (!isUserPrivacyFetched.current) {
-      fetchData();
-      isUserPrivacyFetched.current = true;
-    }
-  }, [user, login]);
-
   const openModalForTab = (tab: string | null) => {
     // setActiveTab(tab);
     setModal(true); // Open the modal
@@ -54,7 +40,7 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
         <div className='w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white'>
           {/* User Profile and Post Button */}
           <div className='flex items-center gap-3'>
-            <div className="w-14 h-14 rounded-full flex items-center justify-center">
+            <div className='w-14 h-14 rounded-full flex items-center justify-center'>
               <Image
                 alt='User DP'
                 src={user?.profile_picture || '/ProfileDP/Dummy.png'}
