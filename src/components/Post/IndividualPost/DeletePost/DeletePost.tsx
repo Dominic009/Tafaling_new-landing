@@ -66,7 +66,7 @@ const DeletePost: React.FC<IDeletePost> = ({
             text={"Yes"}
             icon={MdDeleteForever}
             btnColor="bg-[#e62d2d]"
-            iconTextColor="text-red-600"
+            iconTextColor="text-green-600"
             isLoading={isLoading}
           />
           <ActionButton
@@ -74,7 +74,7 @@ const DeletePost: React.FC<IDeletePost> = ({
             text={"No"}
             icon={FaXmark}
             btnColor="bg-[#217021]"
-            iconTextColor="text-green-500"
+            iconTextColor="text-red-600"
             isLoading={isLoading}
           />
         </div>
