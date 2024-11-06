@@ -235,40 +235,46 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
         <div className='lg:w-[60%]'>
           <>
             <div>
-              {posts
-                .slice(0)
-                .reverse()
-                .map((post, idx) => {
-                  if (posts.length === idx + 1) {
-                    return (
-                      <div ref={lastPostElementRef} key={idx}>
-                        <IndividualPost
-                          post={post}
-                          postKey={idx}
-                          // setIsLoading={setIsLoading}
-                          isLoading={loading}
-                          //   setRefetchUserPost={setRefetchUserPost!}
-                          setRemoveId={setRemoveId}
-                          updatePostProperty={updatePost}
-                        />
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div key={idx}>
-                        <IndividualPost
-                          post={post}
-                          postKey={idx}
-                          // setIsLoading={setIsLoading}
-                          isLoading={loading}
-                          //   setRefetchUserPost={setRefetchUserPost!}
-                          setRemoveId={setRemoveId}
-                          updatePostProperty={updatePost}
-                        />
-                      </div>
-                    );
-                  }
-                })}
+              {posts[0]?.postId === 0 ? (
+                <div className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow h-[300px] flex items-center justify-center'>
+                  <h1 className='font'>No posts added yet!</h1>
+                </div>
+              ) : (
+                posts
+                  .slice(0)
+                  .reverse()
+                  .map((post, idx) => {
+                    if (posts.length === idx + 1) {
+                      return (
+                        <div ref={lastPostElementRef} key={idx}>
+                          <IndividualPost
+                            post={post}
+                            postKey={idx}
+                            // setIsLoading={setIsLoading}
+                            isLoading={loading}
+                            //   setRefetchUserPost={setRefetchUserPost!}
+                            setRemoveId={setRemoveId}
+                            updatePostProperty={updatePost}
+                          />
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={idx}>
+                          <IndividualPost
+                            post={post}
+                            postKey={idx}
+                            // setIsLoading={setIsLoading}
+                            isLoading={loading}
+                            //   setRefetchUserPost={setRefetchUserPost!}
+                            setRemoveId={setRemoveId}
+                            updatePostProperty={updatePost}
+                          />
+                        </div>
+                      );
+                    }
+                  })
+              )}
             </div>
             {loading && <UserPostSkeleton cards={1} />}
           </>
