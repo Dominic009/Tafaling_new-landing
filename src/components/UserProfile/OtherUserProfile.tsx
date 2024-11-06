@@ -18,6 +18,7 @@ interface IOtherUserProfile {
 
 const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
   const [userProfileInfo, setUserProfileInfo] = useState<AuthUser | null>();
+  const [followCount, setFollowCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   //For user get post
@@ -67,6 +68,7 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
         ...res.data.data[0].creator,
         userId: res.data.data[0].creator.user_id,
       });
+      setFollowCount(res.data.data[0].creator.followers);
       setIsLoading(false);
     };
 
@@ -75,6 +77,11 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
 
   // follow & unfollow handler
   const followUserHandler = async () => {
+    setUserProfileInfo(prevState => {
+      return { ...prevState, is_following: true };
+    });
+    setFollowCount(prevState => prevState + 1);
+
     try {
       const res = await followUser(
         userProfileInfo?.userId as number,
@@ -82,18 +89,23 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
       );
 
       if (res.status === 201) {
-        console.log(res);
-        setUserProfileInfo(prevState => {
-          return { ...prevState, is_following: true };
-        });
+        // console.log(res);
       }
     } catch (error) {
+      setUserProfileInfo(prevState => {
+        return { ...prevState, is_following: false };
+      });
+      setFollowCount(prevState => prevState - 1);
       console.log(error);
     }
   };
 
   // follow user handler
   const unfollowUserHandler = async () => {
+    setUserProfileInfo(prevState => {
+      return { ...prevState, is_following: false };
+    });
+    setFollowCount(prevState => prevState - 1);
     try {
       const res = await unfollowUser(
         userProfileInfo?.userId as number,
@@ -101,12 +113,13 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
       );
 
       if (res.status === 201) {
-        console.log(res);
-        setUserProfileInfo(prevState => {
-          return { ...prevState, is_following: false };
-        });
+        // console.log(res);
       }
     } catch (error) {
+      setUserProfileInfo(prevState => {
+        return { ...prevState, is_following: true };
+      });
+      setFollowCount(prevState => prevState + 1);
       console.log(error);
     }
   };
@@ -139,54 +152,12 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
               onLoadingComplete={() => setIsLoading(false)}
             />
           </div>
-          {/* modal for profile picture upload */}
-          {/* <Modal
-        isOpen={modalProfilePicture}
-        onClose={closeModalProfilePicture}
-        width={'30%'}
-      >
-        <div className='py-7 px-2 rounded-lg flex flex-col justify-center items-center'>
-          <h1 className='text-xl text-gray-500 font-semibold text-center underline mb-4'>
-            Select Profile Picture from device
-          </h1>
-          <SingleUploader
-            handleUploadPicture={handleUploadProfilePicture}
-            progress={progress}
-          ></SingleUploader>
-        </div>
-      </Modal> */}
-
-          {/* modal for cover photo upload */}
-          {/* <Modal
-        isOpen={modalCoverPhoto}
-        onClose={closeModalCoverPhoto}
-        width={'30%'}
-      >
-        <div className='py-7 px-2 rounded-lg flex flex-col justify-center items-center'>
-          <h1 className='text-xl text-gray-500 font-semibold text-center underline mb-4'>
-            Select Cover Photo from device
-          </h1>
-          <SingleUploader
-            handleUploadPicture={handleUploadCoverPhoto}
-            progress={progress}
-          ></SingleUploader>
-        </div>
-      </Modal> */}
 
           {/* User DP */}
           <div className='flex flex-col lg:flex-row gap-5 w-[90%] mx-auto -mt-16'>
             {/* overlay div */}
             <div className='w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[280px] group relative'>
               <div className='w-full h-full bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg overflow-hidden'></div>
-              {/* Change timeline image button */}
-              {/* <div className='absolute bottom-6 right-6 z-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible'>
-            <button
-              onClick={() => setModalProfilePicture(!modalProfilePicture)}
-              className='bg-gray-200 text-center rounded py-1 px-2 font-semibold hover:bg-white hover:text-[#00B4DB]'
-            >
-              Change Picture
-            </button>
-          </div> */}
               <Image
                 src={userProfileInfo?.profile_picture || '/ProfileDP/Dummy.png'}
                 layout='fill'
@@ -233,13 +204,12 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
                   To be a dreamer, you just need spread your wings and keep on
                   dreaming until you turn your dream in reality. So keep on
                   pushing!
-                  {/* <MdEditSquare className="text-2xl text-[#00B4DB] hover:text-[#287f92] cursor-pointer custom-hover" /> */}
                 </p>
 
                 <div className='flex items-center gap-4'>
                   <h5 className='text-[#00274A]'>
                     <span className='text-xl font-semibold'>
-                      {userProfileInfo?.followers || 0}
+                      {followCount || 0}
                     </span>{' '}
                     Followers
                   </h5>
@@ -265,40 +235,46 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
         <div className='lg:w-[60%]'>
           <>
             <div>
-              {posts
-                .slice(0)
-                .reverse()
-                .map((post, idx) => {
-                  if (posts.length === idx + 1) {
-                    return (
-                      <div ref={lastPostElementRef} key={idx}>
-                        <IndividualPost
-                          post={post}
-                          postKey={idx}
-                          // setIsLoading={setIsLoading}
-                          isLoading={loading}
-                          //   setRefetchUserPost={setRefetchUserPost!}
-                          setRemoveId={setRemoveId}
-                          updatePostProperty={updatePost}
-                        />
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <div key={idx}>
-                        <IndividualPost
-                          post={post}
-                          postKey={idx}
-                          // setIsLoading={setIsLoading}
-                          isLoading={loading}
-                          //   setRefetchUserPost={setRefetchUserPost!}
-                          setRemoveId={setRemoveId}
-                          updatePostProperty={updatePost}
-                        />
-                      </div>
-                    );
-                  }
-                })}
+              {posts[0]?.postId === 0 ? (
+                <div className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow h-[300px] flex items-center justify-center'>
+                  <h1 className='font'>No posts added yet!</h1>
+                </div>
+              ) : (
+                posts
+                  .slice(0)
+                  .reverse()
+                  .map((post, idx) => {
+                    if (posts.length === idx + 1) {
+                      return (
+                        <div ref={lastPostElementRef} key={idx}>
+                          <IndividualPost
+                            post={post}
+                            postKey={idx}
+                            // setIsLoading={setIsLoading}
+                            isLoading={loading}
+                            //   setRefetchUserPost={setRefetchUserPost!}
+                            setRemoveId={setRemoveId}
+                            updatePostProperty={updatePost}
+                          />
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={idx}>
+                          <IndividualPost
+                            post={post}
+                            postKey={idx}
+                            // setIsLoading={setIsLoading}
+                            isLoading={loading}
+                            //   setRefetchUserPost={setRefetchUserPost!}
+                            setRemoveId={setRemoveId}
+                            updatePostProperty={updatePost}
+                          />
+                        </div>
+                      );
+                    }
+                  })
+              )}
             </div>
             {loading && <UserPostSkeleton cards={1} />}
           </>

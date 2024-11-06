@@ -174,7 +174,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             </div>
           </div>
           {user?.user_name && user.userId === post.creator.user_id && (
-            <div className='relative z-50'>
+            <div className='relative z-30'>
               <HiDotsHorizontal
                 onClick={() => setToggleEditPost(!toggleEditPost)}
                 className='text-[#07a1bc]/50 text-4xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl'
@@ -278,7 +278,7 @@ const IndividualPost: React.FC<IPostProps> = ({
           </div>
 
           <div className='mt-3'>
-            <Interaction post={post} />
+            <Interaction post={post} updatePostProperty={updatePostProperty!} />
           </div>
 
           {/* post created time */}

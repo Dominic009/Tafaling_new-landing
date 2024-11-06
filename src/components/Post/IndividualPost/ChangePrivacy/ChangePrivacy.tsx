@@ -43,7 +43,7 @@ const ChangePrivacy: React.FC<PostProps> = ({
   updatePostProperty,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAuth();
+  const { user, userPrivacy: allPostPrivacy } = useAuth();
   const {
     register,
     handleSubmit,
@@ -75,7 +75,7 @@ const ChangePrivacy: React.FC<PostProps> = ({
       toast.success(response.data.message);
 
       // update post privacy text
-      const userPirvacyText = user?.userPrivacy?.find(
+      const userPirvacyText = allPostPrivacy?.find(
         item => item.privacy_setting_id === parseInt(data.privacy, 10)
       );
 
