@@ -48,7 +48,7 @@ const usePosts = ({
 
   // Function to update a post by its ID with new properties
   const updatePost = (postId: number, updatedProperties: Partial<Post>) => {
-    console.log('Data to update for postId:', postId, updatedProperties);
+    // console.log('Data to update for postId:', postId, updatedProperties);
 
     setPosts(prevPosts => {
       const postIndex = prevPosts.findIndex(post => post.postId === postId);
