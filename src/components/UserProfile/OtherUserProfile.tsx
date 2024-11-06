@@ -1,16 +1,16 @@
-import { followUser, searchUserProfile, unfollowUser } from '@/api/user/user';
-import { getAccessToken } from '@/helpers/tokenStorage';
-import { AuthUser } from '@/types/Auth';
-import Image from 'next/image';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import ProfileSkeleton from '../Loader/Skeleton/ProfileSkeleton';
-import ComingSoon from '../ComingSoon';
-import UserPost from '../Post/UserPost/UserPost';
-import usePosts from '@/hooks/usePosts';
-import IndividualPost from '../Post/IndividualPost/IndividualPost';
-import UserPostSkeleton from '../Loader/Skeleton/UserPostSkeleton';
-import { IoPersonAdd } from 'react-icons/io5';
-import ActionButton from '../Buttons/ActionButton';
+import { followUser, searchUserProfile, unfollowUser } from "@/api/user/user";
+import { getAccessToken } from "@/helpers/tokenStorage";
+import { AuthUser } from "@/types/Auth";
+import Image from "next/image";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import ProfileSkeleton from "../Loader/Skeleton/ProfileSkeleton";
+import ComingSoon from "../ComingSoon";
+import UserPost from "../Post/UserPost/UserPost";
+import usePosts from "@/hooks/usePosts";
+import IndividualPost from "../Post/IndividualPost/IndividualPost";
+import UserPostSkeleton from "../Loader/Skeleton/UserPostSkeleton";
+import { IoPersonAdd } from "react-icons/io5";
+import ActionButton from "../Buttons/ActionButton";
 
 interface IOtherUserProfile {
   userId: number;
@@ -29,7 +29,7 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
     start,
     pageSize: 5,
     userId: userId,
-    url: '/user/search/profile',
+    url: "/user/search/profile",
   });
   // const [isLoading, setIsLoading] = useState(true);
   const isPostsFetched = useRef(false);
@@ -45,9 +45,9 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
       if (observer.current) observer.current.disconnect();
 
       // Create a new IntersectionObserver
-      observer.current = new IntersectionObserver(entries => {
+      observer.current = new IntersectionObserver((entries) => {
         if (entries[0]?.isIntersecting && hasMore) {
-          setStart(prevStart => prevStart + 5);
+          setStart((prevStart) => prevStart + 5);
         }
       });
 
@@ -77,10 +77,10 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
 
   // follow & unfollow handler
   const followUserHandler = async () => {
-    setUserProfileInfo(prevState => {
+    setUserProfileInfo((prevState) => {
       return { ...prevState, is_following: true };
     });
-    setFollowCount(prevState => prevState + 1);
+    setFollowCount((prevState) => prevState + 1);
 
     try {
       const res = await followUser(
@@ -92,20 +92,20 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
         // console.log(res);
       }
     } catch (error) {
-      setUserProfileInfo(prevState => {
+      setUserProfileInfo((prevState) => {
         return { ...prevState, is_following: false };
       });
-      setFollowCount(prevState => prevState - 1);
+      setFollowCount((prevState) => prevState - 1);
       console.log(error);
     }
   };
 
   // follow user handler
   const unfollowUserHandler = async () => {
-    setUserProfileInfo(prevState => {
+    setUserProfileInfo((prevState) => {
       return { ...prevState, is_following: false };
     });
-    setFollowCount(prevState => prevState - 1);
+    setFollowCount((prevState) => prevState - 1);
     try {
       const res = await unfollowUser(
         userProfileInfo?.userId as number,
@@ -116,24 +116,24 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
         // console.log(res);
       }
     } catch (error) {
-      setUserProfileInfo(prevState => {
+      setUserProfileInfo((prevState) => {
         return { ...prevState, is_following: true };
       });
-      setFollowCount(prevState => prevState + 1);
+      setFollowCount((prevState) => prevState + 1);
       console.log(error);
     }
   };
 
   return (
-    <div className='w-full lg:w-[80%] mx-auto'>
+    <div className="w-full lg:w-[80%] mx-auto">
       {isLoading ? (
         <ProfileSkeleton />
       ) : (
-        <div className='relative border-b pb-7'>
+        <div className="relative border-b pb-7">
           {/* Timeline IMG */}
-          <div className='relative h-[240px] md:h-[300px] lg:h-[450px] group transition ease-in-out duration-500'>
+          <div className="relative h-[240px] md:h-[300px] lg:h-[450px] group transition ease-in-out duration-500">
             {/* overlay div */}
-            <div className='w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-b-lg'></div>
+            <div className="w-full h-full bg-black z-20 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-b-lg"></div>
             {/* Change timeline image button */}
             {/* <div className='absolute bottom-6 right-6 z-30 opacity-0 invisible group-hover:opacity-100 group-hover:visible'>
           <button
@@ -144,55 +144,55 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
           </button>
         </div> */}
             <Image
-              src={userProfileInfo?.cover_photo || '/Profile banner/banner.png'}
-              alt='Banner Image'
-              layout='fill'
-              objectFit='cover'
-              className=' rounded-b-lg'
+              src={userProfileInfo?.cover_photo || "/Profile banner/banner.png"}
+              alt="Banner Image"
+              layout="fill"
+              objectFit="cover"
+              className=" rounded-b-lg"
               onLoadingComplete={() => setIsLoading(false)}
             />
           </div>
 
           {/* User DP */}
-          <div className='flex flex-col lg:flex-row gap-5 w-[90%] mx-auto -mt-16'>
+          <div className="flex flex-col lg:flex-row gap-5 w-[90%] mx-auto -mt-16">
             {/* overlay div */}
-            <div className='w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[280px] group relative'>
-              <div className='w-full h-full bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg overflow-hidden'></div>
+            <div className="w-48 md:w-[250px] lg:w-[300px] h-48 md:h-[250px] lg:h-[280px] group relative">
+              <div className="w-full h-full bg-black z-40 absolute opacity-0 invisible group-hover:opacity-40 group-hover:visible transition-opacity duration-500 ease-in-out rounded-lg overflow-hidden"></div>
               <Image
-                src={userProfileInfo?.profile_picture || '/ProfileDP/Dummy.png'}
-                layout='fill'
-                alt='User DP'
-                objectFit='cover'
-                className='bottom-0 rounded-lg drop-shadow-md z-30 group'
+                src={userProfileInfo?.profile_picture || "/ProfileDP/Dummy.png"}
+                layout="fill"
+                alt="User DP"
+                objectFit="cover"
+                className="bottom-0 rounded-lg drop-shadow-md z-30 group"
                 onLoadingComplete={() => setIsLoading(false)}
               ></Image>
             </div>
-            <div className='grid w-[70%]'>
+            <div className="grid w-[70%]">
               <div></div>
-              <div className='flex flex-col justify-between lg:pt-10'>
-                <div className='flex items-center w-full'>
+              <div className="flex flex-col justify-between lg:pt-10">
+                <div className="flex items-center w-full">
                   {/* user name */}
                   <div>
-                    <h1 className='text-[#00274A] font-semibold text-3xl '>
-                      {userProfileInfo?.name}{' '}
+                    <h1 className="text-[#00274A] font-semibold text-3xl ">
+                      {userProfileInfo?.name}{" "}
                     </h1>
-                    <small className='text-[#00274A]/50 text-md -mt-1'>
+                    <small className="text-[#00274A]/50 text-md -mt-1">
                       {userProfileInfo?.email}
                     </small>
                   </div>
-                  <div className='pl-5'>
+                  <div className="pl-5">
                     {!userProfileInfo?.is_following ? (
                       <ActionButton
                         onClickFn={followUserHandler}
                         outline={true}
-                        text='Follow'
+                        text="Follow"
                         icon={IoPersonAdd}
                       />
                     ) : (
                       <ActionButton
                         onClickFn={unfollowUserHandler}
                         outline={true}
-                        text='Unfollow'
+                        text="Unfollow"
                       />
                     )}
                   </div>
@@ -200,24 +200,24 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
                 </div>
 
                 {/* user bio */}
-                <p className='text-[#0E2943]/90 text-lg py-1 inline-flex items-center'>
+                <p className="text-[#0E2943]/90 text-lg py-1 inline-flex items-center">
                   To be a dreamer, you just need spread your wings and keep on
                   dreaming until you turn your dream in reality. So keep on
                   pushing!
                 </p>
 
-                <div className='flex items-center gap-4'>
-                  <h5 className='text-[#00274A]'>
-                    <span className='text-xl font-semibold'>
+                <div className="flex items-center gap-4">
+                  <h5 className="text-[#00274A]">
+                    <span className="text-xl font-semibold">
                       {followCount || 0}
-                    </span>{' '}
+                    </span>{" "}
                     Followers
                   </h5>
-                  <span className='w-2 h-2 rounded-full bg-[#00274A]'></span>
-                  <h5 className='text-[#00274A]'>
-                    <span className='text-xl font-semibold'>
+                  <span className="w-2 h-2 rounded-full bg-[#00274A]"></span>
+                  <h5 className="text-[#00274A]">
+                    <span className="text-xl font-semibold">
                       {userProfileInfo?.following || 0}
-                    </span>{' '}
+                    </span>{" "}
                     Following
                   </h5>
                 </div>
@@ -228,16 +228,18 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
       )}
 
       {/* User Content section */}
-      <section className='mt-9 flex justify-center w-[80%] gap-5 mx-auto'>
-        <div className='h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center'>
+      <section className="mt-9 flex justify-center w-[80%] gap-5 mx-auto">
+        <div className="h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center">
           <ComingSoon />
         </div>
-        <div className='lg:w-[60%]'>
+        <div className="lg:w-[60%]">
           <>
             <div>
               {posts[0]?.postId === 0 ? (
-                <div className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow h-[300px] flex items-center justify-center'>
-                  <h1 className='font'>No posts added yet!</h1>
+                <div className="mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow h-[300px] flex items-center justify-center">
+                  <h1 className="font text-2xl font-semibold text-[#07a1bc] text-center">
+                    No posts added yet!
+                  </h1>
                 </div>
               ) : (
                 posts
