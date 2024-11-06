@@ -241,9 +241,9 @@ const LoggedInUserProfile = () => {
                     <h1 className="text-[#00274A] font-semibold text-3xl ">
                       {user?.name}{" "}
                     </h1>
-                    <small className="text-[#00274A]/50 text-md -mt-1">
+                    <p className="text-[#00274A]/50 text-md -mt-1">
                       {user?.email}
-                    </small>
+                    </p>
                   </div>
                   {/* <div className='pl-5'>
                     {user?.userId !== paramId && (
