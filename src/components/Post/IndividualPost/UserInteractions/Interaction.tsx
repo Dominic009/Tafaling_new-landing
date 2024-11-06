@@ -1,5 +1,5 @@
 import { useAuth } from '@/context/AuthContext/AuthProvider';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FaRegHeart,
   FaHeart,
@@ -13,11 +13,18 @@ import PreviewModal from '@/components/Modal/PreviewModal';
 
 interface InteractionProps {
   post: Post;
+  updatePostProperty: (
+    postId: number,
+    updatedProperties: Partial<Post>
+  ) => void;
 }
 
-const Interaction: React.FC<InteractionProps> = ({ post }) => {
-  const [liked, setLiked] = useState(post.isLiked === 1);
-  const [likeCount, setLikeCount] = useState(post.likeCount);
+const Interaction: React.FC<InteractionProps> = ({
+  post,
+  updatePostProperty,
+}) => {
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
@@ -31,6 +38,10 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
     if (liked) {
       setLikeCount(prevCount => prevCount - 1);
       setLiked(false);
+      updatePostProperty(post.postId, {
+        isLiked: 0,
+        likeCount: post.likeCount !== 0 ? post.likeCount - 1 : 0,
+      });
       try {
         const response = await unlikePost(post.postId, getAccessToken());
         setLoading(false);
@@ -43,6 +54,10 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
     } else {
       setLikeCount(prevCount => prevCount + 1);
       setLiked(true);
+      updatePostProperty(post.postId, {
+        isLiked: 1,
+        likeCount: post.likeCount + 1,
+      });
       try {
         const response = await likePost(post.postId, getAccessToken());
         setLoading(true);
@@ -78,6 +93,11 @@ const Interaction: React.FC<InteractionProps> = ({ post }) => {
       disabled: true,
     },
   ];
+
+  useEffect(() => {
+    setLiked(post.isLiked === 1);
+    setLikeCount(post.likeCount);
+  }, [post]);
 
   return (
     <div className='grid grid-cols-3 w-full'>
