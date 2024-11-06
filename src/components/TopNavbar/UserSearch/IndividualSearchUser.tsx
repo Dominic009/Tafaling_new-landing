@@ -29,32 +29,54 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
 
   // follow user handler
   const followUserHandler = async () => {
+    setSearchedUser(prevState => {
+      return {
+        ...prevState,
+        isFollowing: true,
+        followers: prevState.followers + 1,
+      };
+    });
     try {
       const res = await followUser(searchedUser.userId, getAccessToken());
 
       if (res.status === 201) {
         console.log(res);
-        setSearchedUser(prevState => {
-          return { ...prevState, isFollowing: true };
-        });
       }
     } catch (error) {
+      setSearchedUser(prevState => {
+        return {
+          ...prevState,
+          isFollowing: false,
+          followers: prevState.followers - 1,
+        };
+      });
       console.log(error);
     }
   };
 
   // follow user handler
   const unfollowUserHandler = async () => {
+    setSearchedUser(prevState => {
+      return {
+        ...prevState,
+        isFollowing: false,
+        followers: prevState.followers - 1,
+      };
+    });
     try {
       const res = await unfollowUser(searchedUser.userId, getAccessToken());
 
       if (res.status === 201) {
         // console.log(res);
-        setSearchedUser(prevState => {
-          return { ...prevState, isFollowing: false };
-        });
       }
     } catch (error) {
+      setSearchedUser(prevState => {
+        return {
+          ...prevState,
+          isFollowing: true,
+          followers: prevState.followers + 1,
+        };
+      });
       console.log(error);
     }
   };
@@ -147,9 +169,7 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
           </h1>
           <div className='flex flex-col text-gray-400'>
             <p className='text-sm'>{searchedUser?.email}</p>
-            <p className='mt-3 font-'>
-              {searchedUser?.followers} followers
-            </p>
+            <p className='mt-3 font-'>{searchedUser?.followers} followers</p>
           </div>
         </div>
         <div className='lg:col-span-2 flex justify-end'>
