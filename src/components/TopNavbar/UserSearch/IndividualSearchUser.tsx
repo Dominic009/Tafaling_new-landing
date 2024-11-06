@@ -63,7 +63,7 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
   if (forNavBar) {
     return (
       <div className='z-50 flex'>
-        <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 py-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[100%] mx-auto scale-90'>
+        <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 py-1 px-3 bg-gray-50 rounded-lg drop-shadow w-[100%] mx-auto scale-90'>
           <div className='w-16 h-16 flex items-center justify-center hover:drop-shadow-xl hover:scale-105 custom-hover rounded-full'>
             <Image
               onClick={() => {
@@ -146,10 +146,10 @@ const IndividualSearchUser: React.FC<IIndividualSearchUser> = ({
             {searchedUser?.name}
           </h1>
           <div className='flex flex-col text-gray-400'>
-            <small>{searchedUser?.email}</small>
-            <small className='mt-3 font-semibold'>
+            <p className='text-sm'>{searchedUser?.email}</p>
+            <p className='mt-3 font-'>
               {searchedUser?.followers} followers
-            </small>
+            </p>
           </div>
         </div>
         <div className='lg:col-span-2 flex justify-end'>

@@ -191,8 +191,8 @@ const Navbar: React.FC = () => {
 
                   {isSearchLoading && (
                     <div className='z-50 flex'>
-                      <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 px-3 bg-gray-50 rounded-lg drop-shadow w-[98%] mx-auto scale-90 animate-pulse'>
-                        <div className='w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center'></div>
+                      <div className='grid lg:grid-cols-6 gap-1 items-center justify-center mb-2 py-1 px-3 bg-gray-50 rounded-lg drop-shadow w-[90%] mx-auto scale-75 animate-pulse'>
+                        <div className='w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center'></div>
 
                         <div className='col-span-3 text-left'>
                           <div className='h-5 bg-gray-300 rounded w-3/4 mb-1'></div>
