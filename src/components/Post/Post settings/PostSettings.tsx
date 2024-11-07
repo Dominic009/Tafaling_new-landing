@@ -89,7 +89,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
         <ChangePrivacy
           modal={editPrivacyModal}
           setModal={setEditPrivacyModal}
-          setRefetchUserPost={setRefetchUserPost}
+          setRefetchUserPost={setRefetchUserPost!}
           userPrivacy={user?.userPrivacy && user?.userPrivacy}
           postData={{
             postId: post.postId,

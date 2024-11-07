@@ -10,7 +10,7 @@ interface UsePostsProps {
   userId: number;
   refetchUserPost?: boolean;
   url: string;
-  setRefetchUserPost: Dispatch<SetStateAction<boolean>>;
+  setRefetchUserPost?: Dispatch<SetStateAction<boolean>>;
 }
 
 interface UsePostsReturn {
@@ -136,7 +136,7 @@ const usePosts = ({
 
         setPosts(prevPosts => [...res.data.data, ...prevPosts]);
         setLoading(false);
-        setRefetchUserPost(false);
+        setRefetchUserPost && setRefetchUserPost(false);
       } catch (e) {
         if (axios.isCancel(e)) return;
         setError(true);
