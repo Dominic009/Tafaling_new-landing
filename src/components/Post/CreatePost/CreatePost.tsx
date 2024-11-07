@@ -188,8 +188,8 @@ const CreatePost: React.FC<PostProps> = ({
                 className="w-12 h-12 rounded-full"
               />
             </div>
-            <div className="flex flex-col items-center">
-              <h1 className="text-lg font-semibold">{user?.name}</h1>
+            <div className="flex flex-col justify-start">
+              <h1 className="text-lg font-semibold text-left">{user?.name}</h1>
               <div className="flex w-full opacity-80 relative">
                 <select
                   {...register("privacy")}
