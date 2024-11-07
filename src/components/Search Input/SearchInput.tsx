@@ -62,7 +62,7 @@ const SearchInput: React.FC<ISearchInput> = ({
   }, [isFocused, inputValue, placeholderTexts.length]);
 
   return (
-    <div className='hidden md:block relative lg:col-span-2 drop-shadow-md'>
+    <div className='md:block relative lg:col-span-2 drop-shadow-md'>
       <input
         onChange={handleSearch}
         value={inputValue}

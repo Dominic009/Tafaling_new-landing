@@ -122,7 +122,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-secondary to-[#012349] items-center px-5 w-full custom-hover">
+    <nav className="h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-secondary to-[#012349] items-center px-1 md:px-5 w-full custom-hover">
       {/* Left Section */}
       <div>
         <Link href={"/home"}>
@@ -250,7 +250,9 @@ const Navbar: React.FC = () => {
               )}
             </div>
           </div>
-          <HiOutlineSearch className="text-gray-100 text-3xl md:hidden cursor-pointer" />
+          <Link href={'/search-more-users'} className="flex justify-end md:hidden">
+            <HiOutlineSearch className="text-gray-100 text-3xl  cursor-pointer" />
+          </Link>
 
           <div>
             {user?.user_name && <AuthUserNavMenu />}
