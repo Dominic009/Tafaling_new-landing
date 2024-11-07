@@ -72,7 +72,8 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
                 height={30}
                 alt='Media icon'
               />
-              Photo/Video
+              <span className='hidden md:block'>Photo/Video</span>
+              <span className='block md:hidden'>Media</span> 
             </button>
             <li
               //   onClick={() => openModalForTab('location')}
@@ -103,7 +104,7 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
       )}
 
       {/* Post Modal */}
-      <Modal isOpen={modal} onClose={closeModal} width={'40%'}>
+      <Modal isOpen={modal} onClose={closeModal}>
         <CreatePost
           modal={modal}
           setModal={setModal}
