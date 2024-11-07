@@ -252,18 +252,24 @@ const CreatePost: React.FC<PostProps> = ({
       </div>
       {/* Preview Section */}
       {previews.length > 0 && (
-        <div className="mt-5">
-          <div className=" grid grid-cols-3 gap-4">
+        <div className="mt-2 md:mt-5">
+          <div
+            className={`grid ${
+              (previews.length === 1 && "grid-cols-1") ||
+              (previews.length === 2 && "grid-cols-2") ||
+              (previews.length > 2 && "grid-cols-3")
+            } gap-2`}
+          >
             {previews.map((preview, index) => (
-              <div key={index} className="flex flex-col items-center relative">
+              <div key={index} className="flex flex-col items-center relative bg-blue-50 p-4 rounded">
                 {/* Render image or video based on the file type */}
                 {preview.type.startsWith("image/") ? (
                   <Image
                     src={preview.url}
                     alt={`Uploaded file preview ${index + 1}`}
-                    width={200}
+                    width={300}
                     height={200}
-                    className="rounded-lg object-cover"
+                    className="rounded-lg object-cover border-red-700"
                   />
                 ) : (
                   <video
@@ -276,7 +282,7 @@ const CreatePost: React.FC<PostProps> = ({
                 {progress === 0 && (
                   <label
                     onClick={() => handleRemovePreview(index)}
-                    className="mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-4 right-2 cursor-pointer"
+                    className="mt-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 absolute -top-5 -right-2 cursor-pointer"
                   >
                     X
                   </label>

@@ -232,7 +232,7 @@ const LoggedInUserProfile = () => {
                 onLoadingComplete={() => setIsLoading(false)}
               ></Image>
             </div>
-            <div className="grid w-[70%]">
+            <div className="grid md:w-[70%]">
               <div></div>
               <div className="flex flex-col justify-between lg:pt-10">
                 <div className="flex items-center w-full">
@@ -261,14 +261,14 @@ const LoggedInUserProfile = () => {
                 </div>
 
                 {/* user bio */}
-                <p className="text-[#0E2943]/90 text-lg py-1 inline-flex items-center">
+                <p className="text-[#0E2943]/80 text-lg py-1 inline-flex items-center">
                   To be a dreamer, you just need spread your wings and keep on
                   dreaming until you turn your dream in reality. So keep on
                   pushing!
                   {/* <MdEditSquare className="text-2xl text-[#00B4DB] hover:text-[#287f92] cursor-pointer custom-hover" /> */}
                 </p>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 mt-3 md:mt-0 mb-3 md:mb-0">
                   <h5 className="text-[#00274A]">
                     <span className="text-xl font-semibold">
                       {user?.followers || '0'}
@@ -306,7 +306,7 @@ const LoggedInUserProfile = () => {
       )}
 
       {/* User Content section */}
-      <section className="mt-9 flex justify-center w-[80%] gap-5 mx-auto">
+      <section className="mt-9 flex justify-center w-[90%] md:w-[80%] gap-5 mx-auto">
         <div className="h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center">
           <ComingSoon />
         </div>

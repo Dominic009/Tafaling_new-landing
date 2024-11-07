@@ -251,7 +251,7 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
                         <div ref={lastPostElementRef} key={idx}>
                           <IndividualPost
                             post={post}
-                            postKey={idx}
+                            // postKey={idx}
                             // setIsLoading={setIsLoading}
                             isLoading={loading}
                             //   setRefetchUserPost={setRefetchUserPost!}
@@ -265,7 +265,7 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
                         <div key={idx}>
                           <IndividualPost
                             post={post}
-                            postKey={idx}
+                            // postKey={idx}
                             // setIsLoading={setIsLoading}
                             isLoading={loading}
                             //   setRefetchUserPost={setRefetchUserPost!}
