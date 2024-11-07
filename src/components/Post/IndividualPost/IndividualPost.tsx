@@ -24,7 +24,7 @@ import PostSettings from '../Post settings/PostSettings';
 
 interface IPostProps {
   post: Post;
-  postKey: number;
+  // postKey: number;
   isLoading: boolean;
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,7 +39,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   post,
   isLoading,
   setIsLoading,
-  postKey,
+  // postKey,
   setRemoveId,
   updatePostProperty,
 }) => {
@@ -128,7 +128,7 @@ const IndividualPost: React.FC<IPostProps> = ({
   return (
     <>
       <div
-        key={postKey}
+        // key={postKey}
         className='mb-4 w-full mx-auto bg-white rounded-xl p-3 shadow'
       >
         {/* Header */}

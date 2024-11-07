@@ -34,20 +34,21 @@ const usePublicPosts = ({ start, pageSize }: UsePostsProps): UsePostsReturn => {
           cancelToken: new axios.CancelToken(c => (cancel = c)),
         });
 
-        setPosts(prevPosts => {
-          const newPosts = res.data.data as Post[];
+        setPosts(prevPosts => [...prevPosts, ...res.data.data]);
+        // setPosts(prevPosts => {
+        //   const newPosts = res.data.data as Post[];
 
-          // const uniquePosts = [...prevPosts, ...newPosts];
+        //   // const uniquePosts = [...prevPosts, ...newPosts];
 
-          const uniquePosts = [
-            ...newPosts.filter(
-              newPost => !prevPosts.some(post => post.postId === newPost.postId)
-            ),
-            ...prevPosts,
-          ];
+        //   const uniquePosts = [
+        //     ...newPosts.filter(
+        //       newPost => !prevPosts.some(post => post.postId === newPost.postId)
+        //     ),
+        //     ...prevPosts,
+        //   ];
 
-          return uniquePosts;
-        });
+        //   return uniquePosts;
+        // });
         setHasMore(res.data.data.length > 0);
         setLoading(false);
       } catch (e) {

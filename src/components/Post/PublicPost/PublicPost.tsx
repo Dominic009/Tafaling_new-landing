@@ -75,40 +75,37 @@ const PublicPost: React.FC<IPublicPostProps> = ({ askUserLoginModal }) => {
   return (
     <>
       <div>
-        {posts
-          .slice(0)
-          .reverse()
-          .map((post, idx) => {
-            if (posts.length === idx + 1) {
-              // console.log('ref post', posts.length === idx + 1);
+        {posts.map((post, idx) => {
+          if (posts.length === idx + 1) {
+            // console.log('ref post', posts.length === idx + 1);
 
-              return (
-                <div ref={lastPostElementRef} key={idx}>
-                  <IndividualPost
-                    post={post}
-                    key={idx}
-                    postKey={idx}
-                    // setIsLoading={setIsLoading}
-                    isLoading={loading}
-                    // setRefetchUserPost={setRefetchUserPost!}
-                  />
-                </div>
-              );
-            } else {
-              return (
-                <div key={idx}>
-                  <IndividualPost
-                    post={post}
-                    postKey={idx}
-                    key={idx}
-                    // setIsLoading={setIsLoading}
-                    isLoading={loading}
-                    // setRefetchUserPost={setRefetchUserPost!}
-                  />
-                </div>
-              );
-            }
-          })}
+            return (
+              <div ref={lastPostElementRef} key={idx}>
+                <IndividualPost
+                  post={post}
+                  // key={idx}
+                  // postKey={idx}
+                  // setIsLoading={setIsLoading}
+                  isLoading={loading}
+                  // setRefetchUserPost={setRefetchUserPost!}
+                />
+              </div>
+            );
+          } else {
+            return (
+              <div key={idx}>
+                <IndividualPost
+                  post={post}
+                  // postKey={idx}
+                  // key={idx}
+                  // setIsLoading={setIsLoading}
+                  isLoading={loading}
+                  // setRefetchUserPost={setRefetchUserPost!}
+                />
+              </div>
+            );
+          }
+        })}
       </div>
       {loading && <UserPostSkeleton cards={1} />}
     </>

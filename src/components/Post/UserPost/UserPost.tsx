@@ -128,40 +128,37 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
   return (
     <>
       <div>
-        {posts
-          .slice(0)
-          .reverse()
-          .map((post, idx) => {
-            if (posts.length === idx + 1) {
-              return (
-                <div ref={lastPostElementRef} key={idx}>
-                  <IndividualPost
-                    post={post}
-                    postKey={idx}
-                    // setIsLoading={setIsLoading}
-                    isLoading={loading}
-                    setRefetchUserPost={setRefetchUserPost!}
-                    setRemoveId={setRemoveId}
-                    updatePostProperty={updatePost}
-                  />
-                </div>
-              );
-            } else {
-              return (
-                <div key={idx}>
-                  <IndividualPost
-                    post={post}
-                    postKey={idx}
-                    // setIsLoading={setIsLoading}
-                    isLoading={loading}
-                    setRefetchUserPost={setRefetchUserPost!}
-                    setRemoveId={setRemoveId}
-                    updatePostProperty={updatePost}
-                  />
-                </div>
-              );
-            }
-          })}
+        {posts.map((post, idx) => {
+          if (posts.length === idx + 1) {
+            return (
+              <div ref={lastPostElementRef} key={idx}>
+                <IndividualPost
+                  post={post}
+                  // postKey={idx}
+                  // setIsLoading={setIsLoading}
+                  isLoading={loading}
+                  setRefetchUserPost={setRefetchUserPost!}
+                  setRemoveId={setRemoveId}
+                  updatePostProperty={updatePost}
+                />
+              </div>
+            );
+          } else {
+            return (
+              <div key={idx}>
+                <IndividualPost
+                  post={post}
+                  // postKey={idx}
+                  // setIsLoading={setIsLoading}
+                  isLoading={loading}
+                  setRefetchUserPost={setRefetchUserPost!}
+                  setRemoveId={setRemoveId}
+                  updatePostProperty={updatePost}
+                />
+              </div>
+            );
+          }
+        })}
       </div>
       {loading && <UserPostSkeleton cards={1} />}
     </>

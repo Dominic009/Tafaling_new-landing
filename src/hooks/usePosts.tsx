@@ -84,20 +84,22 @@ const usePosts = ({
           cancelToken: new axios.CancelToken(c => (cancel = c)),
         });
 
-        setPosts(prevPosts => {
-          const newPosts = res.data.data as Post[];
+        setPosts(prevPosts => [...prevPosts, ...res.data.data]);
 
-          // const uniquePosts = [...prevPosts, ...newPosts];
+        // setPosts(prevPosts => {
+        //   const newPosts = res.data.data as Post[];
 
-          const uniquePosts = [
-            ...newPosts.filter(
-              newPost => !prevPosts.some(post => post.postId === newPost.postId)
-            ),
-            ...prevPosts,
-          ];
+        //   // const uniquePosts = [...prevPosts, ...newPosts];
 
-          return uniquePosts;
-        });
+        //   const uniquePosts = [
+        //     ...newPosts.filter(
+        //       newPost => !prevPosts.some(post => post.postId === newPost.postId)
+        //     ),
+        //     ...prevPosts,
+        //   ];
+
+        //   return uniquePosts;
+        // });
         if (res.data.data[0].postId === 0) {
           setHasMore(false);
           setLoading(false);
