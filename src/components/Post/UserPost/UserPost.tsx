@@ -52,9 +52,8 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     userId: user?.userId as number,
     refetchUserPost,
     url: `posts/user`,
+    setRefetchUserPost,
   });
-  // const [isLoading, setIsLoading] = useState(true);
-  const isPostsFetched = useRef(false);
 
   // Observer for infinite loading
   const observer = useRef<IntersectionObserver | null>(null);
@@ -78,52 +77,6 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
     },
     [loading, hasMore]
   );
-
-  // console.log(posts)
-
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     if (user) {
-  //       try {
-  //         setIsLoading(true);
-  //         const response = await getUserPost(getAccessToken(), user?.userId);
-  //         setPosts(response?.data?.data);
-  //       } catch (error) {
-  //         console.error('Error fetching posts:', error);
-  //       } finally {
-  //         setIsLoading(false);
-  //       }
-  //     }
-  //   };
-
-  //   if (!isPostsFetched.current) {
-  //     fetchPosts();
-  //     isPostsFetched.current = true;
-  //   }
-  // }, [user]);
-
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     if (user) {
-  //       try {
-  //         setIsLoading(true);
-  //         const response = await getUserPost(getAccessToken(), user?.userId);
-  //         setPosts(response?.data?.data);
-  //       } catch (error) {
-  //         console.error('Error fetching posts:', error);
-  //       } finally {
-  //         setIsLoading(false);
-  //         setRefetchUserPost && setRefetchUserPost(false);
-  //       }
-  //     }
-  //   };
-
-  //   if (refetchUserPost) {
-  //     fetchPosts();
-  //   }
-  // }, [accessToken, user, refetchUserPost, setRefetchUserPost]);
-
-  const textLimit = 90;
 
   return (
     <>

@@ -12,7 +12,7 @@ import PreviewModal from '@/components/Modal/PreviewModal';
 import { getUserPrivacy } from '@/api/auth/auth';
 
 export interface IRefetchUserPostProp {
-  setRefetchUserPost?: React.Dispatch<React.SetStateAction<boolean>>;
+  setRefetchUserPost: React.Dispatch<React.SetStateAction<boolean>>;
   refetchUserPost?: boolean;
 }
 

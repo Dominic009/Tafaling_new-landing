@@ -10,6 +10,7 @@ interface UsePostsProps {
   userId: number;
   refetchUserPost?: boolean;
   url: string;
+  setRefetchUserPost: Dispatch<SetStateAction<boolean>>;
 }
 
 interface UsePostsReturn {
@@ -27,6 +28,7 @@ const usePosts = ({
   userId,
   refetchUserPost,
   url,
+  setRefetchUserPost,
 }: UsePostsProps): UsePostsReturn => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -41,10 +43,6 @@ const usePosts = ({
       setRemoveId(null);
     }
   }, [posts, removeId, setRemoveId]);
-
-  // useEffect(() => {
-  //   console.log(posts);
-  // }, [posts]);
 
   // Function to update a post by its ID with new properties
   const updatePost = (postId: number, updatedProperties: Partial<Post>) => {
@@ -118,7 +116,38 @@ const usePosts = ({
     };
 
     fetchData();
-  }, [start, pageSize, userId, refetchUserPost, url]);
+  }, [start, pageSize, userId, url]);
+
+  // refetch user post on post. ex: post create
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(false);
+      let cancel: Canceler;
+
+      try {
+        const res = await axiosClient.get(`${url}/${userId}`, {
+          params: { start_record: 0, page_size: 1 },
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+          },
+          cancelToken: new axios.CancelToken(c => (cancel = c)),
+        });
+
+        setPosts(prevPosts => [...res.data.data, ...prevPosts]);
+        setLoading(false);
+        setRefetchUserPost(false);
+      } catch (e) {
+        if (axios.isCancel(e)) return;
+        setError(true);
+        setLoading(false);
+      }
+
+      return () => cancel && cancel();
+    };
+
+    refetchUserPost && fetchData();
+  }, [userId, url, refetchUserPost, setRefetchUserPost]);
 
   return { loading, error, posts, hasMore, setRemoveId, updatePost };
 };
