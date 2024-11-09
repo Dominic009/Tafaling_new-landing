@@ -193,7 +193,7 @@ const CreatePost: React.FC<PostProps> = ({
               <div className="flex w-full opacity-80 relative">
                 <select
                   {...register("privacy")}
-                  className="cursor-pointer bg-blue-800/20 rounded text-gray-900 w-[110px] pl-6"
+                  className="cursor-pointer border border-blue-800/20 rounded text-gray-900 w-[110px] pl-6 text-sm"
                 >
                   {allPrivacy.map((item) => {
                     return (
@@ -210,7 +210,7 @@ const CreatePost: React.FC<PostProps> = ({
                     );
                   })}
                 </select>
-                <label className="absolute -bottom-[1px] left-1">
+                <label className="absolute -top-0.5 left-2">
                   <FaEye className="inline-block text-gray-500" />
                 </label>
               </div>
