@@ -298,6 +298,7 @@ const IndividualPost: React.FC<IPostProps> = ({
           updatePostProperty={updatePostProperty!}
           setPostPrivacy={setPostPrivacy}
           postPrivacy={postPrivacy}
+          setRemoveId={setRemoveId}
         />
       )}
     </>

@@ -25,6 +25,7 @@ interface PostSettingsProps {
     postId: number,
     updatedProperties: Partial<Post>
   ) => void;
+  onClose?: () => void;
 }
 
 const PostSettings: React.FC<PostSettingsProps> = ({
@@ -37,6 +38,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
   postPrivacy,
   updatePostProperty,
   setToggleEditPost,
+  onClose,
 }) => {
   const [editPrivacyModal, setEditPrivacyModal] = useState<boolean>(false);
   const [deletePostModal, setDeletePostModal] = useState<boolean>(false);
@@ -113,6 +115,7 @@ const PostSettings: React.FC<PostSettingsProps> = ({
           post={post}
           setRemoveId={handleDeletePost}
           setToggleEditPost={setToggleEditPost!}
+          onClose={onClose}
         />
       </Modal>
     </div>

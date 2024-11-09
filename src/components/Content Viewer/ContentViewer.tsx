@@ -61,12 +61,6 @@ const ContentViewer: React.FC<ContentProps> = ({
     return () => document.body.classList.remove('no-scroll');
   }, [object]);
 
-  useEffect(() => {
-    if (post && setRemoveId) {
-      setRemoveId(post.postId);
-    }
-  }, [post, setRemoveId]);
-
   const handleContentView = (object: any) => {
     setViewImagePost(object);
   };
@@ -182,6 +176,7 @@ const ContentViewer: React.FC<ContentProps> = ({
                     updatePostProperty={updatePostProperty}
                     setPostPrivacy={setPostPrivacy}
                     setToggleEditPost={setToggleEditPost}
+                    onClose={onClose}
                   />
                 </div>
               )}

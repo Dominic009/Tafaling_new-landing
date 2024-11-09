@@ -1,12 +1,12 @@
-import { removePost } from "@/api/posts/posts";
-import ActionButton from "@/components/Buttons/ActionButton";
-import PrimaryBtn from "@/components/PrimaryBtn";
-import { getAccessToken } from "@/helpers/tokenStorage";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { removePost } from '@/api/posts/posts';
+import ActionButton from '@/components/Buttons/ActionButton';
+import PrimaryBtn from '@/components/PrimaryBtn';
+import { getAccessToken } from '@/helpers/tokenStorage';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { MdDeleteForever } from 'react-icons/md';
-import { FaXmark } from "react-icons/fa6";
-import { Post } from "../../UserPost/UserPost";
-import toast from "react-hot-toast";
+import { FaXmark } from 'react-icons/fa6';
+import { Post } from '../../UserPost/UserPost';
+import toast from 'react-hot-toast';
 
 interface IDeletePost {
   modal?: React.ReactNode;
@@ -14,6 +14,7 @@ interface IDeletePost {
   post: Post;
   setRemoveId?: Dispatch<SetStateAction<number | null>>;
   setToggleEditPost: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose?: () => void;
 }
 
 const DeletePost: React.FC<IDeletePost> = ({
@@ -22,16 +23,17 @@ const DeletePost: React.FC<IDeletePost> = ({
   post,
   setRemoveId,
   setToggleEditPost,
+  onClose,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (modal) {
-      document.body.classList.add("no-scroll");
+      document.body.classList.add('no-scroll');
     } else {
-      document.body.classList.remove("no-scroll");
+      document.body.classList.remove('no-scroll');
     }
-    return () => document.body.classList.remove("no-scroll");
+    return () => document.body.classList.remove('no-scroll');
   }, [modal]);
 
   const deletePostHandler = async () => {
@@ -43,6 +45,7 @@ const DeletePost: React.FC<IDeletePost> = ({
         setRemoveId && setRemoveId(post.postId);
         setModal(false);
         setToggleEditPost(false);
+        onClose && onClose();
         toast.success(res.data.message);
       }
       setIsLoading(false);
@@ -53,28 +56,28 @@ const DeletePost: React.FC<IDeletePost> = ({
 
   return (
     <div>
-      <div className="flex flex-col justify-center pt-2 pb-4 ">
-        <h1 className="text-xl font-medium">Delete?</h1>
-        <p className="text-gray-500">
+      <div className='flex flex-col justify-center pt-2 pb-4 '>
+        <h1 className='text-xl font-medium'>Delete?</h1>
+        <p className='text-gray-500'>
           Are you sure you want to delete this post permanently?
         </p>
       </div>
-      <div className="px-14 py-3">
-        <div className="flex justify-around mt-2">
+      <div className='px-14 py-3'>
+        <div className='flex justify-around mt-2'>
           <ActionButton
             onClickFn={deletePostHandler}
-            text={"Yes"}
+            text={'Yes'}
             icon={MdDeleteForever}
-            btnColor="bg-[#e62d2d]"
-            iconTextColor="text-green-600"
+            btnColor='bg-[#e62d2d]'
+            iconTextColor='text-green-600'
             isLoading={isLoading}
           />
           <ActionButton
             onClickFn={() => setModal(!modal)}
-            text={"No"}
+            text={'No'}
             icon={FaXmark}
-            btnColor="bg-[#217021]"
-            iconTextColor="text-red-600"
+            btnColor='bg-[#217021]'
+            iconTextColor='text-red-600'
             isLoading={isLoading}
           />
         </div>
