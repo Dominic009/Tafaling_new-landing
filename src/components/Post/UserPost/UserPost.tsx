@@ -84,7 +84,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
         {posts.map((post, idx) => {
           if (posts.length === idx + 1) {
             return (
-              <div ref={lastPostElementRef} key={idx}>
+              <div ref={lastPostElementRef} key={post.postId}>
                 <IndividualPost
                   post={post}
                   // postKey={idx}
@@ -98,7 +98,7 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
             );
           } else {
             return (
-              <div key={idx}>
+              <div key={post.postId}>
                 <IndividualPost
                   post={post}
                   // postKey={idx}
