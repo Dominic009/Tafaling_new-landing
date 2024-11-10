@@ -171,7 +171,7 @@ const CreatePost: React.FC<PostProps> = ({
       }
     }
   };
-
+  
   return (
     <form onSubmit={handleSubmit(createPostHandler)} className='p-2'>
       <div className='flex flex-col items-center gap-3 border-b border-gray-200 mb-8'>
@@ -303,11 +303,11 @@ const CreatePost: React.FC<PostProps> = ({
         <Label
           htmlFor='dropzone-file'
           title='Upload a file'
-          className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-[#00B4DB] bg-gray-50 hover:bg-blue-100 custom-slower-hover hover:text-white h-12 hover:h-48 group`}
+          className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-[#00B4DB] bg-gray-50 hover:bg-blue-100 custom-slower-hover hover:text-white h-12 hover:h-32 group`}
         >
-          <div className={`flex flex-col items-center justify-center pt-5`}>
+          <div className={`flex flex-col items-center justify-center group-hover:pt-1 pt-10`}>
             <svg
-              className='mt-5 group-hover:mb-4 custom-hover h-8 w-8 text-[#00B4DB]'
+              className=' group-hover:mb-1 custom-hover h-8 w-8 text-[#00B4DB]'
               aria-hidden='true'
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
