@@ -55,46 +55,12 @@ const ExternalVideoPlayerModal: React.FC<ExternalVideoPlayerModal> = ({
           ></iframe>
         )}
 
-        {/* Interaction section */}
-        <div className='bg-[#f4f7f8] w-full lg:w-[25%] rounded-tr-sm rounded-br-sm py-4 px-4 relative overflow-y-auto custom-scrollbar'>
-          <div className='py-2'>
-            {/* User Information */}
-            <div className='flex items-center gap-2'>
-              <div className='flex items-center'>
-                <Image
-                  alt='User DP'
-                  src={user?.profile_picture || '/ProfileDP/Dummy.png'}
-                  width={50}
-                  height={50}
-                  className='mt-1 rounded-full'
-                ></Image>
-              </div>
-              <div className='flex-1 text-left'>
-                {/* <h1 className='font-semibold text-xl'>{object.creator.name}</h1> */}
-                <h1 className='font-semibold text-xl'>{post?.creator?.name}</h1>
-                <span className='text-sm text-gray-400 flex items-center'>
-                  <IoLocationOutline />
-                  {/* {object.location} */}
-                  Location
-                </span>
-              </div>
-              <div>
-                <HiDotsHorizontal className='text-[#07a1bc]/50 text-3xl cursor-pointer hover:bg-gray-100 px-1 py-1 rounded-xl' />
-              </div>
-            </div>
-
-            {/* Post Caption */}
-            <div className='mt-6 '>
-              <p className='text-left h-60 custom-scrollbar overflow-y-auto'></p>
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            className={`fixed top-5 right-5 font-semibold text-gray-500 bg-gray-100 px-2 py-2 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
-          >
-            <IoClose />
-          </button>
-        </div>
+        <button
+          onClick={onClose}
+          className={`fixed top-5 right-5 font-semibold text-gray-500 bg-gray-100 px-2 py-2 rounded-full hover:bg-red-600 hover:text-white custom-hover`}
+        >
+          <IoClose />
+        </button>
       </div>
     </div>
   );
