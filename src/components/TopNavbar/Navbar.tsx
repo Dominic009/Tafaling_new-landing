@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
       icon: (
         <TiHome
           title="Home"
-          className="text-3xl  hover:text-white custom-hover"
+          className="text-3xl hover:text-white custom-hover"
         />
       ),
     },
@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
       icon: (
         <BsFillPeopleFill
           title="Requests"
-          className="text-2xl  hover:text-white custom-hover"
+          className="text-2xl hover:text-white custom-hover"
         />
       ),
     },
@@ -122,15 +122,16 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-secondary to-[#012349] items-center px-1 md:px-5 w-full custom-hover">
+    <nav className="md:h-[70px] grid grid-cols-2 md:grid-cols-3 gap-5 bg-gradient-to-r from-secondary to-[#012349] items-center px-1 py- md:px-5 w-full custom-hover">
       {/* Left Section */}
-      <div>
+      <div className="w-[60%] md:w-full flex items-center mt-2 md:mt-0">
         <Link href={"/home"}>
           <Image
             src={"/Tafaling logo.png"}
             width={130}
             height={55}
             alt="Brand logo"
+            className=""
           ></Image>
         </Link>
       </div>
@@ -251,7 +252,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
           <Link href={'/search-more-users'} className="flex justify-end md:hidden">
-            <HiOutlineSearch className="text-gray-100 text-3xl  cursor-pointer" />
+            <HiOutlineSearch className="text-gray-100 text-2xl md:text-3xl cursor-pointer" />
           </Link>
 
           <div>

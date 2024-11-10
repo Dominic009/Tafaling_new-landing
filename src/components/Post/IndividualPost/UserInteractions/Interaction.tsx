@@ -121,7 +121,7 @@ const Interaction: React.FC<InteractionProps> = ({
               action.icon
             )}
           </span>
-          <span className='text-gray-500'>
+          <span className='text-sm md:text-md text-gray-500'>
             {action.name === 'Like' && likeCount ? likeCount : action.name}
           </span>
         </button>

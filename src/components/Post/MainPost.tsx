@@ -40,19 +40,19 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
         <div className='w-full mx-auto rounded-xl p-3 shadow mb-6 bg-white'>
           {/* User Profile and Post Button */}
           <div className='flex items-center gap-3'>
-            <div className='w-14 h-14 rounded-full flex items-center justify-center'>
+            <div className='w-12 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center'>
               <Image
                 alt='User DP'
                 src={user?.profile_picture || '/ProfileDP/Dummy.png'}
                 width={50}
                 height={50}
                 objectFit='cover'
-                className='w-14 h-14 rounded-full'
+                className='w-10 h-10 md:w-16 md:h-16 rounded-full'
               />
             </div>
             <button
               onClick={() => openModalForTab(null)}
-              className='text-gray-400 font-light w-full outline-none bg-gray-100 px-4 py-2 rounded-full text-left transition duration-300 ease-in-out'
+              className='text-gray-400 text-sm md:text-lg font-light w-full outline-none bg-gray-100 px-2 md:px-4 py-1 md:py-2 rounded-full text-left transition duration-300 ease-in-out'
             >
               Thinking about something...?
             </button>
@@ -71,31 +71,34 @@ const MainPost: React.FC<IRefetchUserPostProp> = ({ setRefetchUserPost }) => {
                 width={30}
                 height={30}
                 alt='Media icon'
+                className='w-5 h-5 md:w-9 md:h-9'
               />
-              <span className='hidden md:block'>Photo/Video</span>
-              <span className='block md:hidden'>Media</span> 
+              <span className='hidden md:block text-[12px] md:text-lg'>Photo/Video</span>
+              <span className='block md:hidden text-[12px] md:text-lg'>Media</span> 
             </button>
             <li
               //   onClick={() => openModalForTab('location')}
-              className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1'
+              className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1 text-[12px] md:text-lg'
             >
               <Image
                 src={'/Icons/location.png'}
                 width={30}
                 height={30}
                 alt='Location icon'
+                className='w-5 h-5 md:w-9 md:h-9'
               />
               Location
             </li>
             <li
               //   onClick={() => openModalForTab('activity')}
-              className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1'
+              className='hover:bg-gray-100 px-4 py-1 rounded-full cursor-pointer flex items-center justify-center gap-1 text-[12px] md:text-lg'
             >
               <Image
                 src={'/Icons/emoji.png'}
                 width={30}
                 height={30}
                 alt='Activity icon'
+                className='w-5 h-5 md:w-9 md:h-9'
               />
               Activity
             </li>

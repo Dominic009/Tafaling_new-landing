@@ -13,7 +13,7 @@ import ProfileSkeleton from "../Loader/Skeleton/ProfileSkeleton";
 import ComingSoon from "../ComingSoon";
 import UserPost from "../Post/UserPost/UserPost";
 import ActionBtn from "../Buttons/User Profile buttons/ActionBtn";
-import { MdOutlineEdit, MdSettings } from "react-icons/md";
+import { MdEditSquare, MdOutlineEdit, MdSettings } from "react-icons/md";
 
 const LoggedInUserProfile = () => {
   const { user, login } = useAuth();
@@ -261,11 +261,9 @@ const LoggedInUserProfile = () => {
                 </div>
 
                 {/* user bio */}
-                <p className="text-[#0E2943]/80 text-lg py-1 inline-flex items-center">
-                  To be a dreamer, you just need spread your wings and keep on
-                  dreaming until you turn your dream in reality. So keep on
-                  pushing!
-                  {/* <MdEditSquare className="text-2xl text-[#00B4DB] hover:text-[#287f92] cursor-pointer custom-hover" /> */}
+                <p className="text-[#0E2943]/80 text-lg py-1 inline-flex items-center gap-3">
+                  Add bio (Coming Soon)
+                  <MdEditSquare className="text-2xl text-[#00B4DB] hover:text-[#287f92] cursor-pointer custom-hover" />
                 </p>
 
                 <div className="flex items-center gap-4 mt-3 md:mt-0 mb-3 md:mb-0">

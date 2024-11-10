@@ -133,8 +133,8 @@ const IndividualPost: React.FC<IPostProps> = ({
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center">
-            <div className="w-16 h-16 rounded-full flex items-center justify-center">
+          <div className="flex items-center">
+            <div className="w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center">
               <Link href={`/user-profile/${user?.userId}`}>
                 <Image
                   alt="User DP"
@@ -142,20 +142,20 @@ const IndividualPost: React.FC<IPostProps> = ({
                   width={50}
                   height={50}
                   objectFit="cover"
-                  className="w-16 h-16 rounded-full"
+                  className="w-10 h-10 md:w-16 md:h-16 rounded-full"
                 ></Image>
               </Link>
             </div>
             <div className="flex flex-col text-left px-2">
               <>
                 <Link href={`/user-profile/${user?.userId}`}>
-                  <h1 className="font-semibold text-xl">
+                  <h1 className="font-semibold md:text-xl">
                     {post?.creator?.name}
                   </h1>
                 </Link>
               </>
-              <div className="flex items-center gap-3">
-                <h5 className="text-sm text-gray-400 flex gap items-center">
+              <div className="flex items-center gap-2 md:gap-3">
+                <h5 className="text-[11px] md:text-sm text-gray-400 flex gap items-center">
                   <FaLocationDot />
                   {/* {post.location} */}
                   Location
@@ -163,7 +163,7 @@ const IndividualPost: React.FC<IPostProps> = ({
                 {user?.user_name && (
                   <>
                     <span className="w-1 h-1 rounded-full bg-[#d4d4d4]"></span>
-                    <h5 className="text-sm text-gray-400 flex gap items-center">
+                    <h5 className="text-[11px] md:text-sm text-gray-400 flex gap items-center">
                       <p className="flex items-center gap-1">
                         <FaEye className="inline-block" />{" "}
                         {postPrivacy?.privacy_setting_name
@@ -207,7 +207,7 @@ const IndividualPost: React.FC<IPostProps> = ({
               src={`${post.attachments[0]?.fileURL}/${post.attachments[0]?.fileName}`}
               width={800}
               height={500}
-              className={`rounded-md object-cover hover:scale-[102%] custom-hover-img h-[500px]`}
+              className={`rounded-md md:object-cover hover:scale-[102%] custom-hover-img h-[400px] md:h-[550px]`}
               onClick={() => handleContentView(post)}
               onLoadingComplete={() => setIsLoading && setIsLoading(false)}
               loading="lazy"
@@ -232,7 +232,7 @@ const IndividualPost: React.FC<IPostProps> = ({
 
         {/* Footer */}
         <div className="mt-3">
-          <p className="text-left text-lg text-wrap">
+          <p className="text-left text-[14px] md:text-lg text-wrap">
             {renderPostBody()}
             {/* {post.body.length > 90 ? `${post.body.slice(0, 90)}...`} */}
             {!isPostExpanded &&
@@ -288,7 +288,7 @@ const IndividualPost: React.FC<IPostProps> = ({
           </div>
 
           {/* post created time */}
-          <div className="text-end text-gray-400 text-sm font-light">
+          <div className="text-end text-gray-400 text-[11px] md:text-sm font-light">
             <PostTimeConverter time={post?.createdAt}></PostTimeConverter>
           </div>
         </div>

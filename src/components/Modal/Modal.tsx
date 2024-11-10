@@ -27,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({
       <div
         className={`mx-auto rounded-xl p-3 shadow mb-12 bg-${bg} ${className} relative w-[90%] md:w-2.5/3 lg:w-[40%] `}
       >
-        <div className="max-h-[800px] overflow-auto hide-scrollbar" style={width ? { width } : {}}>
+        <div className="max-h-[550px] overflow-auto hide-scrollbar" style={width ? { width } : {}}>
           {children}
           <button
             onClick={onClose}

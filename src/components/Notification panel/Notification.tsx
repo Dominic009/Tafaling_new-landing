@@ -11,9 +11,11 @@ const Notification = () => {
         className="h-full flex items-center justify-center relative"
         onClick={() => setDropdown(!dropdown)}
       >
-        <FaRegBell className="text-2xl text-white hover:text-white hover:scale-105 cursor-pointer transition-all duration-200 ease-in-out" />
-        <div className="absolute top-0 -right-2 bg-[#D6042A] text-center rounded-full w-5 h-5 text-white text-sm">
-          5
+        <FaRegBell className="text-xl md:text-2xl text-white hover:text-white hover:scale-105 cursor-pointer transition-all duration-200 ease-in-out" />
+        <div className="absolute top-0 -right-1 md:top-1 md:-right-2 bg-[#D6042A] text-center rounded-full w-4 md:w-5 h-4 md:h-5 text-white">
+          <p className="text-[11px] md:text-sm w-4 md:w-5 h-4 md:h-5">
+            5
+          </p>
         </div>
       </button>
 

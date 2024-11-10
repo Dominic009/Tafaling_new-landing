@@ -143,7 +143,7 @@ const Page = () => {
                       },
                     })}
                     placeholder='Your Email'
-                    className={`px-12 py-2 rounded-md outline-none w-full ${
+                    className={`pl-10 pr-2 py-2 rounded-md outline-none w-full ${
                       errors.email ? 'border-2 border-red-600' : ''
                     }`}
                   />
@@ -165,7 +165,7 @@ const Page = () => {
                     })}
                     placeholder='Your Password'
                     type={isOpen ? 'text' : 'password'}
-                    className={`px-12 py-2 rounded-md outline-none w-full ${
+                    className={`pl-10 py-2 rounded-md outline-none w-full ${
                       errors.password ? 'border-2 border-red-600' : ''
                     }`}
                   />
