@@ -39,14 +39,14 @@ const SideNav = () => {
       icon: (
         <MdOutlineEdit
           title="Requests"
-          className="text-2xl  hover:text-white custom-hover"
+          className="text-2xl hover:text-white custom-hover"
         />
       ),
     },
   ];
   return (
     <div
-      className=" w-[20%] bg-[#00274A] rounded-md py-4 px-2 relative"
+      className=" md:w-[20%] bg-[#00274A] rounded-md py-2 md:py-4 px-2 relative"
       style={{
         backgroundImage: `url('/Pattern 3.png')`,
         backgroundSize: "1500px",
@@ -54,10 +54,10 @@ const SideNav = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="block lg:hidden absolute text-white right-2">
+      {/* <div className="block lg:hidden absolute text-white right-2">
         <RxHamburgerMenu className="" />
-      </div>
-      <div className="flex flex-col items-center justify-center mb-8">
+      </div> */}
+      <div className="flex flex-col items-center justify-center mb-4 md:mb-8">
         <div className="rounded-full w-20 h-20 relative">
           <Image
             src={user?.profile_picture || "/ProfileDP/Dummy.png"}
@@ -68,7 +68,7 @@ const SideNav = () => {
         </div>
         <h1 className="text-white">{user?.name || "User"}</h1>
       </div>
-      <ul className="text-lg flex flex-col items-center h-full">
+      <ul className="text-lg grid grid-cols-3 md:flex md:flex-col items-center h-full">
         {routes.map((path) => {
           const isActive = path.path === currentPath;
           return (
@@ -77,11 +77,11 @@ const SideNav = () => {
               key={path.name}
               className={`${
                 isActive &&
-                "text-left font-semibold text-white bg-[#155a97] custom-hover py-2"
+                "text-left md:font-semibold text-white bg-[#155a97]/70 custom-hover py-2"
               }  text-gray-400 hover:bg-[#0b467a] rounded-md px-2 w-[100%] custom-hover mb-5 flex items-center gap-2`}
             >
-              <span>{path.icon}</span>
-              <span>{path.name}</span>
+              <span className="hidden md:block">{path.icon}</span>
+              <span className="text-[15px] md:text-xl">{path.name}</span>
             </Link>
           );
         })}

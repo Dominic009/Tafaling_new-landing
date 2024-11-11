@@ -58,7 +58,7 @@ const ChangePassword = () => {
     <div>
       <form
         onSubmit={handleSubmit(handlePasswordChange)}
-        className="flex flex-col gap-5 w-[80%]"
+        className="flex flex-col gap-5 lg:w-[80%]"
       >
         {/* Old Password */}
         <div className="relative">
@@ -72,7 +72,7 @@ const ChangePassword = () => {
                 message: "Old password must be at least 6 characters",
               },
             })}
-            className={`block px-4 py-2 w-[60%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
+            className={`block px-4 py-2 w-full lg:w-[60%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
               errors.oldPassword ? "border-2 border-red-600" : ""
             }`}
           />
@@ -90,7 +90,7 @@ const ChangePassword = () => {
         </div>
 
         {/* New Password */}
-        <div className="relative w-[60%]">
+        <div className="relative w-full lg:w-[60%]">
           <input
             placeholder=""
             type={isOpen ? "text" : "password"}
@@ -101,7 +101,7 @@ const ChangePassword = () => {
                 message: "New password must be at least 6 characters",
               },
             })}
-            className={`block px-4 py-2 w-full text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
+            className={`block px-4 py-2 w-full lg:w-[100%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
               errors.newPassword ? "border-2 border-red-600" : ""
             }`}
           />
@@ -114,12 +114,12 @@ const ChangePassword = () => {
           {isOpen ? (
             <IoEyeOutline
               onClick={() => setIsOpen(!isOpen)}
-              className="absolute right-3 top-4 cursor-pointer text-xl text-[#00B4DB] border"
+              className="absolute right-3 top-4 cursor-pointer text-xl text-[#00B4DB]"
             />
           ) : (
             <IoEyeOffOutline
               onClick={() => setIsOpen(!isOpen)}
-              className="absolute right-3 top-4 cursor-pointer text-xl text-[#00B4DB] border"
+              className="absolute right-3 top-4 cursor-pointer text-xl text-[#00B4DB]"
             />
           )}
           {errors.newPassword && (
@@ -139,7 +139,7 @@ const ChangePassword = () => {
               validate: (value) =>
                 value === newPassword || "Passwords do not match",
             })}
-            className={`block px-4 py-2 w-[60%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
+            className={`block px-4 py-2 w-full lg:w-[60%] text-lg text-gray-900 shadow-sm bg-transparent rounded-md border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#155a97] peer ${
               errors.confirmPassword ? "border-2 border-red-600" : ""
             }`}
           />
