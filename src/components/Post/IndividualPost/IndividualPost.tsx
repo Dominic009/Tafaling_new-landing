@@ -135,7 +135,7 @@ const IndividualPost: React.FC<IPostProps> = ({
         <div className='flex items-center justify-between mb-3'>
           <div className='flex items-center'>
             <div className='w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center'>
-              <Link href={`/user-profile/${user?.userId}`}>
+              <Link href={`/user-profile/${post.creator.user_id}`}>
                 <Image
                   alt='User DP'
                   src={post.creator?.profile_picture || '/ProfileDP/Dummy.png'}
@@ -148,7 +148,7 @@ const IndividualPost: React.FC<IPostProps> = ({
             </div>
             <div className='flex flex-col text-left px-2'>
               <>
-                <Link href={`/user-profile/${user?.userId}`}>
+                <Link href={`/user-profile/${post.creator.user_id}`}>
                   <h1 className='font-semibold md:text-xl'>
                     {post?.creator?.name}
                   </h1>
