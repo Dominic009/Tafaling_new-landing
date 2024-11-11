@@ -8,6 +8,7 @@ import { getAccessToken } from '@/helpers/tokenStorage';
 import UserPostSkeleton from '@/components/Loader/Skeleton/UserPostSkeleton';
 import IndividualPost from '../IndividualPost/IndividualPost';
 import usePosts from '@/hooks/usePosts';
+import { usePathname } from 'next/navigation';
 
 export interface Post {
   profilePicture: string;
@@ -45,13 +46,16 @@ const UserPost: React.FC<IRefetchUserPostProp> = ({
   // const [posts, setPosts] = React.useState<Post[]>([]);
   const [start, setStart] = useState(0);
   const { user } = useAuth();
+  const pathname = usePathname();
 
   const { posts, loading, hasMore, setRemoveId, updatePost } = usePosts({
     start,
     pageSize: 5,
     userId: user?.userId as number,
     refetchUserPost,
-    url: `posts/user`,
+    url: `${
+      pathname.includes('user-profile') ? '/user/search/profile' : 'posts/user'
+    }`,
     setRefetchUserPost,
   });
 
