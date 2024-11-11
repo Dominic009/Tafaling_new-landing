@@ -179,7 +179,6 @@ const LoggedInUserProfile = () => {
           <Modal
             isOpen={modalProfilePicture}
             onClose={closeModalProfilePicture}
-            width={"30%"}
           >
             <div className="py-7 px-2 rounded-lg flex flex-col justify-center items-center">
               <h1 className="text-xl text-gray-500 font-semibold text-center underline mb-4">
@@ -196,7 +195,6 @@ const LoggedInUserProfile = () => {
           <Modal
             isOpen={modalCoverPhoto}
             onClose={closeModalCoverPhoto}
-            width={"30%"}
           >
             <div className="py-7 px-2 rounded-lg flex flex-col justify-center items-center">
               <h1 className="text-xl text-gray-500 font-semibold text-center underline mb-4">
