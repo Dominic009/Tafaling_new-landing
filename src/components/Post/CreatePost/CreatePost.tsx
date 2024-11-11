@@ -13,6 +13,11 @@ import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FaEye } from 'react-icons/fa6';
 import LinkPreview from '../LinkPreview/LinkPreview';
+import {
+  formatFileSizeIntoMB,
+  getMediaMeta,
+  getMediaType,
+} from '@/helpers/common';
 
 interface PostProps extends IRefetchUserPostProp {
   modal?: React.ReactNode;
@@ -51,16 +56,30 @@ const CreatePost: React.FC<PostProps> = ({
   // console.log(previews);
 
   //   Handle file input change for multiple files
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const files = event.target.files;
+
+    //check file type ex: video/image
+    const fileType = await getMediaType(files![0]);
+    // console.log(fileType);
+
+    // get file meta data for checking resolution and other properties
+    const fileMetaData = await getMediaMeta(files![0]);
+    // console.log('fileMetaData', fileMetaData);
+
+    if (formatFileSizeIntoMB(fileMetaData.fileSize) > 2.0) {
+      toast.error('File size can not be more than 2 MB');
+      return;
+    }
+
     if (files) {
       const newFilePreviews = Array.from(files).map(file => ({
         url: URL.createObjectURL(file),
         type: file.type, // Capture the file type (image or video)
       }));
-      // setPreviews(prevPreviews => [...prevPreviews, ...newFilePreviews]);
       setPreviews(newFilePreviews); // for now user can upload single photo
-      // Set the preview URLs for all the files
     }
   };
 
@@ -80,7 +99,7 @@ const CreatePost: React.FC<PostProps> = ({
   };
 
   const createPostHandler = async (data: CreatePostType) => {
-    if (!data.file && !data.post.length) {
+    if (data.post.length === 0) {
       toast.error('Can not create empty post!');
       return;
     }
@@ -96,12 +115,6 @@ const CreatePost: React.FC<PostProps> = ({
     }
 
     try {
-      // const { data, status } = await createUserPost(formData, getAccessToken());
-      // if (status === 201) {
-      //   toast.success('Post created successfully!');
-      //   setModal(false);
-      //   setRefetchUserPost(true);
-      // }
       const { data, status } = await axiosClient.post<any>(
         'posts/create',
         formData,
@@ -139,8 +152,7 @@ const CreatePost: React.FC<PostProps> = ({
     // }
   };
 
-  // for detecting links
-
+  // For detecting links
   const [text, setText] = useState('');
   const [links, setLinks] = useState<string | ''>('');
 
@@ -171,7 +183,7 @@ const CreatePost: React.FC<PostProps> = ({
       }
     }
   };
-  
+
   return (
     <form onSubmit={handleSubmit(createPostHandler)} className='p-2'>
       <div className='flex flex-col items-center gap-3 border-b border-gray-200 mb-8'>
@@ -305,7 +317,9 @@ const CreatePost: React.FC<PostProps> = ({
           title='Upload a file'
           className={`flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-[#00B4DB] bg-gray-50 hover:bg-blue-100 custom-slower-hover hover:text-white h-12 hover:h-32 group`}
         >
-          <div className={`flex flex-col items-center justify-center group-hover:pt-1 pt-10`}>
+          <div
+            className={`flex flex-col items-center justify-center group-hover:pt-1 pt-10`}
+          >
             <svg
               className=' group-hover:mb-1 custom-hover h-8 w-8 text-[#00B4DB]'
               aria-hidden='true'
