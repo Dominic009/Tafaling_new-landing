@@ -125,7 +125,7 @@ const PostBody: React.FC<PostProps> = ({ children }) => {
         <PrimaryBtn text={"Create Post"} width={"15%"}></PrimaryBtn>
       </div>
       {/* Modal Content Based on Active Tab */}
-      <Modal isOpen={modal} onClose={closeModal} width={"40%"}>
+      <Modal isOpen={modal} onClose={closeModal}>
         {/* Default Modal for "Thinking about something...?" */}
         {!activeTab && <PostBody></PostBody>}
 
