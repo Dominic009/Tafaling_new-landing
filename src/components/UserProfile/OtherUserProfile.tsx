@@ -11,6 +11,7 @@ import IndividualPost from '../Post/IndividualPost/IndividualPost';
 import UserPostSkeleton from '../Loader/Skeleton/UserPostSkeleton';
 import { IoPersonAdd } from 'react-icons/io5';
 import ActionButton from '../Buttons/ActionButton';
+import { MdEditSquare } from 'react-icons/md';
 
 interface IOtherUserProfile {
   userId: number;
@@ -200,10 +201,9 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
                 </div>
 
                 {/* user bio */}
-                <p className='text-[#0E2943]/90 text-lg py-1 inline-flex items-center'>
-                  To be a dreamer, you just need spread your wings and keep on
-                  dreaming until you turn your dream in reality. So keep on
-                  pushing!
+                <p className='text-[#0E2943]/80 text-lg py-1 inline-flex items-center gap-3'>
+                  Add bio (Coming Soon)
+                  <MdEditSquare className='text-2xl text-[#00B4DB] hover:text-[#287f92] cursor-pointer custom-hover' />
                 </p>
 
                 <div className='flex items-center gap-4'>
