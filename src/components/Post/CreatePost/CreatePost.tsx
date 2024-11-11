@@ -62,17 +62,17 @@ const CreatePost: React.FC<PostProps> = ({
     const files = event.target.files;
 
     //check file type ex: video/image
-    const fileType = await getMediaType(files![0]);
+    // const fileType = await getMediaType(files![0]);
     // console.log(fileType);
 
     // get file meta data for checking resolution and other properties
-    const fileMetaData = await getMediaMeta(files![0]);
+    // const fileMetaData = await getMediaMeta(files![0]);
     // console.log('fileMetaData', fileMetaData);
 
-    if (formatFileSizeIntoMB(fileMetaData.fileSize) > 2.0) {
-      toast.error('File size can not be more than 2 MB');
-      return;
-    }
+    // if (formatFileSizeIntoMB(fileMetaData.fileSize) > 2.0) {
+    //   toast.error('File size can not be more than 2 MB');
+    //   return;
+    // }
 
     if (files) {
       const newFilePreviews = Array.from(files).map(file => ({
@@ -141,9 +141,9 @@ const CreatePost: React.FC<PostProps> = ({
     } catch (e) {
       const error = e as AxiosError<any, ResponseType>;
       setProgress(0);
-      console.log(error);
-      // toast.error(error?.response?.data.message);
-      toast.error('Post creation failed!');
+      // console.log(error);
+      toast.error(error?.response?.data.message);
+      // toast.error('Post creation failed!');
     }
 
     // Log formData entries
