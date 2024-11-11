@@ -26,8 +26,9 @@ const Modal: React.FC<ModalProps> = ({
     <div className="bg-gray-600/50 fixed w-full h-full backdrop-blur-sm left-0 top-0 z-50 flex items-center justify-center animate__animated animate__fadeIn animate__faster pt-12">
       <div
         className={`mx-auto rounded-xl p-3 shadow mb-12 bg-${bg} ${className} relative w-[90%] md:w-2.5/3 lg:w-[40%] `}
+        style={width ? { width } : {}}
       >
-        <div className="max-h-[550px] overflow-auto hide-scrollbar" style={width ? { width } : {}}>
+        <div className="max-h-[550px] overflow-auto hide-scrollbar">
           {children}
           <button
             onClick={onClose}
