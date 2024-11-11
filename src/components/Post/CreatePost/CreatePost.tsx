@@ -108,9 +108,11 @@ const CreatePost: React.FC<PostProps> = ({
     formData.append('body', data.post);
     formData.append('privacy_id', data.privacy);
     // console.log(data);
-    for (let key in data.file) {
-      if (typeof data.file[key] === 'object') {
-        formData.append(`attachments[${key}]`, data.file[key]);
+    if (data.file.length) {
+      for (let key in data.file) {
+        if (typeof data.file[key] === 'object') {
+          formData.append(`attachments[${key}]`, data.file[key]);
+        }
       }
     }
 
