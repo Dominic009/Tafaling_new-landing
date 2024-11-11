@@ -228,7 +228,7 @@ const OtherUserProfile: React.FC<IOtherUserProfile> = ({ userId }) => {
       )}
 
       {/* User Content section */}
-      <section className='mt-9 flex justify-center w-[80%] gap-5 mx-auto'>
+      <section className='mt-9 flex justify-center w-[95%] md:w-[80%] gap-5 mx-auto'>
         <div className='h-[80vh] w-[20%] lg:sticky lg:top-24 hidden md:hidden lg:block bg-white rounded-xl text-center'>
           <ComingSoon />
         </div>

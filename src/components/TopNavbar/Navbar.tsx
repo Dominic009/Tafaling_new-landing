@@ -16,6 +16,7 @@ import SearchInput from "../Search Input/SearchInput";
 import { searchUser } from "@/api/user/user";
 import { getAccessToken } from "@/helpers/tokenStorage";
 import IndividualSearchUser from "./UserSearch/IndividualSearchUser";
+import PreviewModal from "../Modal/PreviewModal";
 
 export interface ISearchUser {
   userId: number;
@@ -205,32 +206,39 @@ const Navbar: React.FC = () => {
                     </div>
                   )}
 
-                  {isShowingSearchResults &&
-                    !isSearchLoading &&
-                    searchedUsers.length === 0 && (
-                      <>
-                        <h1 className="col-span-6 text-center text-gray-500 font-semibold">
-                          No results found!
-                        </h1>
-                        <Link
-                          onClick={() => {
-                            setSearchedUsers([]);
-                            setInputValue("");
-                          }}
-                          href={{
-                            pathname: `/search-more-users`,
-                            query: { userSearch: inputValue },
-                          }}
-                        >
-                          {searchedUsers.length !== 0 && (
-                            <span className="text-gray-400 hover:text-gray-700 custom-hover font-semibold">
-                              More results
-                            </span>
+                  <>
+                    {isShowingSearchResults &&
+                      !isSearchLoading &&
+                      searchedUsers.length === 0 && (
+                        <>
+                          {!user ? (
+                            <h1 className="col-span-6 text-center text-gray-500 font-semibold">
+                              Please log in first...!
+                            </h1>
+                          ) : (
+                            <h1 className="col-span-6 text-center text-gray-500 font-semibold">
+                              No results found!
+                            </h1>
                           )}
-                        </Link>
-                      </>
-                    )}
-
+                          <Link
+                            onClick={() => {
+                              setSearchedUsers([]);
+                              setInputValue("");
+                            }}
+                            href={{
+                              pathname: `/search-more-users`,
+                              query: { userSearch: inputValue },
+                            }}
+                          >
+                            {searchedUsers.length !== 0 && (
+                              <span className="text-gray-400 hover:text-gray-700 custom-hover font-semibold">
+                                More results
+                              </span>
+                            )}
+                          </Link>
+                        </>
+                      )}
+                  </>
                   {searchedUsers.length !== 0 && (
                     <Link
                       onClick={() => {
@@ -251,7 +259,10 @@ const Navbar: React.FC = () => {
               )}
             </div>
           </div>
-          <Link href={'/search-more-users'} className="flex justify-end md:hidden">
+          <Link
+            href={"/search-more-users"}
+            className="flex justify-end md:hidden"
+          >
             <HiOutlineSearch className="text-gray-100 text-2xl md:text-3xl cursor-pointer" />
           </Link>
 
