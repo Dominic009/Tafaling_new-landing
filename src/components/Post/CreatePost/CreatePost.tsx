@@ -1,23 +1,23 @@
-import axiosClient from '@/api/config';
-import { createUserPost } from '@/api/posts/posts';
-import { IRefetchUserPostProp } from '@/app/(Pages)/home/page';
-import PrimaryBtn from '@/components/PrimaryBtn';
-import { useAuth } from '@/context/AuthContext/AuthProvider';
-import { getAccessToken } from '@/helpers/tokenStorage';
-import { PrivacySetting } from '@/types/Auth';
-import { AxiosError, AxiosProgressEvent } from 'axios';
-import { FileInput, Label } from 'flowbite-react';
-import Image from 'next/image';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { FaEye } from 'react-icons/fa6';
-import LinkPreview from '../LinkPreview/LinkPreview';
+import axiosClient from "@/api/config";
+import { createUserPost } from "@/api/posts/posts";
+import { IRefetchUserPostProp } from "@/app/(Pages)/home/page";
+import PrimaryBtn from "@/components/PrimaryBtn";
+import { useAuth } from "@/context/AuthContext/AuthProvider";
+import { getAccessToken } from "@/helpers/tokenStorage";
+import { PrivacySetting } from "@/types/Auth";
+import { AxiosError, AxiosProgressEvent } from "axios";
+import { FileInput, Label } from "flowbite-react";
+import Image from "next/image";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { FaEye } from "react-icons/fa6";
+import LinkPreview from "../LinkPreview/LinkPreview";
 import {
   formatFileSizeIntoMB,
   getMediaMeta,
   getMediaType,
-} from '@/helpers/common';
+} from "@/helpers/common";
 
 interface PostProps extends IRefetchUserPostProp {
   modal?: React.ReactNode;
@@ -41,16 +41,16 @@ const CreatePost: React.FC<PostProps> = ({
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const [progress, setProgress] = useState(0);
   const { user, userPrivacy: allPrivacy } = useAuth();
-  const { register, handleSubmit, getValues, formState, control, reset } =
+  const { register, handleSubmit, getValues, formState, control, resetField } =
     useForm<CreatePostType>();
 
   useEffect(() => {
     if (modal) {
-      document.body.classList.add('no-scroll');
+      document.body.classList.add("no-scroll");
     } else {
-      document.body.classList.remove('no-scroll');
+      document.body.classList.remove("no-scroll");
     }
-    return () => document.body.classList.remove('no-scroll');
+    return () => document.body.classList.remove("no-scroll");
   }, [modal]);
 
   // console.log(previews);
@@ -86,8 +86,9 @@ const CreatePost: React.FC<PostProps> = ({
   // Handle removing a specific preview
   const handleRemovePreview = (index: number) => {
     setPreviews(prev => prev.filter((_, i) => i !== index)); // Remove the selected preview
+    resetField("file");
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // Reset the file input
+      fileInputRef.current.value = ""; // Reset the file input
     }
   };
 
@@ -99,18 +100,18 @@ const CreatePost: React.FC<PostProps> = ({
   };
 
   const createPostHandler = async (data: CreatePostType) => {
-    if (data.post.length === 0) {
-      toast.error('Can not create empty post!');
+    if (!data.post.length && !data.file) {
+      toast.error("Can not create empty post!");
       return;
     }
 
     const formData = new FormData();
-    formData.append('body', data.post);
-    formData.append('privacy_id', data.privacy);
+    formData.append("body", data.post);
+    formData.append("privacy_id", data.privacy);
     // console.log(data);
     if (data.file.length) {
       for (let key in data.file) {
-        if (typeof data.file[key] === 'object') {
+        if (typeof data.file[key] === "object") {
           formData.append(`attachments[${key}]`, data.file[key]);
         }
       }
@@ -118,12 +119,12 @@ const CreatePost: React.FC<PostProps> = ({
 
     try {
       const { data, status } = await axiosClient.post<any>(
-        'posts/create',
+        "posts/create",
         formData,
         {
           headers: {
             Authorization: `Bearer ${getAccessToken()}`,
-            'content-type': 'multipart/form-data',
+            "content-type": "multipart/form-data",
           },
           onUploadProgress: (progressEvent: AxiosProgressEvent) => {
             const percentCompleted = Math.round(
@@ -135,7 +136,7 @@ const CreatePost: React.FC<PostProps> = ({
       );
 
       if (status === 201) {
-        toast.success('Post created successfully!');
+        toast.success("Post created successfully!");
         setModal(false);
         setRefetchUserPost && setRefetchUserPost(true);
         setProgress(0);
@@ -155,8 +156,8 @@ const CreatePost: React.FC<PostProps> = ({
   };
 
   // For detecting links
-  const [text, setText] = useState('');
-  const [links, setLinks] = useState<string | ''>('');
+  const [text, setText] = useState("");
+  const [links, setLinks] = useState<string | "">("");
 
   useEffect(() => {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -165,20 +166,20 @@ const CreatePost: React.FC<PostProps> = ({
     if (detectedLinks) {
       setLinks(text);
     } else {
-      setLinks('');
+      setLinks("");
     }
   }, [text]);
 
   const textAreaHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputText = e.target.value;
 
-    if (inputText.includes('http')) {
-      const indexOfHttpStart = inputText.indexOf('http');
+    if (inputText.includes("http")) {
+      const indexOfHttpStart = inputText.indexOf("http");
       const httpText = inputText.slice(indexOfHttpStart);
 
       //handle white space after link
-      if (httpText.includes(' ')) {
-        const onlyHttpLink = httpText.split(' ')[0];
+      if (httpText.includes(" ")) {
+        const onlyHttpLink = httpText.split(" ")[0];
         setText(onlyHttpLink);
       } else {
         setText(httpText);
@@ -191,11 +192,11 @@ const CreatePost: React.FC<PostProps> = ({
       <div className='flex flex-col items-center gap-3 border-b border-gray-200 mb-8'>
         <div className='w-full grid md:grid-cols-2'>
           <div className='w-full flex items-center gap-3 pb-1'>
-            {' '}
+            {" "}
             <div className='w-14 h-12 rounded-full flex items-center justify-center mt-1'>
               <Image
                 alt='User DP'
-                src={user?.profile_picture || '/ProfileDP/Dummy.png'}
+                src={user?.profile_picture || "/ProfileDP/Dummy.png"}
                 width={40}
                 height={40}
                 objectFit='cover'
@@ -206,7 +207,7 @@ const CreatePost: React.FC<PostProps> = ({
               <h1 className='text-lg font-semibold text-left'>{user?.name}</h1>
               <div className='flex w-full opacity-80 relative'>
                 <select
-                  {...register('privacy')}
+                  {...register("privacy")}
                   className='cursor-pointer border border-blue-800/20 rounded text-gray-900 w-[110px] pl-6 text-sm'
                 >
                   {allPrivacy.map(item => {
@@ -250,7 +251,7 @@ const CreatePost: React.FC<PostProps> = ({
               rows={10}
               disabled={progress === 0 ? false : true}
               placeholder='Thinking of something...?'
-              {...register('post')}
+              {...register("post")}
               onChange={textAreaHandler}
               className='text-gray-500 font-light w-full outline-none h-[100px] bg-gray-50 rounded-md mb-2 p-2 custom-hover custom-scrollbar'
             />
@@ -269,9 +270,9 @@ const CreatePost: React.FC<PostProps> = ({
         <div className='mt-2 md:mt-5'>
           <div
             className={`grid ${
-              (previews.length === 1 && 'grid-cols-1') ||
-              (previews.length === 2 && 'grid-cols-2') ||
-              (previews.length > 2 && 'grid-cols-3')
+              (previews.length === 1 && "grid-cols-1") ||
+              (previews.length === 2 && "grid-cols-2") ||
+              (previews.length > 2 && "grid-cols-3")
             } gap-2`}
           >
             {previews.map((preview, index) => (
@@ -280,7 +281,7 @@ const CreatePost: React.FC<PostProps> = ({
                 className='flex flex-col items-center relative bg-blue-50 p-4 rounded'
               >
                 {/* Render image or video based on the file type */}
-                {preview.type.startsWith('image/') ? (
+                {preview.type.startsWith("image/") ? (
                   <Image
                     src={preview.url}
                     alt={`Uploaded file preview ${index + 1}`}
@@ -311,7 +312,7 @@ const CreatePost: React.FC<PostProps> = ({
       )}
       <div
         className={`flex flex-col items-center justify-center w-full ${
-          previews.length && 'mt-3'
+          previews.length && "mt-3"
         }`}
       >
         <Label
@@ -355,7 +356,7 @@ const CreatePost: React.FC<PostProps> = ({
           <Controller
             name='file'
             control={control}
-            defaultValue={''}
+            defaultValue={""}
             render={({ field }) => (
               <FileInput
                 disabled={progress === 0 ? false : true}
@@ -384,7 +385,7 @@ const CreatePost: React.FC<PostProps> = ({
               <Controller
                 name='file'
                 control={control}
-                defaultValue={''}
+                defaultValue={""}
                 render={({ field }) => (
                   <FileInput
                     disabled={progress === 0 ? false : true}
@@ -401,7 +402,7 @@ const CreatePost: React.FC<PostProps> = ({
                 )}
               ></Controller>
               <Image
-                src={'/Icons/media.png'}
+                src={"/Icons/media.png"}
                 width={30}
                 height={30}
                 alt='Media icon'
@@ -413,7 +414,7 @@ const CreatePost: React.FC<PostProps> = ({
               className='hover:bg-gray-100 md:px-4 md:py-1 rounded-full cursor-pointer flex items-center justify-center gap-1'
             >
               <Image
-                src={'/Icons/location.png'}
+                src={"/Icons/location.png"}
                 width={30}
                 height={30}
                 alt='Location icon'
@@ -425,7 +426,7 @@ const CreatePost: React.FC<PostProps> = ({
               className='hover:bg-gray-100 md:px-4 md:py-1 rounded-full cursor-pointer flex items-center justify-center gap-1'
             >
               <Image
-                src={'/Icons/emoji.png'}
+                src={"/Icons/emoji.png"}
                 width={30}
                 height={30}
                 alt='Activity icon'
@@ -437,7 +438,7 @@ const CreatePost: React.FC<PostProps> = ({
 
         <div>
           {progress === 0 && (
-            <PrimaryBtn text={'Create Post'} width={'100%'}></PrimaryBtn>
+            <PrimaryBtn text={"Create Post"} width={"100%"}></PrimaryBtn>
           )}
         </div>
       </div>
