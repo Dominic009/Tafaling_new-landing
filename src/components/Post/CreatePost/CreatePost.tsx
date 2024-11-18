@@ -18,6 +18,7 @@ import {
   getMediaMeta,
   getMediaType,
 } from "@/helpers/common";
+import useConfig from "@/hooks/useConfig";
 
 interface PostProps extends IRefetchUserPostProp {
   modal?: React.ReactNode;
@@ -43,6 +44,7 @@ const CreatePost: React.FC<PostProps> = ({
   const { user, userPrivacy: allPrivacy } = useAuth();
   const { register, handleSubmit, getValues, formState, control, resetField } =
     useForm<CreatePostType>();
+  const { config, error, loading } = useConfig();
 
   useEffect(() => {
     if (modal) {
@@ -66,13 +68,18 @@ const CreatePost: React.FC<PostProps> = ({
     // console.log(fileType);
 
     // get file meta data for checking resolution and other properties
-    // const fileMetaData = await getMediaMeta(files![0]);
+    const fileMetaData = await getMediaMeta(files![0]);
     // console.log('fileMetaData', fileMetaData);
 
-    // if (formatFileSizeIntoMB(fileMetaData.fileSize) > 2.0) {
-    //   toast.error('File size can not be more than 2 MB');
-    //   return;
-    // }
+    if (
+      formatFileSizeIntoMB(fileMetaData.fileSize) >
+      config?.minimumFileUploadSize!
+    ) {
+      toast.error(
+        `File size can not be more than ${config?.minimumFileUploadSize!} MB`
+      );
+      return;
+    }
 
     if (files) {
       const newFilePreviews = Array.from(files).map(file => ({
