@@ -1,24 +1,24 @@
-import { AuthJwtPayload } from '@/context/AuthContext/AuthProvider';
+import { AuthJwtPayload } from "@/context/AuthContext/AuthProvider";
 import {
   getAccessToken,
   getRefreshToken,
   setTokenInLS,
-} from '@/helpers/tokenStorage';
-import axios, { AxiosInstance } from 'axios';
-import dayjs from 'dayjs';
-import { jwtDecode } from 'jwt-decode';
-import toast from 'react-hot-toast';
+} from "@/helpers/tokenStorage";
+import axios, { AxiosInstance } from "axios";
+import dayjs from "dayjs";
+import { jwtDecode } from "jwt-decode";
+import toast from "react-hot-toast";
 const axiosClient: AxiosInstance = axios.create({
-  baseURL: 'http://99.237.86.169:7070/api',
+  baseURL: "http://99.237.86.169:7070/api",
   headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
 });
 
 axiosClient.interceptors.request.use(
   async req => {
-    if (req.url === 'auth/login' || req.url === 'auth/register') {
+    if (req.url === "auth/login" || req.url === "auth/register") {
       return req;
     }
 
@@ -38,16 +38,16 @@ axiosClient.interceptors.request.use(
     const response = await axios
       .get(`${process.env.NEXT_PUBLIC_TAFALING_API}/auth/refresh`, {
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${getRefreshToken()}`,
         },
       })
       .catch(err => {
-        localStorage.removeItem('auth-token');
-        toast.error('session timeout, please login again');
+        localStorage.removeItem("auth-token");
+        toast.error("session expired, please login again.");
         setTimeout(() => {
-          window.location.href = 'login';
+          window.location.href = "login";
         }, 2000);
         return req;
       });
@@ -66,11 +66,17 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   response => response,
   error => {
+    // Redirect to login page
+    if (error.response?.status === 401) {
+      toast.error("Session expired, please login again.");
+      window.location.href = "login"; // Adjust the login page route if necessary
+    }
+
     if (
-      error.code === 'ERR_NETWORK' &&
-      error.message.includes('Network Error')
+      error.code === "ERR_NETWORK" &&
+      error.message.includes("Network Error")
     ) {
-      console.log('Request timed out');
+      console.log("Request timed out");
       toast.error(error.message);
     }
     return Promise.reject(error);
