@@ -36,7 +36,7 @@ axiosClient.interceptors.request.use(
     if (!isExpired) return req;
 
     const response = await axios
-      .get(`${process.env.NEXT_PUBLIC_TAFALING_API}/auth/refresh`, {
+      .get(`http://99.237.86.169:7070/api/auth/refresh`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
