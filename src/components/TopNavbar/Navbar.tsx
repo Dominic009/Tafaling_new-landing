@@ -93,7 +93,8 @@ const Navbar: React.FC = () => {
   if (
     currentPath === "/login" ||
     currentPath === "/register" ||
-    currentPath === "/verifyEmail"
+    currentPath === "/verifyEmail" || 
+    currentPath === "/"
   ) {
     return null; // Do not render the Navbar on these paths
   }
