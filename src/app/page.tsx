@@ -9,81 +9,140 @@ import { Gochi_Hand } from "next/font/google";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css"; // Make sure AOS CSS is imported
 
 const gochiHand = Gochi_Hand({ weight: ["400"], subsets: ["latin"] });
 
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-gradient-to-tr from-secondary to-[#00B4DB] p-5">
-      <div className="flex justify-between animate__animated animate__fadeInLeft">
-        <Image
-          src="/Tafaling logo.png"
-          alt="Image"
-          width={200}
-          height={85}
-          className="mix-blend-plus-darker scale-75 md:scale-100"
-        ></Image>
-      </div>
-      {/* Banner Section */}
-      <section className="flex flex-col-reverse lg:flex-row gap-5 md:w-[95%] mx-auto border rounded-xl md:mt-9 p-2 md:p-8">
-        <div className="flex justify-center flex-col">
-          <div className="mb-5 lg:mb-16">
-            <h1 className="text-3xl md:text-5xl lg:text-7xl text-white font-bold mb-2">
-              Connect, Share and <br /> Discover like never before
-            </h1>
-            <p className={`${gochiHand.className} text-gray-200 md:text-xl`}>
-              Tafaling is your ultimate destination for seamless social
-              interactions and creative expression. Share your moments, connect
-              with a vibrant community, and explore endless entertainment.
-              Whether you are uploading photos, sharing videos, or discovering
-              new content, Tafaling makes it all effortless and fun.
-            </p>
-          </div>
-          <PrimaryBtn text="Learn more" size="xl" width="100%" />
-        </div>
+  useEffect(() => {
+    AOS.init({});
+  }, []);
 
-        {/* Swiper Section */}
-        <div className="w-[100%] lg:w-[50%] object-contain rounded-lg">
-          <Swiper
-            spaceBetween={30}
-            slidesPerView={1}
-            loop={true}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-            modules={[Autoplay]}
-          >
-            <SwiperSlide>
-              <Image
-                src="/Landing page/Banner.jpg"
-                alt="Banner 1"
-                width={2000}
-                height={1300}
-                className="rounded-lg"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="/Landing page/Banner2.jpg"
-                alt="Banner 2"
-                width={2000}
-                height={1300}
-                className="rounded-lg"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="/Landing page/Banner3.jpg"
-                alt="Banner 3"
-                width={2000}
-                height={1300}
-                className="rounded-lg"
-              />
-            </SwiperSlide>
-          </Swiper>
+  const features = [
+    "Share and Showcase Your Moments",
+    "Intuitive Design",
+    "Entertainment Hub",
+    "Seamless Interaction",
+    "Personalized Discovery",
+  ];
+
+  return (
+    <main>
+      <div className="min-h-screen bg-gradient-to-tr from-secondary to-[#00B4DB] p-5">
+        {" "}
+        <div className="flex justify-between animate__animated animate__fadeInLeft">
+          <Image
+            src="/Tafaling logo.png"
+            alt="Image"
+            width={200}
+            height={85}
+            className="mix-blend-plus-darker scale-75 md:scale-100"
+          ></Image>
         </div>
-      </section>
+        {/* Banner Section */}
+        <section className="flex flex-col-reverse lg:flex-row gap-5 md:w-[95%] mx-auto border rounded-xl md:mt-9 p-2 md:p-8">
+          <div className="flex justify-center flex-col">
+            <div className="mb-5 lg:mb-16">
+              <h1 className="text-3xl md:text-5xl lg:text-7xl text-white font-bold mb-2">
+                Connect, Share and <br /> Discover like never before
+              </h1>
+              <p className={`${gochiHand.className} text-gray-200 md:text-xl`}>
+                Tafaling is your ultimate destination for seamless social
+                interactions and creative expression. Share your moments,
+                connect with a vibrant community, and explore endless
+                entertainment. Whether you are uploading photos, sharing videos,
+                or discovering new content, Tafaling makes it all effortless and
+                fun.
+              </p>
+            </div>
+            <PrimaryBtn text="Learn more" size="xl" width="100%" />
+          </div>
+
+          {/* Swiper Section */}
+          <div className="w-[100%] lg:w-[50%] object-contain rounded-lg">
+            <Swiper
+              spaceBetween={30}
+              slidesPerView={1}
+              loop={true}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              modules={[Autoplay]}
+            >
+              <SwiperSlide>
+                <Image
+                  src="/Landing page/Banner.jpg"
+                  alt="Banner 1"
+                  width={2000}
+                  height={1300}
+                  className="rounded-lg"
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <Image
+                  src="/Landing page/Banner2.jpg"
+                  alt="Banner 2"
+                  width={2000}
+                  height={1300}
+                  className="rounded-lg"
+                />
+              </SwiperSlide>
+              <SwiperSlide>
+                <Image
+                  src="/Landing page/Banner3.jpg"
+                  alt="Banner 3"
+                  width={2000}
+                  height={1300}
+                  className="rounded-lg"
+                />
+              </SwiperSlide>
+            </Swiper>
+          </div>
+        </section>
+      </div>
+      {/* About Section */}
+      <div
+        className={`mt-16 mb-16 w-[90%] mx-auto flex flex-col lg:flex-row justify-center items-center gap-5`}
+      >
+        <div data-aos="fade-up" className="rounded-lg shadow-xl">
+          <Image
+            src="/Landing page/About.jpg"
+            alt="Banner 1"
+            width={2000}
+            height={1300}
+            className="rounded-lg"
+          ></Image>
+        </div>
+        <div>
+          <h1
+            className={`${gochiHand.className} text-3xl md:text-5xl border-l-8 border-primary pl-2 mb-3`}
+          >
+            About tafaling
+          </h1>
+          <p className={`text-xl text-gray-500`}>
+            Tafaling is a vibrant social media and entertainment platform
+            designed to bring people closer through creativity and connection.
+            Our mission is to create a space where users can effortlessly share
+            their stories, discover engaging content, and connect with a dynamic
+            community worldwide.
+          </p>
+          <div
+            data-aos="fade-left"
+            className="grid md:grid-cols-3 text-center gap-5 mt-10"
+          >
+            {features.map((feature, key) => (
+              <div key={key}>
+                <p className="border border-primary rounded-full px-3 py-1 hover:bg-[#003846]/50 custom-hover font-semibold text-gray-800">
+                  {feature}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* <div className='h-[80vh] flex flex-col items-center justify-center'>
         <h1 className='text-3xl md:text-5xl lg:text-7xl font-semibold text-white text-center'>
