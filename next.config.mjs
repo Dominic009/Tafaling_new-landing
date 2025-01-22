@@ -16,31 +16,36 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
+        protocol: "https",
+        hostname: "images.unsplash.com",
       },
       {
-        protocol: 'https',
-        hostname: 'unsplash.com',
+        protocol: "https",
+        hostname: "unsplash.com",
       },
       {
-        protocol: 'https',
-        hostname: 'videos.pexels.com',
+        protocol: "https",
+        hostname: "videos.pexels.com",
       },
       {
-        protocol: 'http',
-        hostname: '99.237.86.169',
-        port: '7070',
+        protocol: "http",
+        hostname: "99.237.86.169",
+        port: "7070",
       },
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '8080',
+        protocol: "http",
+        hostname: "localhost",
+        port: "8080",
       },
       {
-        protocol: 'http',
-        hostname: '127.0.0.1',
-        port: '8000',
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "8000",
+      },
+      {
+        protocol: "http",
+        hostname: "devapi.tafaling.com",
+        port: "",
       },
     ],
   },

@@ -8,8 +8,11 @@ import axios, { AxiosInstance } from "axios";
 import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
+
+const baseURL = "http://devapi.tafaling.com/api";
+
 const axiosClient: AxiosInstance = axios.create({
-  baseURL: "http://99.237.86.169:7070/api",
+  baseURL: baseURL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -36,7 +39,7 @@ axiosClient.interceptors.request.use(
     if (!isExpired) return req;
 
     const response = await axios
-      .get(`http://99.237.86.169:7070/api/auth/refresh`, {
+      .get(`${baseURL}/auth/refresh`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
