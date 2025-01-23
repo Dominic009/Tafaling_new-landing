@@ -40,7 +40,7 @@ export default function Home() {
       description: "Set up your profile",
     },
     {
-      image: "/Landing page/Step3.png",
+      image: "/Landing page/Asset2.png",
       description: "Do TAFALING",
     },
   ];
@@ -58,13 +58,15 @@ export default function Home() {
           ></Image>
         </div>
         {/* Banner Section */}
-        <section className="flex flex-col-reverse lg:flex-row gap-5 md:w-[95%] mx-auto border rounded-xl md:mt-9 p-2 md:p-8">
-          <div className="flex justify-center flex-col">
+        <section className="flex flex-col-reverse lg:flex-row gap-16 md:w-[95%] mx-auto  rounded-xl md:mt-9 p-2 md:p-8">
+          <div className="flex justify-center flex-col ">
             <div className="mb-5 lg:mb-16">
               <h1 className="text-3xl md:text-5xl lg:text-7xl text-white font-bold mb-2">
                 Connect, Share and <br /> Discover like never before
               </h1>
-              <p className={`${gochiHand.className} text-gray-200 md:text-xl`}>
+              <p
+                className={`${gochiHand.className} text-gray-200 md:text-xl`}
+              >
                 Tafaling is your ultimate destination for seamless social
                 interactions and creative expression. Share your moments,
                 connect with a vibrant community, and explore endless
@@ -74,12 +76,14 @@ export default function Home() {
               </p>
             </div>
             {/* <PrimaryBtn text="Learn more" size="xl" width="100%" /> */}
-            <a
-              href="#getting-started"
-              className={`bg-primary hover:bg-secondary py-2 rounded-md text-white font- md:text-xl flex items-center justify-center gap-2 transition duration-300 ease-in-out active:scale-90 relative`}
-            >
-              <button>Learn More</button>
-            </a>
+            <div>
+              <a
+                href="#getting-started"
+                className={`bg-primary hover:bg-secondary py-2 rounded-md text-white font- md:text-xl flex items-center justify-center gap-2 transition duration-300 ease-in-out active:scale-90`}
+              >
+                <button>Learn More</button>
+              </a>
+            </div>
           </div>
 
           {/* Swiper Section */}
@@ -169,16 +173,16 @@ export default function Home() {
       {/* Get Started Section */}
       <section
         id="getting-started"
-        className="bg-gradient-to-tr from-secondary to-[#00B4DB] py-12"
+        className="min-h-screen bg-gradient-to-tr from-secondary to-[#00B4DB] py-4 flex items-center"
       >
         <div className="w-[90%] mx-auto">
-          <div data-aos="fade-up" className="text-center mb-5">
+          <div data-aos="fade-up" className="text-center mb-16 lg:mb-24">
             <h1
               className={`text-3xl lg:text-5xl mb-5 lg:w-[40%] mx-auto font-bold text-white`}
             >
               Getting Started with Tafaling
             </h1>
-            <p className={`text-xl text-gray-200 ${gochiHand.className} `}>
+            <p className={`text-xl text-gray-200 ${gochiHand.className} lg:w-[70%] mx-auto`}>
               Getting started with Tafaling is quick and easy! In just a few
               simple steps, you will be part of a vibrant community, ready to
               share, discover, and connect. First, sign up for free and create
@@ -197,7 +201,7 @@ export default function Home() {
                   width={400}
                   height={400}
                   alt="steps"
-                  className="rounded-lg drop-shadow-2xl animate-pulse"
+                  className="rounded-lg drop-shadow-2xl animate-pulse h-[320px] object-contain"
                 ></img>
                 <h1
                   className={`text-white text-xl lg:text-3xl mt-5 text-center font-semibold uppercase`}
