@@ -12,12 +12,14 @@ import "swiper/css";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css"; // Make sure AOS CSS is imported
+import SecondaryBtn from "@/components/SecondaryBtn";
+import Link from "next/link";
 
 const gochiHand = Gochi_Hand({ weight: ["400"], subsets: ["latin"] });
 
 export default function Home() {
   useEffect(() => {
-    AOS.init({});
+    AOS.init({ duration: 1000, easing: "ease", delay: 300 });
   }, []);
 
   const features = [
@@ -28,10 +30,24 @@ export default function Home() {
     "Personalized Discovery",
   ];
 
+  const stepsData = [
+    {
+      image: "/Landing page/Step1.png",
+      description: "Sign Up for free",
+    },
+    {
+      image: "/Landing page/Step2.png",
+      description: "Set up your profile",
+    },
+    {
+      image: "/Landing page/Step3.png",
+      description: "Do TAFALING",
+    },
+  ];
+
   return (
     <main>
       <div className="min-h-screen bg-gradient-to-tr from-secondary to-[#00B4DB] p-5">
-        {" "}
         <div className="flex justify-between animate__animated animate__fadeInLeft">
           <Image
             src="/Tafaling logo.png"
@@ -57,7 +73,13 @@ export default function Home() {
                 fun.
               </p>
             </div>
-            <PrimaryBtn text="Learn more" size="xl" width="100%" />
+            {/* <PrimaryBtn text="Learn more" size="xl" width="100%" /> */}
+            <a
+              href="#getting-started"
+              className={`bg-primary hover:bg-secondary py-2 rounded-md text-white font- md:text-xl flex items-center justify-center gap-2 transition duration-300 ease-in-out active:scale-90 relative`}
+            >
+              <button>Learn More</button>
+            </a>
           </div>
 
           {/* Swiper Section */}
@@ -105,9 +127,9 @@ export default function Home() {
       </div>
       {/* About Section */}
       <div
-        className={`mt-16 mb-16 w-[90%] mx-auto flex flex-col lg:flex-row justify-center items-center gap-5`}
+        className={`mt-32 mb-32 w-[90%] mx-auto flex flex-col lg:flex-row justify-center items-center gap-5`}
       >
-        <div data-aos="fade-up" className="rounded-lg shadow-xl">
+        <div data-aos="flip-up" className="rounded-lg shadow-xl">
           <Image
             src="/Landing page/About.jpg"
             alt="Banner 1"
@@ -118,11 +140,11 @@ export default function Home() {
         </div>
         <div>
           <h1
-            className={`${gochiHand.className} text-3xl md:text-5xl border-l-8 border-primary pl-2 mb-3`}
+            className={`text-3xl md:text-5xl border-l-8 border-primary pl-2 mb-3`}
           >
             About tafaling
           </h1>
-          <p className={`text-xl text-gray-500`}>
+          <p className={`text-xl text-gray-500 ${gochiHand.className} `}>
             Tafaling is a vibrant social media and entertainment platform
             designed to bring people closer through creativity and connection.
             Our mission is to create a space where users can effortlessly share
@@ -143,6 +165,105 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Get Started Section */}
+      <section
+        id="getting-started"
+        className="bg-gradient-to-tr from-secondary to-[#00B4DB] py-12"
+      >
+        <div className="w-[90%] mx-auto">
+          <div data-aos="fade-up" className="text-center mb-5">
+            <h1
+              className={`text-3xl lg:text-5xl mb-5 lg:w-[40%] mx-auto font-bold text-white`}
+            >
+              Getting Started with Tafaling
+            </h1>
+            <p className={`text-xl text-gray-200 ${gochiHand.className} `}>
+              Getting started with Tafaling is quick and easy! In just a few
+              simple steps, you will be part of a vibrant community, ready to
+              share, discover, and connect. First, sign up for free and create
+              your account. Then, personalize your profile to showcase who you
+              are. Finally, start exploring the platform, share your moments,
+              and engage with others. Tafaling is designed to be intuitive, so
+              you will be up and running in no time!
+            </p>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-10 justify-between items-center">
+            {stepsData.map((step, idx) => (
+              <div key={idx} className="border md:border-none p-2 rounded-lg">
+                <img
+                  src={step.image}
+                  width={400}
+                  height={400}
+                  alt="steps"
+                  className="rounded-lg drop-shadow-2xl animate-pulse"
+                ></img>
+                <h1
+                  className={`text-white text-xl lg:text-3xl mt-5 text-center font-semibold uppercase`}
+                >
+                  {step.description}
+                </h1>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Join us */}
+      <section className="bg-gray-100 py-32">
+        <div
+          className="w-[90%] mx-auto bg-secondary p-5 flex flex-col-reverse gap-16 md:flex-row items-center justify-center rounded-lg shadow-2xl group"
+          style={{
+            backgroundImage: `url('/Pattern 3.png')`,
+            backgroundSize: "1700px",
+            backgroundPosition: "-600px -500px",
+            backgroundRepeat: "no-repeat",
+          }}
+        >
+          <div className="flex flex-col gap-6 md:w-[30%]">
+            <h1
+              className={`text-3xl lg:text-3xl mb-5 font-semibold text-white text-left`}
+            >
+              Join Tafaling Today and Be Part of the Community!
+            </h1>
+            <div data-aos="zoom-out" data-aos-duration="2000">
+              <Link href={"/register"}>
+                {" "}
+                <PrimaryBtn
+                  text="Register"
+                  width="100%"
+                  size="2xl"
+                  weight="bold"
+                />
+              </Link>
+            </div>
+            <div data-aos="zoom-out" data-aos-duration="2500">
+              <Link href={"/login"}>
+                {" "}
+                <SecondaryBtn
+                  text="Sign In"
+                  width="100%"
+                  size="2xl"
+                  weight="bold"
+                />
+              </Link>
+            </div>
+          </div>
+          <div>
+            <Image
+              src={"/Landing page/Join.png"}
+              width={500}
+              height={500}
+              alt="Join us"
+            ></Image>
+          </div>
+        </div>
+      </section>
+
+      <footer className="text-center py-4 bg-gray-800 text-white">
+        <p>&copy; {new Date().getFullYear()} Tafaling. All Rights Reserved.</p>
+      </footer>
 
       {/* <div className='h-[80vh] flex flex-col items-center justify-center'>
         <h1 className='text-3xl md:text-5xl lg:text-7xl font-semibold text-white text-center'>

@@ -347,3 +347,7 @@
   --background-color: #ffffff; /* Background for Light */
   --text-color: #000000; /* Text color for Light */
 }
+
+html {
+  scroll-behavior: smooth;
+}
