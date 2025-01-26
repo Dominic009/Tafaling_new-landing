@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 
-const baseURL = "http://devapi.tafaling.com/api";
+const baseURL = "https://devapi.tafaling.com/api";
 
 const axiosClient: AxiosInstance = axios.create({
   baseURL: baseURL,
